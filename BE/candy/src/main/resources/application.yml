@@ -1,0 +1,18 @@
+server:
+  port: 8080
+  error:
+    whitelabel:
+      enabled: false
+  servlet:
+    context-path: /api
+
+spring:
+  # TODO : PUSH ?? ?? ?? ?? ??? ?.
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://${DB_DOMAIN}:${DB_PORT}/candy?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+#    username: ${DB_USERNAME}
+#    password: ${DB_PASSWORD}
+    url: ENC(ef+E4wtkZU8vh0qhBMCUhfbwQDGsGIMsvrtX0uiOudJA5ECVfBKepDZQQIE7Z3uR4/A0678zt41m4W/I1IYgF5iO4s9rPUXMGr6PLHl76SxbWXW8II2AijL+n6GoRyIS)
+    username: ENC(Cv7Oc54oq27wpP2edYlzRQ==)
+    password: ENC(8NTxxUnrWm557GsnxwDN1LRzJ0xQL7Vz)
