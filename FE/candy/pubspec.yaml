@@ -31,6 +31,9 @@ dependencies:
   flutter:
     sdk: flutter
 
+  flutter_localizations:
+    sdk: flutter
+
   # 카카오 로그인
   kakao_flutter_sdk_user: ^1.4.2
 
