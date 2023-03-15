@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:candy/widgets/bottom_navigation_bar.dart';
 
 class MyPage extends StatefulWidget {
   const MyPage({super.key});
@@ -111,6 +112,7 @@ class _MyPageState extends State<MyPage> {
           ),
         ),
       ),
+      bottomNavigationBar: const BottomNavigation(),
     );
   }
 }
