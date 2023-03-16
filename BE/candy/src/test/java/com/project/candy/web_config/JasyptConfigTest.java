@@ -12,9 +12,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class JasyptConfigTest {
   @Test
   void jasypt(){
-    String url = "jdbc:mysql://localhost:3306/candy?serverTimezone=Asia/Seoul&characterEncoding=UTF-8";
-    String username = "candy";
-    String password = "candy@B105";
+    String url = "db url";
+    String username = "db id";
+    String password = "db pw";
 
     String encryptUrl = jasyptEncrypt(url);
     String encryptUsername = jasyptEncrypt(username);
@@ -28,7 +28,7 @@ class JasyptConfigTest {
   }
 
   private String jasyptEncrypt(String input) {
-    String key = "candy@B105";
+    String key = "vm option key";
     StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
     encryptor.setAlgorithm("PBEWithMD5AndDES");
     encryptor.setPassword(key);
@@ -36,7 +36,7 @@ class JasyptConfigTest {
   }
 
   private String jasyptDecryt(String input){
-    String key = "candy@B105";
+    String key = "vm option key";
     StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
     encryptor.setAlgorithm("PBEWithMD5AndDES");
     encryptor.setPassword(key);
