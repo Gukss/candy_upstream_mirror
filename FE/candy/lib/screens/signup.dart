@@ -65,6 +65,15 @@ class _SignupState extends State<Signup> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios_new_rounded,
+            size: 24,
+          ),
+        ),
         title: const Text('회원가입'),
         centerTitle: true,
         actions: [
