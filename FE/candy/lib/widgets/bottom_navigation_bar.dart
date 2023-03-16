@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:candy/screens/barcode_scan.dart';
-import 'package:candy/screens/my_page.dart';
 import 'dart:async';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:candy/screens/splash.dart';
+import 'package:candy/screens/my_page.dart';
 
 class BottomNavigation extends StatelessWidget {
   const BottomNavigation({super.key});
@@ -35,7 +35,7 @@ class BottomNavigation extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => BarcodeScan()),
+                  MaterialPageRoute(builder: (context) => Splash()),
                 );
               },
               child: const Icon(Icons.home_outlined),
