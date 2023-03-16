@@ -1,6 +1,7 @@
-import 'package:candy/screens/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
+
+import 'package:candy/screens/splash.dart';
 
 void main() {
   KakaoSdk.init(nativeAppKey: '29d8fb3c41f1f576f718af8398c6bf7e');

@@ -1,3 +1,4 @@
+import 'package:candy/screens/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
@@ -5,12 +6,24 @@ import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 class Splash extends StatelessWidget {
   const Splash({super.key});
 
+  void routeSignupPage(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) {
+          return const Signup();
+        },
+      ),
+    );
+  }
+
   // 카카오 로그인
-  void onLoginButtonTap() async {
+  void onLoginButtonTap(BuildContext context) async {
     if (await isKakaoTalkInstalled()) {
       try {
         await UserApi.instance.loginWithKakaoTalk();
         print('카카오톡으로 로그인 성공');
+        routeSignupPage(context);
       } catch (error) {
         print('카카오톡으로 로그인 실패 $error');
 
@@ -23,6 +36,7 @@ class Splash extends StatelessWidget {
         try {
           await UserApi.instance.loginWithKakaoAccount();
           print('카카오계정으로 로그인 성공');
+          routeSignupPage(context);
         } catch (error) {
           print('카카오계정으로 로그인 실패 $error');
         }
@@ -31,6 +45,7 @@ class Splash extends StatelessWidget {
       try {
         await UserApi.instance.loginWithKakaoAccount();
         print('카카오계정으로 로그인 성공');
+        routeSignupPage(context);
       } catch (error) {
         print('카카오계정으로 로그인 실패 $error');
       }
@@ -41,28 +56,35 @@ class Splash extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Container(
-          child: Column(
-            children: [
-              const Text(
-                'CANDY',
-                style: TextStyle(
-                  fontSize: 64,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              Expanded(
-                child: GestureDetector(
-                  onTap: () {
-                    onLoginButtonTap();
-                  },
-                  child: Image.asset(
-                    'assets/images/kakao/kakao_login_large_narrow.png',
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Text(
+                  'CANDY',
+                  style: TextStyle(
+                    fontSize: 64,
+                    fontWeight: FontWeight.w700,
                   ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    onLoginButtonTap(context);
+                  },
+                  child: Image.asset(
+                    'assets/images/kakao/kakao_login_medium_wide.png',
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );
