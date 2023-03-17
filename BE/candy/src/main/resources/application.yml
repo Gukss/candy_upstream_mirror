@@ -13,6 +13,6 @@ spring:
 #    url: jdbc:mysql://${DB_DOMAIN}:${DB_PORT}/candy?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
 #    username: ${DB_USERNAME}
 #    password: ${DB_PASSWORD}
-    url: ENC(ef+E4wtkZU8vh0qhBMCUhfbwQDGsGIMsvrtX0uiOudJA5ECVfBKepDZQQIE7Z3uR4/A0678zt41m4W/I1IYgF5iO4s9rPUXMGr6PLHl76SxbWXW8II2AijL+n6GoRyIS)
-    username: ENC(Cv7Oc54oq27wpP2edYlzRQ==)
-    password: ENC(8NTxxUnrWm557GsnxwDN1LRzJ0xQL7Vz)
+    url: ENC(D5fHoeMvlgUh99Os/Rpj3oovL5UCleQMD25+lF9awkA2MeGczWY/2mTj2HFmnRntm//jVjKEOBbygpZkSDXTzQgF185aYEgkp+th4dS8TN0LzowFfZv6IvncWDaPwny2Ux/MSKJPkPA=)
+    username: ENC(7sbQC5RGkILlN4b876Zadg==)
+    password: ENC(DrgvKi9+4A0U55oqHjFhF0/zIMq+ORhG)
