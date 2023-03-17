@@ -1,8 +1,27 @@
+import 'package:candy/widgets/beer/beer_info.dart';
+import 'package:candy/widgets/review/slide_bar.dart';
 import 'package:candy/widgets/ui/margin.dart';
 import 'package:flutter/material.dart';
 
-class BeerDetail extends StatelessWidget {
+class BeerDetail extends StatefulWidget {
   const BeerDetail({super.key});
+
+  @override
+  State<BeerDetail> createState() => _BeerDetailState();
+}
+
+class _BeerDetailState extends State<BeerDetail> {
+  late double feshNum;
+  late double bodyNum;
+  late double tasteNum;
+
+  @override
+  void initState() {
+    super.initState();
+    feshNum = 0;
+    bodyNum = 0;
+    tasteNum = 0;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,111 +54,46 @@ class BeerDetail extends StatelessWidget {
           ),
         ],
       ),
-      body: ListView.builder(
-        itemCount: 1,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.all(16),
-            child: Container(
-              color: Colors.grey,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Container(
+            color: Colors.grey,
+            child: Padding(
+              padding: const EdgeInsets.all(24),
               child: Column(
                 children: [
-                  Row(
-                    children: const [
-                      Text(
-                        '맥주 이름',
-                        style: TextStyle(),
-                      ),
-                      Icon(
-                        Icons.check,
-                        size: 16,
-                        color: Colors.green,
-                      ),
-                    ],
+                  const BeerInfo(
+                    beerName: {'korean': '카스 프레시', 'english': 'Cass Fresh'},
+                    beerImgSrc:
+                        'https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Flag_of_South_Korea.svg/255px-Flag_of_South_Korea.svg.png',
+                    country: '대한민국',
+                    countryImgSrc:
+                        'https://image.shutterstock.com/image-photo/image-260nw-2108189540.jpg',
+                    brandName: '하이트진로',
+                    alcoholLevel: 4.2,
+                    beerType: '밀맥주',
                   ),
-                  const Text('맥주 영어 이름'),
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: 128,
-                        height: 320,
-                        child: Image.network(
-                          'https://image.shutterstock.com/image-photo/image-260nw-2108189540.jpg',
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      const Margin(marginType: 'width', size: 16),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            child: Row(
-                              children: const [
-                                Text('종류'),
-                                Margin(marginType: 'width', size: 16),
-                                Text('밀맥주'),
-                              ],
-                            ),
-                          ),
-                          const Margin(marginType: 'height', size: 8),
-                          SizedBox(
-                            child: Row(
-                              children: [
-                                const Text('원산지'),
-                                const Margin(marginType: 'width', size: 16),
-                                const Text('한국'),
-                                const Margin(marginType: 'width', size: 16),
-                                Image.network(
-                                  'https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Flag_of_South_Korea.svg/255px-Flag_of_South_Korea.svg.png',
-                                  width: 20,
-                                ),
-                              ],
-                            ),
-                          ),
-                          const Margin(marginType: 'height', size: 8),
-                          SizedBox(
-                            child: Row(
-                              children: const [
-                                Text('브랜드'),
-                                Margin(marginType: 'width', size: 16),
-                                Text('하이트진로'),
-                              ],
-                            ),
-                          ),
-                          const Margin(marginType: 'height', size: 8),
-                          SizedBox(
-                            child: Row(
-                              children: const [
-                                Text('도수'),
-                                Margin(marginType: 'width', size: 16),
-                                Text('4.2%'),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                  const Margin(marginType: 'height', size: 16),
                   Container(
                     child: Column(
                       children: [
-                        Row(
-                          children: const [
-                            Text('청량감'),
-                            Margin(marginType: 'width', size: 16),
-                          ],
+                        const SlideBar(
+                          sliderCategory: '청량감',
+                          sliderValue: 0,
+                          readOnly: true,
                         ),
-                        Row(
-                          children: const [
-                            Text('바디감'),
-                            Margin(marginType: 'width', size: 16),
-                          ],
+                        const Margin(marginType: 'height', size: 16),
+                        SlideBar(
+                          sliderCategory: '바디감',
+                          sliderValue: bodyNum,
+                          readOnly: true,
                         ),
-                        Row(
-                          children: const [
-                            Text('맛'),
-                            Margin(marginType: 'width', size: 16),
-                          ],
+                        const Margin(marginType: 'height', size: 16),
+                        SlideBar(
+                          sliderCategory: '맛',
+                          sliderValue: tasteNum,
+                          readOnly: true,
                         ),
                       ],
                     ),
@@ -147,8 +101,8 @@ class BeerDetail extends StatelessWidget {
                 ],
               ),
             ),
-          );
-        },
+          ),
+        ),
       ),
     );
   }
