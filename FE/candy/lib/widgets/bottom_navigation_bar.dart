@@ -5,8 +5,29 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:candy/screens/splash.dart';
 import 'package:candy/screens/my_page.dart';
 
-class BottomNavigation extends StatelessWidget {
+class BottomNavigation extends StatefulWidget {
   const BottomNavigation({super.key});
+
+  @override
+  State<BottomNavigation> createState() => _BottomNavigationState();
+}
+
+class _BottomNavigationState extends State<BottomNavigation> {
+// 탭을 이동할 때 쓸 변수!
+  int _selectedIndex = 0;
+
+  List<Widget> pages = <Widget>[
+    Splash(),
+    // <Widget>[scanBarcodeNormal()],
+    MyPage(),
+    MyPage(),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   Future<void> scanBarcodeNormal() async {
     String barcodeScanRes = '';
@@ -22,44 +43,23 @@ class BottomNavigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: 16,
-          horizontal: 40,
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text('BottomNavigationBar Sample'),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Splash()),
-                );
-              },
-              child: const Icon(Icons.home_outlined),
-            ),
-            ElevatedButton(
-              onPressed: () => scanBarcodeNormal(),
-              child: Image.asset(
-                'assets/images/barcode.png',
-                width: 24,
-                height: 24,
-              ),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => MyPage()),
-                );
-              },
-              child: const Icon(Icons.person_2_outlined),
-            )
+        body: pages[_selectedIndex],
+        bottomNavigationBar: BottomNavigationBar(
+          // type: BottomNavigationBarType.fixed,
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+                icon: Icon(Icons.home_outlined), label: 'Home'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.qr_code_scanner_outlined), label: ''),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.person_2_outlined), label: 'Mypage'),
           ],
-        ),
-      ),
-    );
+          currentIndex: _selectedIndex,
+          onTap: _onItemTapped,
+        ));
   }
 }
