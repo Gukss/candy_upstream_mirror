@@ -28,7 +28,7 @@ class BeerImageWithName extends StatelessWidget {
           backColor: backColor,
           beerImgSrc: beerImgSrc,
         ),
-        const Margin(marginType: 'height', size: 8),
+        const Margin(marginType: MarginType.height, size: 8),
         Text(
           beerName['korean']!,
           style: TextStyle(

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
+enum MarginType { height, width }
+
 class Margin extends StatelessWidget {
-  final String marginType;
+  final MarginType marginType;
   final double size;
 
   const Margin({
@@ -13,8 +15,8 @@ class Margin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: marginType == 'width' ? size : null,
-      height: marginType == 'height' ? size : null,
+      width: marginType == MarginType.width ? size : null,
+      height: marginType == MarginType.height ? size : null,
     );
   }
 }
