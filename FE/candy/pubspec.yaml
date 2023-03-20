@@ -31,6 +31,9 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # Splash
+  flutter_native_splash: ^2.2.19
+
   # 카카오 로그인
   kakao_flutter_sdk_user: ^1.4.2
 
@@ -71,6 +74,7 @@ flutter:
     - assets/images/kakao/
     - assets/images/barcode.png
     - assets/images/beers/
+    - assets/images/logo/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
