@@ -29,7 +29,7 @@ class SlideBar extends StatelessWidget {
             ),
           ),
         ),
-        const Margin(marginType: 'width', size: 16),
+        const Margin(marginType: MarginType.width, size: 16),
         SliderTheme(
           data: SliderThemeData(
             overlayShape: SliderComponentShape.noThumb,

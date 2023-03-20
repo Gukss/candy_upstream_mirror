@@ -49,7 +49,7 @@ class BeerInfo extends StatelessWidget {
             color: Colors.black.withOpacity(0.5),
           ),
         ),
-        const Margin(marginType: 'height', size: 16),
+        const Margin(marginType: MarginType.height, size: 16),
         Row(
           children: [
             SizedBox(
@@ -60,7 +60,7 @@ class BeerInfo extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            const Margin(marginType: 'width', size: 16),
+            const Margin(marginType: MarginType.width, size: 16),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -72,7 +72,7 @@ class BeerInfo extends StatelessWidget {
                         fontSize: 16,
                       ),
                     ),
-                    const Margin(marginType: 'width', size: 16),
+                    const Margin(marginType: MarginType.width, size: 16),
                     Text(
                       beerType,
                       style: const TextStyle(
@@ -81,7 +81,7 @@ class BeerInfo extends StatelessWidget {
                     ),
                   ],
                 ),
-                const Margin(marginType: 'height', size: 24),
+                const Margin(marginType: MarginType.height, size: 24),
                 Row(
                   children: [
                     const Text(
@@ -90,33 +90,33 @@ class BeerInfo extends StatelessWidget {
                         fontSize: 16,
                       ),
                     ),
-                    const Margin(marginType: 'width', size: 16),
+                    const Margin(marginType: MarginType.width, size: 16),
                     Text(
                       country,
                       style: const TextStyle(
                         fontSize: 16,
                       ),
                     ),
-                    const Margin(marginType: 'width', size: 16),
+                    const Margin(marginType: MarginType.width, size: 16),
                     Image.network(
                       beerImgSrc,
                       width: 20,
                     ),
                   ],
                 ),
-                const Margin(marginType: 'height', size: 24),
+                const Margin(marginType: MarginType.height, size: 24),
                 Row(
                   children: [
                     const Text('브랜드'),
-                    const Margin(marginType: 'width', size: 16),
+                    const Margin(marginType: MarginType.width, size: 16),
                     Text(brandName),
                   ],
                 ),
-                const Margin(marginType: 'height', size: 24),
+                const Margin(marginType: MarginType.height, size: 24),
                 Row(
                   children: [
                     const Text('도수'),
-                    const Margin(marginType: 'width', size: 16),
+                    const Margin(marginType: MarginType.width, size: 16),
                     Text('$alcoholLevel%'),
                   ],
                 ),

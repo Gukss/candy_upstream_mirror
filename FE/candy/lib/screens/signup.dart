@@ -111,14 +111,14 @@ class _SignupState extends State<Signup> {
                     fontSize: 24,
                   ),
                 ),
-                const Margin(marginType: 'height', size: 24),
+                const Margin(marginType: MarginType.height, size: 24),
                 Nickname(nicknameController: nicknameController),
-                const Margin(marginType: 'height', size: 16),
+                const Margin(marginType: MarginType.height, size: 16),
                 Gender(
                   gender: gender,
                   changeGender: onGenderButtonPressed,
                 ),
-                const Margin(marginType: 'height', size: 16),
+                const Margin(marginType: MarginType.height, size: 16),
                 BirthDate(
                   yearList: yearList,
                   monthList: monthList,

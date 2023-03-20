@@ -74,7 +74,7 @@ class _BeerDetailState extends State<BeerDetail> {
                     alcoholLevel: 4.2,
                     beerType: '밀맥주',
                   ),
-                  const Margin(marginType: 'height', size: 16),
+                  const Margin(marginType: MarginType.height, size: 16),
                   Container(
                     child: Column(
                       children: [
@@ -83,13 +83,13 @@ class _BeerDetailState extends State<BeerDetail> {
                           sliderValue: 0,
                           readOnly: true,
                         ),
-                        const Margin(marginType: 'height', size: 16),
+                        const Margin(marginType: MarginType.height, size: 16),
                         SlideBar(
                           sliderCategory: '바디감',
                           sliderValue: bodyNum,
                           readOnly: true,
                         ),
-                        const Margin(marginType: 'height', size: 16),
+                        const Margin(marginType: MarginType.height, size: 16),
                         SlideBar(
                           sliderCategory: '맛',
                           sliderValue: tasteNum,
