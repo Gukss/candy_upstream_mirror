@@ -7,14 +7,16 @@ class Statistics extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        StatisticsText(),
-        SizedBox(
-          height: 16,
-        ),
-        StatisticsChart(),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: const [
+          StatisticsText(),
+          SizedBox(
+            height: 16,
+          ),
+          StatisticsChart(),
+        ],
+      ),
     );
   }
 }
