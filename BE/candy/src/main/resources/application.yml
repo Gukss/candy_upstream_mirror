@@ -7,12 +7,11 @@ server:
     context-path: /api
 
 spring:
-  # TODO : PUSH ?? ?? ?? ?? ??? ?.
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
 #    url: jdbc:mysql://${DB_DOMAIN}:${DB_PORT}/candy?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
 #    username: ${DB_USERNAME}
 #    password: ${DB_PASSWORD}
-    url: ENC(D5fHoeMvlgUh99Os/Rpj3oovL5UCleQMD25+lF9awkA2MeGczWY/2mTj2HFmnRntm//jVjKEOBbygpZkSDXTzQgF185aYEgkp+th4dS8TN0LzowFfZv6IvncWDaPwny2Ux/MSKJPkPA=)
-    username: ENC(7sbQC5RGkILlN4b876Zadg==)
-    password: ENC(DrgvKi9+4A0U55oqHjFhF0/zIMq+ORhG)
+    url: ENC(I3WC6f7XbissxnqTpHqW/U84u9kB/8Gofpedx34pZhbYUegQSUhzFwVfV3UvtFntZ+5tcWBhzQGfR/iTAb9Trg+OqunykgGyFZtAmlpVQ915PtK8RznH56xyhdKInCj5zpotQiYOzkA=)
+    username: ENC(I8pMeRhANPbTigt8FCD40g==)
+    password: ENC(6q5oI1uTTpEEl/8Xx7O6rOyHX1sZmp77)
