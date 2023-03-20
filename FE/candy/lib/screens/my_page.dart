@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:candy/widgets/my_page/calendar.dart';
 import 'package:candy/screens/splash.dart';
+import 'package:candy/widgets/my_page/calendar.dart';
+import 'package:candy/widgets/my_page/statistics/statistics_list.dart';
 
 class MyPage extends StatefulWidget {
   const MyPage({super.key});
@@ -15,7 +16,7 @@ class _MyPageState extends State<MyPage> {
   static List<Widget> pages = <Widget>[
     Calendar2(),
     Splash(),
-    Splash(),
+    Statistics(),
   ];
 
   void onTextButtonTap(index) {
@@ -98,9 +99,6 @@ class _MyPageState extends State<MyPage> {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 16,
-            ),
             Expanded(
               child: Container(
                 child: Center(child: pages[_page_index]),
@@ -109,7 +107,6 @@ class _MyPageState extends State<MyPage> {
           ]),
         ),
       ),
-      // bottomNavigationBar: const BottomNavigation(),
     );
   }
 }
