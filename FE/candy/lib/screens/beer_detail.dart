@@ -1,3 +1,4 @@
+import 'package:candy/widgets/app_bar/beer_detail_app_bar.dart';
 import 'package:candy/widgets/beer/beer_info.dart';
 import 'package:candy/widgets/review/slide_bar.dart';
 import 'package:candy/widgets/ui/margin.dart';
@@ -26,34 +27,7 @@ class _BeerDetailState extends State<BeerDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const Icon(
-            Icons.arrow_back_ios_new_rounded,
-            size: 24,
-          ),
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.edit,
-              size: 24,
-            ),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.favorite_rounded,
-              size: 24,
-              color: Colors.red,
-            ),
-          ),
-        ],
-      ),
+      appBar: const BeerDetailAppBar(),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16),
