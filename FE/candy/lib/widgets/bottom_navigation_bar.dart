@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:candy/screens/splash.dart';
 import 'package:candy/screens/my_page.dart';
+import 'package:candy/widgets/barcode_scan.dart';
 
 class BottomNavigation extends StatefulWidget {
   const BottomNavigation({super.key});
@@ -18,8 +19,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
 
   List<Widget> pages = <Widget>[
     Splash(),
-    // <Widget>[scanBarcodeNormal()],
-    MyPage(),
+    BarcodeScan(),
     MyPage(),
   ];
 
@@ -29,27 +29,12 @@ class _BottomNavigationState extends State<BottomNavigation> {
     });
   }
 
-  Future<void> scanBarcodeNormal() async {
-    String barcodeScanRes = '';
-    try {
-      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-          '#ff6666', 'back', true, ScanMode.BARCODE);
-      print(barcodeScanRes);
-    } on PlatformException {
-      print('Failed to get platform version.');
-    }
-    if (barcodeScanRes.isNotEmpty) return;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('BottomNavigationBar Sample'),
-        ),
         body: pages[_selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
-          // type: BottomNavigationBarType.fixed,
+          selectedItemColor: Color.fromARGB(255, 255, 205, 6),
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
                 icon: Icon(Icons.home_outlined), label: 'Home'),
