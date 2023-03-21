@@ -3,6 +3,9 @@ package com.project.candy.calendar.repository;
 import com.project.candy.calendar.entity.Calendar;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+import java.util.Optional;
+
 /**
  * packageName    : com.project.candy.calendar.repository
  * fileName       : CalendarRepository
@@ -11,4 +14,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface CalendarRepository extends JpaRepository<Calendar, Long> {
 
+  Optional<List<Calendar>> findByUserId(long userId);
 }
