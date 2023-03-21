@@ -4,7 +4,6 @@ package com.project.candy.user.dto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
 
 /**
@@ -19,7 +18,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class CreateUserRequest {
     String email;
-    String nickName;
+    String nickname;
 
     String gender;
 

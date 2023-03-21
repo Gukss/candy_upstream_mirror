@@ -1,6 +1,7 @@
 package com.project.candy.user.service;
 
 import com.project.candy.user.dto.CreateUserRequest;
+import com.project.candy.user.entity.User;
 
 /**
  * packageName    : com.project.candy.user.service
@@ -11,6 +12,21 @@ import com.project.candy.user.dto.CreateUserRequest;
 
 
 public interface UserService {
-    public String print_home();
-    public void CreateUser(CreateUserRequest createUserRequest);
+
+    /**
+     * desc : sign-up , 회원가입 시  프론트로부터 DTO룰 받아
+     *  User 테이블에 값을 저장하는 메소드.
+     *  email 중복을 확인하여 , 중복된 값이면 false
+     *  아니면 true를 리턴한다.
+     * @param createUserRequest
+     * @return
+     */
+    public Boolean CreateUser(CreateUserRequest createUserRequest);
+
+  /**
+   * desc : 다른 클래스에서 Email 로 User 객체를 리턴해주는 메소드
+   * @param Email
+   * @return
+   */
+  public User findUserByEmail(String Email);
 }
