@@ -2,6 +2,10 @@ package com.project.candy.user.repository;
 
 import com.project.candy.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.http.server.reactive.ServerHttpRequest;
+
+import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -13,4 +17,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 
 public interface UserRepository extends JpaRepository<User,Long> {
+    Optional<User>  findByEmail(String email);
+    List<User> findAllByEmail(String email);
 }

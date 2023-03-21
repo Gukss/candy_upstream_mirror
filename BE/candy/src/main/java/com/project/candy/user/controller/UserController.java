@@ -7,10 +7,7 @@ import com.project.candy.user.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 /**
@@ -28,12 +25,16 @@ public class UserController {
 
     private final UserService userService;
 
-
-    @PostMapping("/sign-up")
+    /**
+     *  프론트로부터 sign-up , 회원가입 요청을 처리하는 메소드
+     * @param createUserRequest
+     * @return
+     */
+    @PostMapping("sign-up")
     public ResponseEntity<?> createUser (@RequestBody CreateUserRequest createUserRequest){
-
-        userService.CreateUser(createUserRequest);
-
-        return new ResponseEntity<>(null, HttpStatus.OK);
+        boolean return_value = userService.CreateUser(createUserRequest);
+        return new ResponseEntity<Boolean>(return_value, HttpStatus.OK);
     }
+
+
 }

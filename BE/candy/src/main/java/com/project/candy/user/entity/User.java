@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 /**
@@ -37,17 +38,17 @@ public class User extends BaseTimeEntity {
     @NotBlank
     private String gender;
 
-    @NotBlank
+    @NotNull
     private LocalDate birth;
 
     @Column(length = 511)
     @NotBlank
     private String profileImage;
 
-    @NotBlank
+    @NotNull
     private Role role;
 
     @Embedded
-    @NotBlank
+    @NotNull
     private BaseEntity baseEntity;
 }
