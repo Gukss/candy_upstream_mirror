@@ -101,7 +101,7 @@ class _MyPageState extends State<MyPage> {
             ),
             Expanded(
               child: Container(
-                child: Center(child: pages[_page_index]),
+                child: pages[_page_index],
               ),
             ),
           ]),
