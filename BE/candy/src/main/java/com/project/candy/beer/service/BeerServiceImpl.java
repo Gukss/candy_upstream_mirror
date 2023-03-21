@@ -6,7 +6,6 @@ import com.project.candy.beer.repository.BeerRepository;
 import com.project.candy.calendar.entity.Calendar;
 import com.project.candy.calendar.repository.CalendarRepository;
 import com.project.candy.country.dto.ReadCountryResponse;
-import com.project.candy.country.entity.Country;
 import com.project.candy.country.service.CountryService;
 import com.project.candy.exception.exceptionMessage.NotFoundExceptionMessage;
 import com.project.candy.like.entity.Like;
