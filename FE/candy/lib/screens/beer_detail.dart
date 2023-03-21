@@ -40,10 +40,10 @@ class _BeerDetailState extends State<BeerDetail> {
                   const BeerInfo(
                     beerName: {'korean': '카스 프레시', 'english': 'Cass Fresh'},
                     beerImgSrc:
-                        'https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Flag_of_South_Korea.svg/255px-Flag_of_South_Korea.svg.png',
+                        'https://image.shutterstock.com/image-photo/image-260nw-2108189540.jpg',
                     country: '대한민국',
                     countryImgSrc:
-                        'https://image.shutterstock.com/image-photo/image-260nw-2108189540.jpg',
+                        'https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Flag_of_South_Korea.svg/255px-Flag_of_South_Korea.svg.png',
                     brandName: '하이트진로',
                     alcoholLevel: 4.2,
                     beerType: '밀맥주',

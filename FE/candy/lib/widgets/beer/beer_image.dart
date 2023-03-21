@@ -21,7 +21,7 @@ class BeerImage extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         color: backColor,
       ),
-      child: Image.asset(
+      child: Image.network(
         beerImgSrc,
       ),
     );
