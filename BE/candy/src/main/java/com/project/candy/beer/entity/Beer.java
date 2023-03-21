@@ -1,5 +1,6 @@
 package com.project.candy.beer.entity;
 
+import com.project.candy.country.entity.Country;
 import com.project.candy.util.BaseEntity;
 import com.project.candy.util.BaseTimeEntity;
 import lombok.*;
@@ -54,6 +55,10 @@ public class Beer extends BaseTimeEntity {
 
     @NotBlank
     private double overall;
+
+    @JoinColumn(name = "country_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Country country;
 
     @Embedded
     @NotBlank
