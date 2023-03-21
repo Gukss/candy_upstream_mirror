@@ -1,3 +1,4 @@
+import 'package:candy/widgets/beer/beer_info_text.dart';
 import 'package:candy/widgets/ui/margin.dart';
 import 'package:flutter/material.dart';
 
@@ -29,7 +30,7 @@ class BeerInfo extends StatelessWidget {
         Row(
           children: [
             Text(
-              '${beerName['korean']}',
+              beerName['korean']!,
               style: const TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.w700,
@@ -43,7 +44,7 @@ class BeerInfo extends StatelessWidget {
           ],
         ),
         Text(
-          '${beerName['english']}',
+          beerName['english']!,
           style: TextStyle(
             fontSize: 14,
             color: Colors.black.withOpacity(0.5),
@@ -64,61 +65,25 @@ class BeerInfo extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    const Text(
-                      '종류',
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
-                    ),
-                    const Margin(marginType: MarginType.width, size: 16),
-                    Text(
-                      beerType,
-                      style: const TextStyle(
-                        fontSize: 16,
-                      ),
-                    ),
-                  ],
+                BeerInfoText(
+                  title: '종류',
+                  value: beerType,
                 ),
                 const Margin(marginType: MarginType.height, size: 24),
-                Row(
-                  children: [
-                    const Text(
-                      '원산지',
-                      style: TextStyle(
-                        fontSize: 16,
-                      ),
-                    ),
-                    const Margin(marginType: MarginType.width, size: 16),
-                    Text(
-                      country,
-                      style: const TextStyle(
-                        fontSize: 16,
-                      ),
-                    ),
-                    const Margin(marginType: MarginType.width, size: 16),
-                    Image.network(
-                      beerImgSrc,
-                      width: 20,
-                    ),
-                  ],
+                BeerInfoText(
+                  title: '원산지',
+                  value: country,
+                  imageSrc: beerImgSrc,
                 ),
                 const Margin(marginType: MarginType.height, size: 24),
-                Row(
-                  children: [
-                    const Text('브랜드'),
-                    const Margin(marginType: MarginType.width, size: 16),
-                    Text(brandName),
-                  ],
+                BeerInfoText(
+                  title: '브랜드',
+                  value: brandName,
                 ),
                 const Margin(marginType: MarginType.height, size: 24),
-                Row(
-                  children: [
-                    const Text('도수'),
-                    const Margin(marginType: MarginType.width, size: 16),
-                    Text('$alcoholLevel%'),
-                  ],
+                BeerInfoText(
+                  title: '도수',
+                  value: '$alcoholLevel%',
                 ),
               ],
             ),
