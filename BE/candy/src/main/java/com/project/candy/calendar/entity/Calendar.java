@@ -24,6 +24,7 @@ public class Calendar extends BaseTimeEntity {
 
     @Id
     @Column(name = "calendar_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @ManyToOne

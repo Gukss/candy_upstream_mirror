@@ -9,6 +9,4 @@ import com.project.candy.beer.entity.Beer;
  * description    : BeerService
  */
 public interface BeerService {
-  public Beer findById(Long id);
-  public Beer findByBeerKrNameOrBeerEnNameOrBarcode(String beerKrName, String beerEnName, String barcode);
 }
