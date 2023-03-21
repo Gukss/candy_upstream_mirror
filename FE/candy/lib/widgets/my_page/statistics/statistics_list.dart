@@ -20,6 +20,7 @@ class Statistics extends StatelessWidget {
     final PageController pageController = PageController(initialPage: 0);
 
     return SingleChildScrollView(
+      padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
       child: Column(children: [
         const StatisticsText(),
         const SizedBox(
