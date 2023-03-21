@@ -57,7 +57,7 @@ class BeerInfo extends StatelessWidget {
               width: 104,
               height: 240,
               child: Image.network(
-                countryImgSrc,
+                beerImgSrc,
                 fit: BoxFit.cover,
               ),
             ),
@@ -73,7 +73,7 @@ class BeerInfo extends StatelessWidget {
                 BeerInfoText(
                   title: '원산지',
                   value: country,
-                  imageSrc: beerImgSrc,
+                  imageSrc: countryImgSrc,
                 ),
                 const Margin(marginType: MarginType.height, size: 24),
                 BeerInfoText(
