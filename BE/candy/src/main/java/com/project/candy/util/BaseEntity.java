@@ -1,8 +1,8 @@
 package com.project.candy.util;
 
-import com.sun.istack.NotNull;
 import lombok.*;
 import javax.persistence.Embeddable;
+import javax.validation.constraints.NotBlank;
 
 /**
  * packageName    : com.project.candy.util
@@ -18,14 +18,14 @@ import javax.persistence.Embeddable;
 public class BaseEntity {
 
     //생성자
-    @NotNull
+    @NotBlank
     private String constructor;
 
     //수정자
-    @NotNull
+    @NotBlank
     private String updater;
     
     // 삭제 여부
-    @NotNull
+    @NotBlank
     private boolean isDelete;
 }
