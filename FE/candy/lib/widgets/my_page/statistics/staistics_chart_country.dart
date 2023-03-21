@@ -3,16 +3,14 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
 
-enum LegendShape { circle, rectangle }
-
-class StatisticsChart extends StatefulWidget {
-  const StatisticsChart({Key? key}) : super(key: key);
+class StatisticsChartCountry extends StatefulWidget {
+  const StatisticsChartCountry({Key? key}) : super(key: key);
 
   @override
-  StatisticsChartState createState() => StatisticsChartState();
+  StatisticsChartCountryState createState() => StatisticsChartCountryState();
 }
 
-class StatisticsChartState extends State<StatisticsChart> {
+class StatisticsChartCountryState extends State<StatisticsChartCountry> {
   final dataMap = <String, double>{
     "대한민국": 5,
     "일본": 3,
@@ -40,11 +38,26 @@ class StatisticsChartState extends State<StatisticsChart> {
             showChartValues: true,
             showChartValuesInPercentage: true,
             showChartValueBackground: false,
-            // chartValueBackgroundColor: Color.fromARGB(255, 182, 182, 182),
             decimalPlaces: 1),
         legendOptions: const LegendOptions(
             showLegendsInRow: true, legendPosition: LegendPosition.bottom));
 
-    return Container(child: chart);
+    return Container(
+      child: Column(children: [
+        Container(
+            margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
+            width: double.infinity,
+            child: const Text(
+              '나라별 마신 맥주',
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            )),
+        const SizedBox(height: 16),
+        chart,
+      ]),
+    );
   }
 }
