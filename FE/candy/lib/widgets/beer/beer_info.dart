@@ -7,7 +7,6 @@ class BeerInfo extends StatelessWidget {
   final String beerImgSrc;
   final String beerType;
   final String country;
-  final String countryImgSrc;
   final String brandName;
   final double alcoholLevel;
 
@@ -17,7 +16,6 @@ class BeerInfo extends StatelessWidget {
     required this.beerImgSrc,
     required this.beerType,
     required this.country,
-    required this.countryImgSrc,
     required this.brandName,
     required this.alcoholLevel,
   });
@@ -73,7 +71,6 @@ class BeerInfo extends StatelessWidget {
                 BeerInfoText(
                   title: '원산지',
                   value: country,
-                  imageSrc: countryImgSrc,
                 ),
                 const Margin(marginType: MarginType.height, size: 24),
                 BeerInfoText(
