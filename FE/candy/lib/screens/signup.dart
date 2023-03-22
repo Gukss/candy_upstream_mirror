@@ -1,3 +1,4 @@
+import 'package:candy/screens/main_page.dart';
 import 'package:flutter/material.dart';
 
 import 'package:candy/widgets/signup/birth_date.dart';
@@ -21,10 +22,46 @@ class _SignupState extends State<Signup> {
   String gender = '';
 
   // 등록 버튼 누르기
-  void onRegisterButtonPressed() {
-    print(nicknameController.text);
-    print(gender);
-    print(birthDate);
+  void onRegisterButtonPressed(BuildContext context) {
+    String snackBarContent = '';
+    if (nicknameController.text.length < 2 ||
+        nicknameController.text.length > 20) {
+      snackBarContent = '닉네임 길이는 2~20까지 가능합니다.';
+    } else if (gender == '') {
+      snackBarContent = '성별을 선택해주세요.';
+    } else if (DateTime.now().year - birthDate['year']! < 19) {
+      snackBarContent = '성인이 아니면 사용할 수 없습니다.';
+    }
+    if (snackBarContent != '') {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          action: SnackBarAction(
+            label: 'Action',
+            onPressed: () {
+              // Code to execute.
+            },
+          ),
+          content: Text(snackBarContent),
+          duration: const Duration(milliseconds: 1500),
+          backgroundColor: Colors.red,
+          padding: const EdgeInsets.symmetric(
+            horizontal: 8.0, // Inner padding for SnackBar content.
+          ),
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+        ),
+      );
+    } else {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) {
+            return const MainPage();
+          },
+        ),
+      );
+    }
   }
 
   // 성별 선택
@@ -78,7 +115,9 @@ class _SignupState extends State<Signup> {
         centerTitle: true,
         actions: [
           TextButton(
-            onPressed: onRegisterButtonPressed,
+            onPressed: () {
+              onRegisterButtonPressed(context);
+            },
             child: const Text(
               '등록',
               style: TextStyle(
