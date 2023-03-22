@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.*;
  * date           : 2023-03-20
  * description    : User 엔티티와 관련된 api 요청을 처리하는 컨트롤러
  */
-
-
 @RestController
 @RequestMapping("/")
 @RequiredArgsConstructor
