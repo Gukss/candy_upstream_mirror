@@ -53,6 +53,7 @@ public class UserServiceImpl implements UserService {
                         .isDelete(false)
                         .updater(createUserRequest.getEmail())
                         .build())
+
                 .build();
         log.info(user.getEmail() );
         log.info(user.getBirth().toString() );
