@@ -32,11 +32,6 @@ public class Country extends BaseTimeEntity {
     @NotBlank
     private String countryEnName;;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "contry_image_id")
-    @NotBlank
-    private CountryImage countryImage;
-
     @Embedded
     @NotBlank
     private BaseEntity baseEntity;
