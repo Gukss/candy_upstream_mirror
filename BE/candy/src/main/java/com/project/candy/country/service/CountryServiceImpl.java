@@ -2,7 +2,6 @@ package com.project.candy.country.service;
 
 import com.project.candy.country.dto.ReadCountryResponse;
 import com.project.candy.country.entity.Country;
-import com.project.candy.country.repository.CountryImageRepository;
 import com.project.candy.country.repository.CountryRepository;
 import com.project.candy.exception.exceptionMessage.NotFoundExceptionMessage;
 import lombok.RequiredArgsConstructor;

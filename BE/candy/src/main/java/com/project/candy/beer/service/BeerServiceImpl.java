@@ -12,6 +12,7 @@ import com.project.candy.like.entity.Like;
 import com.project.candy.like.repository.LikeRepository;
 import com.project.candy.user.entity.User;
 import com.project.candy.user.repository.UserRepository;
+import com.project.candy.util.BaseEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -58,7 +59,7 @@ public class BeerServiceImpl implements BeerService {
     if (calendarList != null) {
       isDrink = true;
     }
-    Like like = likeRepository.readLikeSelectedByUser(beerId, user.getId()).get();
+    Like like = likeRepository.findByUserAndBeer(user, beer).get();
     if (like != null) {
       isLike = true;
     }
@@ -67,19 +68,6 @@ public class BeerServiceImpl implements BeerService {
     readBeerDetailResponse.setDrinkAndLike(isDrink, isLike);
 
     return readBeerDetailResponse;
-  }
-
-  @Override
-  public void createLikeBeer(Long beerId, String userEmail) {
-
-    User user = userRepository.findByEmail(userEmail).orElseThrow(() -> new NotFoundExceptionMessage());
-    Beer beer = beerRepository.findById(beerId).orElseThrow(() -> new NotFoundExceptionMessage());
-
-  }
-
-  @Override
-  public void deleteLikeBeer(Long beerId, String userEmail) {
-
   }
 
   @Override

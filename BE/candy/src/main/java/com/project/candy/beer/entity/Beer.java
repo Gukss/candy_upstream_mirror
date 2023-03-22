@@ -56,6 +56,10 @@ public class Beer extends BaseTimeEntity {
     @NotBlank
     private double overall;
 
+    @NotBlank
+    @Column(length = 511)
+    private String beerImage;
+
     @JoinColumn(name = "country_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Country country;
