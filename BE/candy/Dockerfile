@@ -10,6 +10,6 @@ RUN ./gradlew bootJar
 FROM openjdk:11
 COPY --from=builder build/libs/candy-0.0.1-SNAPSHOT.jar candy.jar
 
-EXPOSE 8080g
+EXPOSE 8080
 
 ENTRYPOINT ["sh", "-c", "java ${JAVA_OPTS} -jar candy.jar"]
