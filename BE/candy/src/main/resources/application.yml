@@ -20,7 +20,7 @@ spring:
     open-in-view: false
     show-sql: true
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     properties:
       hibernate:
         # sql 변수 생성 시 자동으로 ``으로 감싸준다.

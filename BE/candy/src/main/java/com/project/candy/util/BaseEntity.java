@@ -28,4 +28,8 @@ public class BaseEntity {
     // 삭제 여부
     @NotBlank
     private boolean isDelete;
+
+    public void delete() {
+        this.isDelete = true;
+    }
 }
