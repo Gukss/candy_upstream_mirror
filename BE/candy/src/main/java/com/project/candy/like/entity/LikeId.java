@@ -36,4 +36,12 @@ public class LikeId implements Serializable {
         result = 31 * result + (int) (beerId ^ (beerId >>> 32));
         return result;
     }
+
+    public LikeId() {
+    }
+
+    public LikeId(long userId, long beerId) {
+        this.userId = userId;
+        this.beerId = beerId;
+    }
 }

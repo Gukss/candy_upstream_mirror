@@ -5,9 +5,8 @@ import com.project.candy.user.entity.User;
 import com.project.candy.util.BaseEntity;
 import com.project.candy.util.BaseTimeEntity;
 import lombok.*;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * packageName    : com.project.candy.like.entity
@@ -26,19 +25,19 @@ public class Like extends BaseTimeEntity {
     @EmbeddedId
     private LikeId likeId;
 
-    @MapsId("userId")
+    @MapsId(value = "userId")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    @NotBlank
+    @NotNull
     private User user;
 
-    @MapsId("beerId")
+    @MapsId(value = "beerId")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "beer_id")
-    @NotBlank
+    @NotNull
     private Beer beer;
 
     @Embedded
-    @NotBlank
+    @NotNull
     private BaseEntity baseEntity;
 }

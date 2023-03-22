@@ -1,6 +1,7 @@
 package com.project.candy.util;
 
 import lombok.*;
+
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotBlank;
 
@@ -17,19 +18,23 @@ import javax.validation.constraints.NotBlank;
 @Builder
 public class BaseEntity {
 
-    //생성자
-    @NotBlank
-    private String constructor;
+  //생성자
+  @NotBlank
+  private String constructor;
 
-    //수정자
-    @NotBlank
-    private String updater;
-    
-    // 삭제 여부
-    @NotBlank
-    private boolean isDelete;
+  //수정자
+  @NotBlank
+  private String updater;
 
-    public void delete() {
-        this.isDelete = true;
-    }
+  // 삭제 여부
+  @NotBlank
+  private boolean isDelete;
+
+  public void delete() {
+    this.isDelete = true;
+  }
+
+  public void create() {
+    this.isDelete = false;
+  }
 }

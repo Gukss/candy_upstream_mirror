@@ -16,7 +16,7 @@ import javax.validation.constraints.NotBlank;
  * description    :
  */
 @Entity
-@Table(name = "bear_history")
+@Table(name = "beer_history")
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
