@@ -70,12 +70,15 @@ public class BeerServiceImpl implements BeerService {
   }
 
   @Override
-  public void createLikeBeer(String userEmail) {
+  public void createLikeBeer(Long beerId, String userEmail) {
+
+    User user = userRepository.findByEmail(userEmail).orElseThrow(() -> new NotFoundExceptionMessage());
+    Beer beer = beerRepository.findById(beerId).orElseThrow(() -> new NotFoundExceptionMessage());
 
   }
 
   @Override
-  public void deleteLikeBeer(String userEmail) {
+  public void deleteLikeBeer(Long beerId, String userEmail) {
 
   }
 

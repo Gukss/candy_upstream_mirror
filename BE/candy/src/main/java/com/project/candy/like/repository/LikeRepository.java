@@ -2,6 +2,7 @@ package com.project.candy.like.repository;
 
 import com.project.candy.like.entity.Like;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.Optional;
 
@@ -13,5 +14,6 @@ import java.util.Optional;
  */
 public interface LikeRepository extends JpaRepository<Like, Long> {
 
-  Optional<Like> readLikeSelectedByUser(Long beerId, long id);
+  @Query(nativeQuery = true, value = "select * from like where like.beer_id = :beerId and like.user_id = :userId")
+  Optional<Like> readLikeSelectedByUser(Long beerId, long userId);
 }
