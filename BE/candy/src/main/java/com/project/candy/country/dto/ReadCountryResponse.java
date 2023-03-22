@@ -28,7 +28,6 @@ public class ReadCountryResponse {
     return ReadCountryResponse.builder()
             .countryKrName(country.getCountryKrName())
             .countryEnName(country.getCountryEnName())
-            .countryImage(country.getCountryImage().getCountryImageUrl())
             .build();
   }
 }
