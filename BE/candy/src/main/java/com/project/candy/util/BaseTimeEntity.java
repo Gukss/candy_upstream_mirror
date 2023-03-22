@@ -1,6 +1,5 @@
 package com.project.candy.util;
 
-import com.sun.istack.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,6 +9,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 /**
@@ -30,6 +31,6 @@ public abstract class BaseTimeEntity {
     private LocalDateTime createdAt; //생성일자
 
     @LastModifiedDate
-    @NotNull
+    @NotNull // notBlank 사용시 에러남.
     private LocalDateTime updatedAt; //수정일자
 }
