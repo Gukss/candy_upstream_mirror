@@ -80,6 +80,7 @@ flutter:
     - assets/images/barcode.png
     - assets/images/beers/
     - assets/images/logo/
+    - assets/images/countries/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

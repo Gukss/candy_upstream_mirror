@@ -4,13 +4,11 @@ import 'package:flutter/material.dart';
 class BeerInfoText extends StatelessWidget {
   final String title;
   final String value;
-  final String? imageSrc;
 
   const BeerInfoText({
     super.key,
     required this.title,
     required this.value,
-    this.imageSrc,
   });
 
   @override
@@ -20,11 +18,11 @@ class BeerInfoText extends StatelessWidget {
         Text(title),
         const Margin(marginType: MarginType.width, size: 16),
         Text(value),
-        if (imageSrc != null)
+        if (title == '원산지')
           const Margin(marginType: MarginType.width, size: 16),
-        if (imageSrc != null)
-          Image.network(
-            imageSrc!,
+        if (title == '원산지')
+          Image.asset(
+            'assets/images/countries/$value.${value == '한국' ? 'jpg' : 'gif'}',
             width: 20,
           ),
       ],
