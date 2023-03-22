@@ -36,7 +36,7 @@ public class Like extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "beer_id")
     @NotBlank
-    private Beer beerId;
+    private Beer beer;
 
     @Embedded
     @NotBlank

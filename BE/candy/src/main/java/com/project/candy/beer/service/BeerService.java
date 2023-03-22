@@ -25,15 +25,17 @@ public interface BeerService {
    * desc : 맥주 좋아요 추가
    *
    * @param userEmail
+   * @param beerId
    */
-  void createLikeBeer(String userEmail);
+  void createLikeBeer(Long beerId, String userEmail);
 
   /**
    * desc : 맥주 좋아요 취소
    *
    * @param userEmail
+   * @param beerId
    */
-  void deleteLikeBeer(String userEmail);
+  void deleteLikeBeer(Long beerId, String userEmail);
 
   /**
    * desc : 맥주 리스트 조회 (도감용)
