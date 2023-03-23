@@ -8,6 +8,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * packageName    : com.project.candy.beer_history.entity
@@ -31,19 +32,28 @@ public class BeerHistory extends BaseTimeEntity {
     @MapsId("userId")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    @NotBlank
+    @NotNull
     private User user;
 
     @MapsId("beerId")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "beer_id")
-    @NotBlank
+    @NotNull
     private Beer beer;
 
-    @NotBlank
+    @NotNull
     private int count; // 맥주 마신 횟수
 
     @Embedded
-    @NotBlank
+    @NotNull
     private BaseEntity baseEntity;
+
+    /**
+     *  desc : 이미 맥주가 있을때
+     *  count 값을 증가시키는 메소드
+     */
+    public void updateCount(){
+        this.count+=1;
+    }
+
 }

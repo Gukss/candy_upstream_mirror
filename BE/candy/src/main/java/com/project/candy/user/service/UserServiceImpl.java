@@ -1,21 +1,16 @@
 package com.project.candy.user.service;
 
-import com.project.candy.exception.exceptionMessage.DuplicatedExceptionsMessage;
 import com.project.candy.exception.exceptionMessage.NotFoundExceptionMessage;
 import com.project.candy.user.dto.CreateUserRequest;
-import com.project.candy.user.dto.ReadUserByEmail;
+import com.project.candy.user.dto.ReadUserByEmailResponse;
 import com.project.candy.user.entity.Role;
 import com.project.candy.user.entity.User;
 import com.project.candy.user.repository.UserRepository;
 import com.project.candy.util.BaseEntity;
-import com.project.candy.exception.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Arrays;
 
 /**
  * packageName    : com.project.candy.user.service
@@ -68,8 +63,8 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public ReadUserByEmail readUserByEmail(String userEmail) {
-    return ReadUserByEmail
+  public ReadUserByEmailResponse readUserByEmail(String userEmail) {
+    return ReadUserByEmailResponse
             .EntityToDto(
                     userRepository.findByEmail(userEmail)
                             .orElseThrow(

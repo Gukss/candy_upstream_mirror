@@ -13,27 +13,35 @@ import java.io.Serializable;
 @Embeddable
 public class BeerHistoryId implements Serializable {
 
-    @Column(name = "user_id")
-    private long userId;
+  @Column(name = "user_id")
+  private long userId;
 
-    @Column(name = "beer_id")
-    private long beerId;
+  @Column(name = "beer_id")
+  private long beerId;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
 
-        BeerHistoryId that = (BeerHistoryId) o;
+    BeerHistoryId that = (BeerHistoryId) o;
 
-        if (userId != that.userId) return false;
-        return beerId == that.beerId;
-    }
+    if (userId != that.userId) return false;
+    return beerId == that.beerId;
+  }
 
-    @Override
-    public int hashCode() {
-        int result = (int) (userId ^ (userId >>> 32));
-        result = 31 * result + (int) (beerId ^ (beerId >>> 32));
-        return result;
-    }
+  @Override
+  public int hashCode() {
+    int result = (int) (userId ^ (userId >>> 32));
+    result = 31 * result + (int) (beerId ^ (beerId >>> 32));
+    return result;
+  }
+
+  public BeerHistoryId() {
+  }
+
+  public BeerHistoryId(long userId, long beerId) {
+    this.userId = userId;
+    this.beerId = beerId;
+  }
 }

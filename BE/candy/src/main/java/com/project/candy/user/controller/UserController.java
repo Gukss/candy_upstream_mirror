@@ -1,10 +1,8 @@
 package com.project.candy.user.controller;
 
 import com.project.candy.user.dto.CreateUserRequest;
-import com.project.candy.user.dto.ReadUserByEmail;
-import com.project.candy.user.entity.User;
+import com.project.candy.user.dto.ReadUserByEmailResponse;
 import com.project.candy.user.service.UserService;
-import com.project.candy.user.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,7 +43,7 @@ public class UserController {
    */
   @GetMapping(path = "user", headers = "email")
   public ResponseEntity<?> findUserByEmail(@RequestHeader("email") String userEmail) {
-    return new ResponseEntity<ReadUserByEmail>(userService.readUserByEmail(userEmail), HttpStatus.OK);
+    return new ResponseEntity<ReadUserByEmailResponse>(userService.readUserByEmail(userEmail), HttpStatus.OK);
   }
 
 }
