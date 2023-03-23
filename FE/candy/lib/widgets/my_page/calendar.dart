@@ -30,9 +30,8 @@ class _Calendar2State extends State<Calendar2> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: SafeArea(
-            child: TableCalendar(
+    return SafeArea(
+        child: TableCalendar(
       focusedDay: focusedDay,
       firstDay: DateTime(1901),
       lastDay: DateTime(2101),
@@ -70,7 +69,7 @@ class _Calendar2State extends State<Calendar2> {
         return isSameDay(selectedDay, day);
       },
       eventLoader: _getEventForDay,
-    )));
+    ));
   }
 }
 
