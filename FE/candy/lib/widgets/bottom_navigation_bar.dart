@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:candy/screens/splash.dart';
+import 'package:candy/screens/main_page.dart';
 import 'package:candy/screens/my_page.dart';
 import 'package:candy/widgets/barcode_scan.dart';
 
@@ -16,7 +16,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
   int _selectedIndex = 0;
 
   List<Widget> pages = <Widget>[
-    Splash(),
+    MainPage(),
     BarcodeScan(),
     MyPage(),
   ];
