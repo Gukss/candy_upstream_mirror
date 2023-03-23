@@ -1,6 +1,7 @@
 package com.project.candy.user.controller;
 
 import com.project.candy.user.dto.CreateUserRequest;
+import com.project.candy.user.dto.ReadUserByEmail;
 import com.project.candy.user.entity.User;
 import com.project.candy.user.service.UserService;
 import com.project.candy.user.service.UserServiceImpl;
@@ -28,11 +29,21 @@ public class UserController {
      * @param createUserRequest
      * @return
      */
-    @PostMapping("sign-up")
-    public ResponseEntity<?> createUser (@RequestBody CreateUserRequest createUserRequest){
-        boolean return_value = userService.CreateUser(createUserRequest);
+    @PostMapping(path = "sign-up", headers = "HEADER")
+    public ResponseEntity<?> createUser (@RequestHeader("HEADER") String userEmail,@RequestBody CreateUserRequest createUserRequest){
+        boolean return_value = userService.CreateUser(userEmail, createUserRequest);
         return new ResponseEntity<Boolean>(return_value, HttpStatus.OK);
     }
 
+    /**
+     *  한명의 Email을 헤더로 받으면,
+     *  해당 유저의 nickName , profileImage 를 리턴
+     * @param userEmail
+     * @return
+     */
+    @GetMapping(path = "user", headers = "HEADER")
+    public ResponseEntity<?> findUserByEmail (@RequestHeader("HEADER") String userEmail){
+        return new ResponseEntity<ReadUserByEmail>(userService.readUserByEmail(userEmail), HttpStatus.OK);
+    }
 
 }

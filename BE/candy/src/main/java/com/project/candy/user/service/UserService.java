@@ -1,6 +1,7 @@
 package com.project.candy.user.service;
 
 import com.project.candy.user.dto.CreateUserRequest;
+import com.project.candy.user.dto.ReadUserByEmail;
 import com.project.candy.user.entity.User;
 
 /**
@@ -21,7 +22,7 @@ public interface UserService {
      * @param createUserRequest
      * @return
      */
-    public Boolean CreateUser(CreateUserRequest createUserRequest);
+    public Boolean CreateUser(String userEmail ,CreateUserRequest createUserRequest);
 
   /**
    * desc : 다른 클래스에서 Email 로 User 객체를 리턴해주는 메소드
@@ -29,4 +30,12 @@ public interface UserService {
    * @return
    */
   public User findUserByEmail(String Email);
+
+  /**
+   * desc : userEmail 을 인자로 받으면 Dto를 리턴해주는 메소드
+   * @param userEmail
+   * @return
+   */
+  public ReadUserByEmail readUserByEmail(String userEmail);
+
 }
