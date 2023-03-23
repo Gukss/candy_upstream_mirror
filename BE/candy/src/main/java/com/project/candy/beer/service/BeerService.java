@@ -1,7 +1,7 @@
 package com.project.candy.beer.service;
 
 import com.project.candy.beer.dto.ReadBeerDetailResponse;
-import com.project.candy.beer.entity.Beer;
+import com.project.candy.beer.dto.ReadBeerListResponse;
 import java.util.List;
 
 /**
@@ -25,5 +25,5 @@ public interface BeerService {
    * desc : 맥주 리스트 조회 (도감용)
    * @return 모든 맥주 리스트 리턴 (단, 마신건지, 찜한건지 변수 필요)
    */
-  List<Beer> readAllBeerList();
+  List<ReadBeerListResponse> readAllBeerList();
 }
