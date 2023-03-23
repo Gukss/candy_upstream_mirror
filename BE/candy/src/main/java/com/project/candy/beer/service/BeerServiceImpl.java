@@ -1,6 +1,7 @@
 package com.project.candy.beer.service;
 
 import com.project.candy.beer.dto.ReadBeerDetailResponse;
+import com.project.candy.beer.dto.ReadBeerListResponse;
 import com.project.candy.beer.entity.Beer;
 import com.project.candy.beer.repository.BeerRepository;
 import com.project.candy.calendar.entity.Calendar;
@@ -12,14 +13,11 @@ import com.project.candy.like.entity.Like;
 import com.project.candy.like.repository.LikeRepository;
 import com.project.candy.user.entity.User;
 import com.project.candy.user.repository.UserRepository;
-import com.project.candy.util.BaseEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
-import java.util.Optional;
 
 /**
  * packageName    : com.project.candy.beer.service
@@ -71,8 +69,10 @@ public class BeerServiceImpl implements BeerService {
   }
 
   @Override
-  public List<Beer> readAllBeerList() {
-    List<Beer> beerList = beerRepository.findAll();
-    return null;
+  public List<ReadBeerListResponse> readAllBeerList() {
+
+    List<ReadBeerListResponse> beerList = beerRepository.readAllBeerList();
+
+    return beerList;
   }
 }
