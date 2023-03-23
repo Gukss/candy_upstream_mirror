@@ -2,7 +2,6 @@ package com.project.candy.calendar.repository;
 
 import com.project.candy.calendar.dto.ReadCalendarResponse;
 import com.project.candy.calendar.entity.Calendar;
-import com.project.candy.user.dto.ReadUserByEmail;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

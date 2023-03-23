@@ -1,8 +1,7 @@
-package com.project.candy.calendar.conroller;
+package com.project.candy.calendar.controller;
 
 import com.project.candy.calendar.dto.ReadCalendarResponse;
 import com.project.candy.calendar.service.CalendarService;
-import com.project.candy.user.dto.CreateUserRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

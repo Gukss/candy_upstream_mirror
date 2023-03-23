@@ -1,7 +1,7 @@
 package com.project.candy.user.service;
 
 import com.project.candy.user.dto.CreateUserRequest;
-import com.project.candy.user.dto.ReadUserByEmail;
+import com.project.candy.user.dto.ReadUserByEmailResponse;
 import com.project.candy.user.entity.User;
 
 /**
@@ -39,6 +39,6 @@ public interface UserService {
    * @param userEmail
    * @return
    */
-  public ReadUserByEmail readUserByEmail(String userEmail);
+  public ReadUserByEmailResponse readUserByEmail(String userEmail);
 
 }
