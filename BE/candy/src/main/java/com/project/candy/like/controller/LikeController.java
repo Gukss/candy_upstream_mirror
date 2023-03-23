@@ -23,14 +23,14 @@ public class LikeController {
 
   @PostMapping("/{beer-id}")
   public ResponseEntity<?> createLikeBeer(
-          @PathVariable(name = "beer-id") Long beerId, @RequestBody String userEmail) {
+          @PathVariable(name = "beer-id") Long beerId, @RequestHeader(value = "email") String userEmail) {
     likeService.createLikeBeer(beerId, userEmail);
     return new ResponseEntity<>(HttpStatus.CREATED);
   }
 
   @DeleteMapping("/{beer-id}")
   public ResponseEntity<?> deleteLikeBeer(
-          @PathVariable(name = "beer-id") Long beerId, @RequestBody String userEmail) {
+          @PathVariable(name = "beer-id") Long beerId, @RequestHeader(value = "email") String userEmail) {
     likeService.deleteLikeBeer(beerId, userEmail);
     return new ResponseEntity<>(HttpStatus.OK);
   }

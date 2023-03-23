@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 /**
@@ -69,9 +70,10 @@ public class BeerServiceImpl implements BeerService {
   }
 
   @Override
-  public List<ReadBeerListResponse> readAllBeerList() {
+  public List<ReadBeerListResponse> readAllBeerList(String userEmail) {
 
-    List<ReadBeerListResponse> beerList = beerRepository.readAllBeerList();
+    User user = userRepository.findByEmail(userEmail).orElseThrow(() -> new NotFoundExceptionMessage());
+    List<ReadBeerListResponse> beerList = beerRepository.readAllBeerList(user.getId());
 
     return beerList;
   }

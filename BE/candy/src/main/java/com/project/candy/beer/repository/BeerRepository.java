@@ -4,9 +4,9 @@ import com.project.candy.beer.dto.ReadBeerListResponse;
 import com.project.candy.beer.entity.Beer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * packageName    : com.project.candy.beer.repository
@@ -25,13 +25,13 @@ public interface BeerRepository extends JpaRepository<Beer, Long> {
                   "from " +
                   "(select beer.beer_id, beer_kr_name, beer_en_name, beer_image, count(bh.beer_id) as is_drink " +
                   "from beer " +
-                  "left join beer_history bh on beer.beer_id = bh.beer_id " +
-                  "group by beer.beer_id) is_drink " +
+                  "left join beer_history bh on beer.beer_id = bh.beer_id and bh.user_id = :user_id and bh.is_delete = false " +
+                  "group by beer.beer_id, bh.user_id) is_drink " +
                   "join " +
                   "(select beer.beer_id, count(`like`.beer_id) as is_like " +
                   "from beer " +
-                  "left join `like` on beer.beer_id = `like`.beer_id " +
-                  "group by beer.beer_id) is_like " +
+                  "left join `like` on beer.beer_id = `like`.beer_id and `like`.user_id = :user_id and `like`.is_delete = false " +
+                  "group by beer.beer_id, `like`.user_id) is_like " +
                   "on is_drink.beer_id = is_like.beer_id;")
-  List<ReadBeerListResponse> readAllBeerList();
+  List<ReadBeerListResponse> readAllBeerList(@Param("user_id") long userId);
 }
