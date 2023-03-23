@@ -1,28 +1,28 @@
 import 'package:candy/widgets/app_bar/beer_detail_app_bar.dart';
+import 'package:candy/widgets/beer/beer_extra_info.dart';
 import 'package:candy/widgets/beer/beer_info.dart';
 import 'package:candy/widgets/review/beer_review_list.dart';
-import 'package:candy/widgets/review/slide_bar.dart';
 import 'package:candy/widgets/ui/margin.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
-class BeerDetail extends StatefulWidget {
-  const BeerDetail({super.key});
+class BeerDetail extends StatelessWidget {
+  final int beerId;
 
-  @override
-  State<BeerDetail> createState() => _BeerDetailState();
-}
+  const BeerDetail({
+    super.key,
+    required this.beerId,
+  });
 
-class _BeerDetailState extends State<BeerDetail> {
-  late double feshNum;
-  late double bodyNum;
-  late double tasteNum;
-
-  @override
-  void initState() {
-    super.initState();
-    feshNum = 0;
-    bodyNum = 0;
-    tasteNum = 0;
+  Future<Map<String, dynamic>> getBeerInfo() async {
+    const String basicUrl = 'j8b105.p.ssafy.io/api';
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json',
+    };
+    http.get(
+      Uri.parse('$basicUrl/$beerId'),
+    );
+    return {};
   }
 
   @override
@@ -41,8 +41,8 @@ class _BeerDetailState extends State<BeerDetail> {
                 child: Padding(
                   padding: const EdgeInsets.all(24),
                   child: Column(
-                    children: [
-                      const BeerInfo(
+                    children: const [
+                      BeerInfo(
                         beerName: {'korean': '카스 프레시', 'english': 'Cass Fresh'},
                         beerImgSrc:
                             'https://justliquor.com.au/2735/cass-fresh-beer-can-355ml.jpg',
@@ -52,8 +52,13 @@ class _BeerDetailState extends State<BeerDetail> {
                         beerType: '밀맥주',
                         rate: 3.5,
                       ),
-                      const Margin(marginType: MarginType.height, size: 16),
-                      BeerExtraInfo(bodyNum: bodyNum, tasteNum: tasteNum),
+                      Margin(marginType: MarginType.height, size: 16),
+                      BeerExtraInfo(
+                        bodyNum: 1,
+                        tasteNum: 1,
+                        freshNum: 1,
+                        readOnly: true,
+                      ),
                     ],
                   ),
                 ),
@@ -69,42 +74,6 @@ class _BeerDetailState extends State<BeerDetail> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class BeerExtraInfo extends StatelessWidget {
-  const BeerExtraInfo({
-    super.key,
-    required this.bodyNum,
-    required this.tasteNum,
-  });
-
-  final double bodyNum;
-  final double tasteNum;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const SlideBar(
-          sliderCategory: '청량감',
-          sliderValue: 0,
-          readOnly: true,
-        ),
-        const Margin(marginType: MarginType.height, size: 16),
-        SlideBar(
-          sliderCategory: '바디감',
-          sliderValue: bodyNum,
-          readOnly: true,
-        ),
-        const Margin(marginType: MarginType.height, size: 16),
-        SlideBar(
-          sliderCategory: '맛',
-          sliderValue: tasteNum,
-          readOnly: true,
-        ),
-      ],
     );
   }
 }
