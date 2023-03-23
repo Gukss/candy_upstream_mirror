@@ -15,9 +15,9 @@ class _MyPageState extends State<MyPage> {
   int _page_index = 0;
 
   static List<Widget> pages = <Widget>[
-    Calendar2(),
-    Splash(),
-    Statistics(),
+    const Calendar2(),
+    const Splash(),
+    const Statistics(),
   ];
 
   void onTextButtonTap(index) {
@@ -37,21 +37,17 @@ class _MyPageState extends State<MyPage> {
           ),
           child: Column(children: [
             Row(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(9999),
+              children: const [
+                CircleAvatar(
+                  backgroundImage: NetworkImage(
+                    "https://cdnimg.melon.co.kr/resource/image/cds/musicstory/imgUrl20211207051538220.jpg/melon/optimize/90",
                   ),
-                  clipBehavior: Clip.hardEdge,
-                  height: 96,
-                  width: 96,
-                  child: Image.network(
-                      "https://cdnimg.melon.co.kr/resource/image/cds/musicstory/imgUrl20211207051538220.jpg/melon/optimize/90"),
+                  radius: 48,
                 ),
-                const SizedBox(
+                SizedBox(
                   width: 24,
                 ),
-                const Text(
+                Text(
                   '닉네임',
                   style: TextStyle(
                     fontSize: 20,
