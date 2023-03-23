@@ -14,18 +14,20 @@ import com.project.candy.user.entity.User;
 
 public interface UserService {
 
-    /**
-     * desc : sign-up , 회원가입 시  프론트로부터 DTO룰 받아
-     *  User 테이블에 값을 저장하는 메소드.
-     *  email 중복을 확인하여 , 중복된 값이면 false
-     *  아니면 true를 리턴한다.
-     * @param createUserRequest
-     * @return
-     */
-    public Boolean CreateUser(String userEmail ,CreateUserRequest createUserRequest);
+  /**
+   * desc : sign-up , 회원가입 시  프론트로부터 DTO룰 받아
+   * User 테이블에 값을 저장하는 메소드.
+   * email 중복을 확인하여 , 중복된 값이면 false
+   * 아니면 true를 리턴한다.
+   *
+   * @param createUserRequest
+   * @return
+   */
+  public Boolean CreateUser(String userEmail, CreateUserRequest createUserRequest);
 
   /**
    * desc : 다른 클래스에서 Email 로 User 객체를 리턴해주는 메소드
+   *
    * @param Email
    * @return
    */
@@ -33,6 +35,7 @@ public interface UserService {
 
   /**
    * desc : userEmail 을 인자로 받으면 Dto를 리턴해주는 메소드
+   *
    * @param userEmail
    * @return
    */

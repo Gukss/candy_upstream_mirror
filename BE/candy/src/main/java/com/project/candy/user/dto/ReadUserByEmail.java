@@ -15,7 +15,7 @@ public class ReadUserByEmail {
 
   private String nickname;
 
-  static public ReadUserByEmail EntityToDto(User user){
+  static public ReadUserByEmail EntityToDto(User user) {
     return ReadUserByEmail.builder()
             .nickname(user.getNickname())
             .profileImage(user.getProfileImage())
