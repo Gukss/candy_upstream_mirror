@@ -7,6 +7,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * packageName    : com.project.candy.calendar.entity
@@ -29,10 +30,10 @@ public class Calendar extends BaseTimeEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @NotBlank
+    @NotNull
     private User user;
 
     @Embedded
-    @NotBlank
+    @NotNull
     private BaseEntity baseEntity;
 }

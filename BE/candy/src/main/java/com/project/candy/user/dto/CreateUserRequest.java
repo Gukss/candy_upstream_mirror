@@ -17,11 +17,12 @@ import java.time.LocalDate;
 @Getter
 @NoArgsConstructor
 public class CreateUserRequest {
-    String email;
     String nickname;
 
     String gender;
 
     LocalDate birth;
+
+    String profileImage;
 
 }

@@ -3,6 +3,7 @@ package com.project.candy.user.service;
 import com.project.candy.exception.exceptionMessage.DuplicatedExceptionsMessage;
 import com.project.candy.exception.exceptionMessage.NotFoundExceptionMessage;
 import com.project.candy.user.dto.CreateUserRequest;
+import com.project.candy.user.dto.ReadUserByEmail;
 import com.project.candy.user.entity.Role;
 import com.project.candy.user.entity.User;
 import com.project.candy.user.repository.UserRepository;
@@ -35,23 +36,23 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public Boolean CreateUser(CreateUserRequest createUserRequest) {
+    public Boolean CreateUser(String userEmail , CreateUserRequest createUserRequest) {
 
         // 받아온 이메일 값이 중복되는지 확인
-        if(userRepository.findAllByEmail(createUserRequest.getEmail()).size()>0){
+        if(userRepository.findAllByEmail(userEmail).size()>0){
             return false;
         }
         User user = User.builder()
-                .email(createUserRequest.getEmail())
+                .email(userEmail)
                 .nickname(createUserRequest.getNickname())
                 .gender(createUserRequest.getGender())
                 .birth(createUserRequest.getBirth())
-                .profileImage("a")
+                .profileImage(createUserRequest.getProfileImage())
                 .role(Role.GUEST)
                 .baseEntity(BaseEntity.builder()
-                        .constructor(createUserRequest.getEmail())
+                        .constructor(userEmail)
                         .isDelete(false)
-                        .updater(createUserRequest.getEmail())
+                        .updater(userEmail)
                         .build())
                 .build();
         log.info(user.getEmail() );
@@ -63,7 +64,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findUserByEmail(String Email) {
-        return userRepository.findByEmail(Email).orElseThrow(() -> new NotFoundExceptionMessage());
+        return userRepository.findByEmail(Email).orElseThrow(() -> new NotFoundExceptionMessage(NotFoundExceptionMessage.NOT_FOUND_USER));
+    }
+
+    @Override
+    public ReadUserByEmail readUserByEmail(String userEmail) {
+        return ReadUserByEmail
+                .EntityToDto(
+                        userRepository.findByEmail(userEmail)
+                                .orElseThrow(
+                                        () -> new NotFoundExceptionMessage(NotFoundExceptionMessage.NOT_FOUND_USER)
+                                )
+                );
     }
 
 
