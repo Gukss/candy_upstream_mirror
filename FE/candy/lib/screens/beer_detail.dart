@@ -1,5 +1,6 @@
 import 'package:candy/widgets/app_bar/beer_detail_app_bar.dart';
 import 'package:candy/widgets/beer/beer_info.dart';
+import 'package:candy/widgets/review/beer_review_list.dart';
 import 'package:candy/widgets/review/slide_bar.dart';
 import 'package:candy/widgets/ui/margin.dart';
 import 'package:flutter/material.dart';
@@ -31,51 +32,79 @@ class _BeerDetailState extends State<BeerDetail> {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16),
-          child: Container(
-            color: Colors.grey,
-            child: Padding(
-              padding: const EdgeInsets.all(24),
-              child: Column(
-                children: [
-                  const BeerInfo(
-                    beerName: {'korean': '카스 프레시', 'english': 'Cass Fresh'},
-                    beerImgSrc:
-                        'https://justliquor.com.au/2735/cass-fresh-beer-can-355ml.jpg',
-                    country: '한국',
-                    brandName: '하이트진로',
-                    alcoholLevel: 4.2,
-                    beerType: '밀맥주',
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: double.infinity,
+                color: Colors.grey,
+                child: Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: Column(
+                    children: [
+                      const BeerInfo(
+                        beerName: {'korean': '카스 프레시', 'english': 'Cass Fresh'},
+                        beerImgSrc:
+                            'https://justliquor.com.au/2735/cass-fresh-beer-can-355ml.jpg',
+                        country: '한국',
+                        brandName: '하이트진로',
+                        alcoholLevel: 4.2,
+                        beerType: '밀맥주',
+                        rate: 3.5,
+                      ),
+                      const Margin(marginType: MarginType.height, size: 16),
+                      BeerExtraInfo(bodyNum: bodyNum, tasteNum: tasteNum),
+                    ],
                   ),
-                  const Margin(marginType: MarginType.height, size: 16),
-                  Container(
-                    child: Column(
-                      children: [
-                        const SlideBar(
-                          sliderCategory: '청량감',
-                          sliderValue: 0,
-                          readOnly: true,
-                        ),
-                        const Margin(marginType: MarginType.height, size: 16),
-                        SlideBar(
-                          sliderCategory: '바디감',
-                          sliderValue: bodyNum,
-                          readOnly: true,
-                        ),
-                        const Margin(marginType: MarginType.height, size: 16),
-                        SlideBar(
-                          sliderCategory: '맛',
-                          sliderValue: tasteNum,
-                          readOnly: true,
-                        ),
-                      ],
-                    ),
-                  ),
+                ),
+              ),
+              const Margin(marginType: MarginType.height, size: 32),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const [
+                  BeerReviewList(),
                 ],
               ),
-            ),
+            ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class BeerExtraInfo extends StatelessWidget {
+  const BeerExtraInfo({
+    super.key,
+    required this.bodyNum,
+    required this.tasteNum,
+  });
+
+  final double bodyNum;
+  final double tasteNum;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const SlideBar(
+          sliderCategory: '청량감',
+          sliderValue: 0,
+          readOnly: true,
+        ),
+        const Margin(marginType: MarginType.height, size: 16),
+        SlideBar(
+          sliderCategory: '바디감',
+          sliderValue: bodyNum,
+          readOnly: true,
+        ),
+        const Margin(marginType: MarginType.height, size: 16),
+        SlideBar(
+          sliderCategory: '맛',
+          sliderValue: tasteNum,
+          readOnly: true,
+        ),
+      ],
     );
   }
 }

@@ -53,6 +53,9 @@ dependencies:
   # 파이차트
   pie_chart: ^5.3.2
 
+  # 별점
+  flutter_rating_bar: ^4.0.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -1,6 +1,7 @@
 import 'package:candy/widgets/beer/beer_info_text.dart';
 import 'package:candy/widgets/ui/margin.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class BeerInfo extends StatelessWidget {
   final Map<String, String> beerName;
@@ -9,6 +10,7 @@ class BeerInfo extends StatelessWidget {
   final String country;
   final String brandName;
   final double alcoholLevel;
+  final double rate;
 
   const BeerInfo({
     super.key,
@@ -18,6 +20,7 @@ class BeerInfo extends StatelessWidget {
     required this.country,
     required this.brandName,
     required this.alcoholLevel,
+    required this.rate,
   });
 
   @override
@@ -63,6 +66,23 @@ class BeerInfo extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                RatingBar.builder(
+                  ignoreGestures: true,
+                  itemSize: 32,
+                  initialRating: rate,
+                  minRating: 0.5,
+                  maxRating: 5,
+                  direction: Axis.horizontal,
+                  allowHalfRating: true,
+                  itemCount: 5,
+                  itemPadding: const EdgeInsets.symmetric(horizontal: 0),
+                  itemBuilder: (context, _) => const Icon(
+                    Icons.star,
+                    color: Colors.amber,
+                  ),
+                  onRatingUpdate: (rating) {},
+                ),
+                const Margin(marginType: MarginType.height, size: 24),
                 BeerInfoText(
                   title: '종류',
                   value: beerType,
