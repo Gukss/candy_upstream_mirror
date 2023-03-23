@@ -23,39 +23,39 @@ import java.util.stream.Collectors;
  * description    : 음주 일지에 관련된 서비스 인터페이스 구현체
  */
 @Service
-@Transactional(readOnly=true)
+@Transactional(readOnly = true)
 @Slf4j
 @RequiredArgsConstructor
 public class CalendarServiceImpl implements CalendarService {
 
-    private final CalendarRepository calendarRepository;
+  private final CalendarRepository calendarRepository;
 
-    private final UserRepository userRepository;
-    @Transactional
-    @Override
-    public void createCalendar(String userEmail) {
-        // 실존 체크
-        User customer =userRepository.findByEmail(userEmail).orElseThrow(() -> new NotFoundExceptionMessage(NotFoundExceptionMessage.NOT_FOUND_USER));
+  private final UserRepository userRepository;
 
-        Calendar calendar =Calendar.builder()
-                .user(customer)
-                .baseEntity(BaseEntity.builder()
-                        .constructor(userEmail)
-                        .isDelete(false)
-                        .updater(userEmail)
-                        .build())
-                .build();
-        calendarRepository.save(calendar);
-    }
+  @Transactional
+  @Override
+  public void createCalendar(String userEmail) {
+    // 실존 체크
+    User customer = userRepository.findByEmail(userEmail).orElseThrow(() -> new NotFoundExceptionMessage(NotFoundExceptionMessage.NOT_FOUND_USER));
 
-    @Override
-    public List<ReadCalendarResponse> readCalendarList(String userEmail, int year, int month) {
-        User customer =userRepository.findByEmail(userEmail).orElseThrow(() -> new NotFoundExceptionMessage(NotFoundExceptionMessage.NOT_FOUND_USER));
-        List<Calendar> calendars =calendarRepository.findAllByUseridWhereYearAndMonth(customer.getId(), year, month).get();
-//        List<Calendar> calendars =calendarRepository.findByUserId(customer.getId()).get()
-//                .stream()
-//                .filter(calendar -> (calendar.getCreatedAt().getYear()==year) && (calendar.getCreatedAt().getMonthValue()==month)).collect(Collectors.toList());
-        return calendars.stream().map(calendar -> ReadCalendarResponse.EntitytoDTO(calendar)).collect(Collectors.toList());
-    }
+    Calendar calendar = Calendar.builder()
+            .user(customer)
+            .baseEntity(BaseEntity.builder()
+                    .constructor(userEmail)
+                    .isDelete(false)
+                    .updater(userEmail)
+                    .build())
+            .build();
+    calendarRepository.save(calendar);
+  }
+
+  @Override
+  public List<ReadCalendarResponse> readCalendarList(String userEmail, int year, int month) {
+    User customer = userRepository.findByEmail(userEmail).orElseThrow(() -> new NotFoundExceptionMessage(NotFoundExceptionMessage.NOT_FOUND_USER));
+//    List<Calendar> calendars = calendarRepository.findAllByUseridWhereYearAndMonth(customer.getId(), year, month).get();
+//    return calendars.stream().map(calendar -> ReadCalendarResponse.EntitytoDTO(calendar)).collect(Collectors.toList());
+    return calendarRepository.findAllByUseridWhereYearAndMonth(customer.getId() , year, month).get();
+
+  }
 
 }
