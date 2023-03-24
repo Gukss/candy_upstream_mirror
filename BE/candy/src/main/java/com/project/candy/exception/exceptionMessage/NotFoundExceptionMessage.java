@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class NotFoundExceptionMessage extends RuntimeException{
   public static final String NOT_FOUND_BEER = "존재하지 않는 맥주입니다.";
   public static final String NOT_FOUND_USER = "존재하지 않는 회원입니다.";
+  public static final String NOT_FOUND_STATISTICS = "존재하지 않는 통계입니다.";
 
   public NotFoundExceptionMessage() {
     super();
