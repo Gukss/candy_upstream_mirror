@@ -2,6 +2,8 @@ package com.project.candy.beer.service;
 
 import com.project.candy.beer.dto.ReadBeerDetailResponse;
 import com.project.candy.beer.dto.ReadBeerListResponse;
+import com.project.candy.likes.dto.ReadLikesListByUserResponse;
+
 import java.util.List;
 
 /**

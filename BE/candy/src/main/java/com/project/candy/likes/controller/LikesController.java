@@ -34,4 +34,9 @@ public class LikesController {
     likesService.deleteLikeBeer(beerId, userEmail);
     return new ResponseEntity<>(HttpStatus.OK);
   }
+
+  @GetMapping
+  public ResponseEntity<?> readAllLikesListByUser(@RequestHeader(value = "email") String userEmail) {
+    return new ResponseEntity<>(likesService.readAllLikesListByUser(userEmail), HttpStatus.OK);
+  }
 }

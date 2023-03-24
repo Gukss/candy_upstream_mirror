@@ -3,6 +3,7 @@ package com.project.candy.likes.service;
 import com.project.candy.beer.entity.Beer;
 import com.project.candy.beer.repository.BeerRepository;
 import com.project.candy.exception.exceptionMessage.NotFoundExceptionMessage;
+import com.project.candy.likes.dto.ReadLikesListByUserResponse;
 import com.project.candy.likes.entity.Likes;
 import com.project.candy.likes.entity.LikesId;
 import com.project.candy.likes.repository.LikesRepository;
@@ -13,6 +14,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * packageName    : com.project.candy.like.service
@@ -72,5 +76,28 @@ public class LikesServiceImpl implements LikesService {
     Likes likes = likeRepository.findByUserAndBeer(user, beer).orElseThrow(() -> new NotFoundExceptionMessage());
     // 삭제
     likes.getBaseEntity().delete();
+  }
+
+  @Override
+  public List<ReadLikesListByUserResponse> readAllLikesListByUser(String userEmail) {
+
+    User user = userRepository.findByEmail(userEmail)
+            .orElseThrow(() -> new NotFoundExceptionMessage(NotFoundExceptionMessage.NOT_FOUND_USER));
+
+    List<Likes> likeList = likeRepository.readAllLikesListByUserAndIsDeleteFalse(user.getId());
+
+    if (!likeList.isEmpty() && likeList != null) {
+      List<ReadLikesListByUserResponse> likesBeerList = new ArrayList<>();
+
+      for (Likes like : likeList) {
+        Beer beer = like.getBeer();
+        likesBeerList.add(new ReadLikesListByUserResponse(beer.getBeerKrName(), beer.getBeerEnName(), beer.getBeerImage()));
+      }
+
+      return likesBeerList;
+    }
+
+    // todo : 메세지 정의하기
+    throw new NotFoundExceptionMessage();
   }
 }
