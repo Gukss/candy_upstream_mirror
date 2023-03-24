@@ -59,6 +59,12 @@ dependencies:
   # 별점
   flutter_rating_bar: ^4.0.1
 
+  # 슬라이드
+  percent_indicator: ^4.2.3
+
+  # dropdown
+  dropdown_button2: ^2.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
