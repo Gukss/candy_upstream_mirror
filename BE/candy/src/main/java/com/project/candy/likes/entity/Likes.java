@@ -1,4 +1,4 @@
-package com.project.candy.like.entity;
+package com.project.candy.likes.entity;
 
 import com.project.candy.beer.entity.Beer;
 import com.project.candy.user.entity.User;
@@ -15,15 +15,15 @@ import javax.validation.constraints.NotNull;
  * description    :
  */
 @Entity
-@Table(name = "like")
+@Table(name = "likes")
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
-public class Like extends BaseTimeEntity {
+public class Likes extends BaseTimeEntity {
 
     @EmbeddedId
-    private LikeId likeId;
+    private LikesId likeId;
 
     @MapsId(value = "userId")
     @ManyToOne(fetch = FetchType.LAZY)

@@ -1,4 +1,4 @@
-package com.project.candy.like.service;
+package com.project.candy.likes.service;
 
 /**
  * packageName    : com.project.candy.like.service
@@ -6,7 +6,7 @@ package com.project.candy.like.service;
  * date           : 2023-03-22
  * description    : 맥주 찜하기 기능을 담당하는 서비스 인터페이스
  */
-public interface LikeService {
+public interface LikesService {
 
   /**
    * desc : 맥주 찜하기
