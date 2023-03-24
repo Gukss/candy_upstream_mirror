@@ -28,10 +28,10 @@ public interface BeerRepository extends JpaRepository<Beer, Long> {
                   "left join beer_history bh on beer.beer_id = bh.beer_id and bh.user_id = :user_id and bh.is_delete = false " +
                   "group by beer.beer_id, bh.user_id) is_drink " +
                   "join " +
-                  "(select beer.beer_id, count(`like`.beer_id) as is_like " +
+                  "(select beer.beer_id, count(likes.beer_id) as is_like " +
                   "from beer " +
-                  "left join `like` on beer.beer_id = `like`.beer_id and `like`.user_id = :user_id and `like`.is_delete = false " +
-                  "group by beer.beer_id, `like`.user_id) is_like " +
+                  "left join likes on beer.beer_id = likes.beer_id and likes.user_id = :user_id and likes.is_delete = false " +
+                  "group by beer.beer_id, likes.user_id) is_like " +
                   "on is_drink.beer_id = is_like.beer_id;")
   List<ReadBeerListResponse> readAllBeerList(@Param("user_id") long userId);
 }

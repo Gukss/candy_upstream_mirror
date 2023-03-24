@@ -7,8 +7,6 @@ import com.project.candy.beer_history.entity.BeerHistory;
 import com.project.candy.beer_history.entity.BeerHistoryId;
 import com.project.candy.beer_history.repository.BeerHistoryRepository;
 import com.project.candy.exception.exceptionMessage.NotFoundExceptionMessage;
-import com.project.candy.like.entity.Like;
-import com.project.candy.like.entity.LikeId;
 import com.project.candy.user.entity.User;
 import com.project.candy.user.repository.UserRepository;
 import com.project.candy.util.BaseEntity;

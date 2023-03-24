@@ -1,4 +1,4 @@
-package com.project.candy.like.entity;
+package com.project.candy.likes.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -11,7 +11,7 @@ import java.io.Serializable;
  * description    : like 테이블의 복합키 관계를 풀기위한 클래스
  */
 @Embeddable
-public class LikeId implements Serializable {
+public class LikesId implements Serializable {
 
     @Column(name = "user_id")
     private long userId;
@@ -24,7 +24,7 @@ public class LikeId implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        LikeId likeId = (LikeId) o;
+        LikesId likeId = (LikesId) o;
 
         if (userId != likeId.userId) return false;
         return beerId == likeId.beerId;
@@ -37,10 +37,10 @@ public class LikeId implements Serializable {
         return result;
     }
 
-    public LikeId() {
+    public LikesId() {
     }
 
-    public LikeId(long userId, long beerId) {
+    public LikesId(long userId, long beerId) {
         this.userId = userId;
         this.beerId = beerId;
     }

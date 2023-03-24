@@ -7,10 +7,11 @@ import com.project.candy.beer.repository.BeerRepository;
 import com.project.candy.calendar.entity.Calendar;
 import com.project.candy.calendar.repository.CalendarRepository;
 import com.project.candy.country.dto.ReadCountryResponse;
-import com.project.candy.country.service.CountryService;
+import com.project.candy.country.entity.Country;
+import com.project.candy.country.repository.CountryRepository;
 import com.project.candy.exception.exceptionMessage.NotFoundExceptionMessage;
-import com.project.candy.like.entity.Like;
-import com.project.candy.like.repository.LikeRepository;
+import com.project.candy.likes.entity.Likes;
+import com.project.candy.likes.repository.LikesRepository;
 import com.project.candy.user.entity.User;
 import com.project.candy.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -34,16 +35,18 @@ public class BeerServiceImpl implements BeerService {
 
   private final BeerRepository beerRepository;
   private final UserRepository userRepository;
-  private final CountryService countryService;
+  private final CountryRepository countryRepository;
   private final CalendarRepository calendarRepository;
-  private final LikeRepository likeRepository;
+  private final LikesRepository likeRepository;
 
   @Override
   public ReadBeerDetailResponse readBeerDetail(Long beerId, String userEmail) {
     // 상세 정보에 들어갈 맥주 정보
     Beer beer = beerRepository.findById(beerId).orElseThrow(() -> new NotFoundExceptionMessage());
     // 상세 정보에 들어갈 나라 정보 (한글/영문 이름, 이미지 url)
-    ReadCountryResponse readCountryResponse = countryService.readCountry(beer.getCountry().getId());
+    //todo: 예외 메시지 바꾸기
+    Country foundCountry = countryRepository.findById(beer.getCountry().getId()).orElseThrow(()->new NotFoundExceptionMessage(NotFoundExceptionMessage.NOT_FOUND_BEER));
+    ReadCountryResponse readCountryResponse = ReadCountryResponse.entityToDTO(foundCountry);
     // 위 두 정보를 리턴 DTO에 넣어준다.
     ReadBeerDetailResponse readBeerDetailResponse = ReadBeerDetailResponse.EntityToDTO(beer, readCountryResponse);
 
@@ -58,8 +61,10 @@ public class BeerServiceImpl implements BeerService {
     if (calendarList != null) {
       isDrink = true;
     }
-    Like like = likeRepository.findByUserAndBeer(user, beer).get();
-    if (like != null) {
+    log.info(String.valueOf(user.getId()));
+    log.info(String.valueOf(beer.getId()));
+    Likes likes = likeRepository.readByUserAndBeerAndIsDeleteFalse(user.getId(), beer.getId());
+    if (likes != null) {
       isLike = true;
     }
 

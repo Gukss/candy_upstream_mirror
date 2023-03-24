@@ -1,6 +1,6 @@
-package com.project.candy.like.controller;
+package com.project.candy.likes.controller;
 
-import com.project.candy.like.service.LikeService;
+import com.project.candy.likes.service.LikesService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -17,21 +17,21 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RequestMapping("/like")
 @RequiredArgsConstructor
-public class LikeController {
+public class LikesController {
 
-  private final LikeService likeService;
+  private final LikesService likesService;
 
   @PostMapping("/{beer-id}")
   public ResponseEntity<?> createLikeBeer(
           @PathVariable(name = "beer-id") Long beerId, @RequestHeader(value = "email") String userEmail) {
-    likeService.createLikeBeer(beerId, userEmail);
+    likesService.createLikeBeer(beerId, userEmail);
     return new ResponseEntity<>(HttpStatus.CREATED);
   }
 
   @DeleteMapping("/{beer-id}")
   public ResponseEntity<?> deleteLikeBeer(
           @PathVariable(name = "beer-id") Long beerId, @RequestHeader(value = "email") String userEmail) {
-    likeService.deleteLikeBeer(beerId, userEmail);
+    likesService.deleteLikeBeer(beerId, userEmail);
     return new ResponseEntity<>(HttpStatus.OK);
   }
 }
