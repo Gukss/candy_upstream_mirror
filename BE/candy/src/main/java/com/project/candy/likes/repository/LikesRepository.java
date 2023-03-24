@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -27,4 +28,7 @@ public interface LikesRepository extends JpaRepository<Likes, Long> {
   // 찜하기 해제하지 않은 데이터만 찾는 메소드
   @Query(nativeQuery = true, value = "select * from likes where (user_id = :user_id) and (beer_id = :beer_id) and (is_delete = false)")
   Likes readByUserAndBeerAndIsDeleteFalse(@Param("user_id") long userId, @Param("beer_id") long beerId);
+
+  @Query(nativeQuery = true, value = "select * from likes where user_id = :user_id and is_delete = false;")
+  List<Likes> readAllLikesListByUserAndIsDeleteFalse(@Param("user_id") long userId);
 }

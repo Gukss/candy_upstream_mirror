@@ -1,5 +1,9 @@
 package com.project.candy.likes.service;
 
+import com.project.candy.likes.dto.ReadLikesListByUserResponse;
+
+import java.util.List;
+
 /**
  * packageName    : com.project.candy.like.service
  * fileName       : LikeService
@@ -23,4 +27,12 @@ public interface LikesService {
    * @param beerId
    */
   void deleteLikeBeer(Long beerId, String userEmail);
+
+  /**
+   * desc : 사용자가 좋아요(찜)한 맥주 리스트 조회
+   *  
+   * @param userEmail
+   * @return
+   */
+  List<ReadLikesListByUserResponse> readAllLikesListByUser(String userEmail);
 }

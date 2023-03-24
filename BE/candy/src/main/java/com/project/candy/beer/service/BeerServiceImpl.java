@@ -10,6 +10,7 @@ import com.project.candy.country.dto.ReadCountryResponse;
 import com.project.candy.country.entity.Country;
 import com.project.candy.country.repository.CountryRepository;
 import com.project.candy.exception.exceptionMessage.NotFoundExceptionMessage;
+import com.project.candy.likes.dto.ReadLikesListByUserResponse;
 import com.project.candy.likes.entity.Likes;
 import com.project.candy.likes.repository.LikesRepository;
 import com.project.candy.user.entity.User;
@@ -19,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -45,7 +47,7 @@ public class BeerServiceImpl implements BeerService {
     Beer beer = beerRepository.findById(beerId).orElseThrow(() -> new NotFoundExceptionMessage());
     // 상세 정보에 들어갈 나라 정보 (한글/영문 이름, 이미지 url)
     //todo: 예외 메시지 바꾸기
-    Country foundCountry = countryRepository.findById(beer.getCountry().getId()).orElseThrow(()->new NotFoundExceptionMessage(NotFoundExceptionMessage.NOT_FOUND_BEER));
+    Country foundCountry = countryRepository.findById(beer.getCountry().getId()).orElseThrow(() -> new NotFoundExceptionMessage(NotFoundExceptionMessage.NOT_FOUND_BEER));
     ReadCountryResponse readCountryResponse = ReadCountryResponse.entityToDTO(foundCountry);
     // 위 두 정보를 리턴 DTO에 넣어준다.
     ReadBeerDetailResponse readBeerDetailResponse = ReadBeerDetailResponse.EntityToDTO(beer, readCountryResponse);
