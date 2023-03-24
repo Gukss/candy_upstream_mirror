@@ -43,6 +43,8 @@ public class ReadBeerDetailResponse {
 
   private double overall;
 
+  private String beerImageUrl;
+
   private boolean isDrink;
 
   private boolean isLike;
@@ -59,6 +61,7 @@ public class ReadBeerDetailResponse {
             .beerKrName(beer.getBeerKrName())
             .beerEnName(beer.getBeerEnName())
             .style(beer.getStyle())
+            .beerImageUrl(beer.getBeerImage())
             .countryKrName(readCountryResponse.getCountryKrName())
             .countryEnName(readCountryResponse.getCountryEnName())
             .build();
