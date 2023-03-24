@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:candy/api/api_service.dart';
+import 'package:candy/api/request_info.dart';
 import 'package:candy/models/beer_detail_model.dart';
 import 'package:http/http.dart' as http;
 
