@@ -1,5 +1,6 @@
 import 'package:candy/widgets/ui/margin.dart';
 import 'package:flutter/material.dart';
+import 'package:candy/widgets/my_page/beer_encyclopedia/beer_list.dart';
 
 class BeerEncyclopedia extends StatefulWidget {
   const BeerEncyclopedia({super.key});
@@ -12,24 +13,31 @@ class _BeerEncyclopediaState extends State<BeerEncyclopedia> {
   String dropdownValue = '전체';
   int dropindex = 0;
   List<String> itemList = ['전체', '좋아요한 맥주', '마신맥주', '마시지않은 맥주'];
-  late List<Map<String, dynamic>> beerList;
+  late List<Map<String, dynamic>> beer;
 
   checkdrop(int index) {
     if (index == 0) {
-      return 0;
+      return beer;
     } else if (index == 1) {
-      return 0;
+      final newbeer = beer.where((e) => e['liked'] == true).toList();
+      return newbeer;
     } else if (index == 2) {
-      return 0;
+      final newbeer = beer.where((e) => e['drunken'] == true).toList();
+      return newbeer;
     } else {
-      return 0;
+      final newbeer = beer.where((e) => e['drunken'] == false).toList();
+      return newbeer;
     }
   }
 
   @override
-  void initState() async {
+  void initState() {
+    getBeer();
     super.initState();
-    beerList = [
+  }
+
+  getBeer() async {
+    beer = [
       {
         'imgSrc':
             'https://cdnimage.ebn.co.kr/news/201903/news_1552435659_976191_main1.jpg',
@@ -47,7 +55,7 @@ class _BeerEncyclopediaState extends State<BeerEncyclopedia> {
           'korean': '버니니2',
           'english': 'Bunini',
         },
-        'liked': false,
+        'liked': true,
         'drunken': false,
       },
       {
@@ -87,7 +95,7 @@ class _BeerEncyclopediaState extends State<BeerEncyclopedia> {
           'korean': '버니니6',
           'english': 'Bunini',
         },
-        'liked': false,
+        'liked': true,
         'drunken': false,
       },
       {
@@ -97,7 +105,7 @@ class _BeerEncyclopediaState extends State<BeerEncyclopedia> {
           'korean': '버니니7',
           'english': 'Bunini',
         },
-        'liked': false,
+        'liked': true,
         'drunken': true,
       },
     ];
@@ -124,10 +132,10 @@ class _BeerEncyclopediaState extends State<BeerEncyclopedia> {
           },
         ),
         const Margin(marginType: MarginType.height, size: 16),
-        // BeerList(
-        //   imgBackgroundSize: 100,
-        //   newbeerlist: checkdrop(dropindex),
-        // )
+        BeerList(
+          imgBackgroundSize: 100,
+          newbeerlist: checkdrop(dropindex),
+        )
       ],
     );
   }
