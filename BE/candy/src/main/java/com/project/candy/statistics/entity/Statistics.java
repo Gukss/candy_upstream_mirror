@@ -1,5 +1,6 @@
 package com.project.candy.statistics.entity;
 
+import com.project.candy.user.entity.User;
 import com.project.candy.util.BaseEntity;
 import com.project.candy.util.BaseTimeEntity;
 import lombok.*;
@@ -40,7 +41,17 @@ public class Statistics extends BaseTimeEntity {
     @NotBlank
     private int totalDay; // 총 인증 일 수
 
+    //todo: 회원 연결해주기
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    @NotBlank
+    private User user;
+
     @Embedded
     @NotBlank
     private BaseEntity baseEntity;
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }
