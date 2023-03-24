@@ -1,92 +1,53 @@
-import 'package:candy/screens/signup.dart';
+import 'package:candy/screens/login.dart';
+import 'package:candy/screens/main_page.dart';
+import 'package:candy/stores/store.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
 class Splash extends StatelessWidget {
   const Splash({super.key});
 
-  void routeSignupPage(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) {
-          return const Signup();
-        },
-      ),
-    );
-  }
-
-  // 카카오 로그인
-  void onLoginButtonTap(BuildContext context) async {
-    if (await isKakaoTalkInstalled()) {
+  // 토큰 존재 확인 및 유저 정보 저장
+  Future<bool> checkIsLogined(UserController userController) async {
+    // 로그인 여부(토큰 유효 여부)
+    bool? result;
+    if (await AuthApi.instance.hasToken()) {
+      // 토큰 정보 확인
       try {
-        await UserApi.instance.loginWithKakaoTalk();
-        print('카카오톡으로 로그인 성공');
-        routeSignupPage(context);
-      } catch (error) {
-        print('카카오톡으로 로그인 실패 $error');
-
-        // 사용자가 카카오톡 설치 후 디바이스 권한 요청 화면에서 로그인을 취소한 경우,
-        // 의도적인 로그인 취소로 보고 카카오계정으로 로그인 시도 없이 로그인 취소로 처리 (예: 뒤로 가기)
-        if (error is PlatformException && error.code == 'CANCELED') {
-          return;
-        }
-        // 카카오톡에 연결된 카카오계정이 없는 경우, 카카오계정으로 로그인
-        try {
-          await UserApi.instance.loginWithKakaoAccount();
-          print('카카오계정으로 로그인 성공');
-          routeSignupPage(context);
-        } catch (error) {
-          print('카카오계정으로 로그인 실패 $error');
-        }
-      }
-    } else {
-      try {
-        await UserApi.instance.loginWithKakaoAccount();
-        print('카카오계정으로 로그인 성공');
-        routeSignupPage(context);
-      } catch (error) {
-        print('카카오계정으로 로그인 실패 $error');
-      }
+        await UserApi.instance.accessTokenInfo();
+        result = true;
+        // 유저 정보 확인 및 저장
+        User user = await UserApi.instance.me();
+        userController.userEmail.value = user.kakaoAccount!.email!;
+      } catch (e) {}
     }
+    result ??= false;
+    // Splash 제거
+    FlutterNativeSplash.remove();
+    return result;
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Text(
-                  'CANDY',
-                  style: TextStyle(
-                    fontSize: 64,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ],
+    final UserController userController = Get.find();
+    return FutureBuilder(
+      future: checkIsLogined(userController),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return const Center(
+            child: SizedBox(
+              width: double.infinity,
+              child: CircularProgressIndicator(),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    onLoginButtonTap(context);
-                  },
-                  child: Image.asset(
-                    'assets/images/kakao/kakao_login_medium_wide.png',
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
+          );
+        }
+        if (snapshot.data!) {
+          return const MainPage();
+        }
+        return const Login();
+      },
     );
   }
 }

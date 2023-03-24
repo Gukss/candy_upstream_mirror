@@ -31,6 +31,9 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # getX
+  get: ^4.6.5
+
   # Splash
   flutter_native_splash: ^2.2.19
 
