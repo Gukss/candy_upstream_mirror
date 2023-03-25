@@ -1,6 +1,7 @@
 package com.project.candy.beer.controller;
 
 import com.project.candy.beer.service.BeerService;
+import com.project.candy.exception.exceptionMessage.NotFoundExceptionMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -29,5 +30,16 @@ public class BeerController {
   @GetMapping
   public ResponseEntity<?> readAllBeerList(@RequestHeader("email") String userEmail) {
     return new ResponseEntity<>(beerService.readAllBeerList(userEmail), HttpStatus.OK);
+  }
+
+  @GetMapping(value = "/search")
+  public ResponseEntity<?> searchBeerByName(@RequestParam(value = "beer-name") String beerName) {
+    return new ResponseEntity<>(beerService.readAllSearchBeerList(beerName), HttpStatus.OK);
+  }
+
+  @GetMapping(value = "/barcode/{barcode}")
+  public ResponseEntity<?> searchBeerByBarcode(
+          @RequestHeader(value = "email") String userEmail, @PathVariable(value = "barcode") String barcode) {
+    return new ResponseEntity<>(beerService.readBeerDetailByBarcode(barcode, userEmail), HttpStatus.OK);
   }
 }

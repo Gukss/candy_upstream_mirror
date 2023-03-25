@@ -2,6 +2,7 @@ package com.project.candy.beer.service;
 
 import com.project.candy.beer.dto.ReadBeerDetailResponse;
 import com.project.candy.beer.dto.ReadBeerListResponse;
+import com.project.candy.beer.dto.ReadSearchBeerListResponse;
 import com.project.candy.beer.entity.Beer;
 import com.project.candy.beer.repository.BeerRepository;
 import com.project.candy.calendar.entity.Calendar;
@@ -22,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * packageName    : com.project.candy.beer.service
@@ -83,5 +85,37 @@ public class BeerServiceImpl implements BeerService {
     List<ReadBeerListResponse> beerList = beerRepository.readAllBeerList(user.getId());
 
     return beerList;
+  }
+
+  @Override
+  public List<ReadSearchBeerListResponse> readAllSearchBeerList(String beerName) {
+
+    boolean isKorean = Pattern.matches("^[ㄱ-ㅎ가-힣]*$", beerName);
+    List<Beer> beerList = new ArrayList<>();
+    if (isKorean) {
+      beerList = beerRepository.findAllByBeerKrNameContaining(beerName);
+    } //
+    else {
+      beerList = beerRepository.findAllByBeerEnNameContaining(beerName);
+    }
+
+    List<ReadSearchBeerListResponse> resBeerList = new ArrayList<>();
+    for (Beer beer : beerList) {
+      resBeerList.add(new ReadSearchBeerListResponse(
+              beer.getId(), beer.getBeerKrName(), beer.getBeerEnName(), beer.getBeerImage()));
+    }
+
+    return resBeerList;
+  }
+
+  @Override
+  public ReadBeerDetailResponse readBeerDetailByBarcode(String barcode, String userEmail) {
+
+    Beer beer = beerRepository.findByBarcode(barcode).orElseThrow(
+            () -> new NotFoundExceptionMessage(NotFoundExceptionMessage.NOT_FOUND_BEER));
+
+    ReadBeerDetailResponse resBeerDetail = readBeerDetail(beer.getId(), userEmail);
+
+    return resBeerDetail;
   }
 }
