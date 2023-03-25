@@ -8,4 +8,5 @@ import com.project.candy.statistics.dto.ReadStatisticResponse;
  */
 public interface StatisticsService {
   ReadStatisticResponse readStatistics(String email);
+  void createStatisticsScheduled();
 }
