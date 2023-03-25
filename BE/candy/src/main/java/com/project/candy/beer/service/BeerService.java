@@ -3,8 +3,6 @@ package com.project.candy.beer.service;
 import com.project.candy.beer.dto.ReadBeerDetailResponse;
 import com.project.candy.beer.dto.ReadBeerListResponse;
 import com.project.candy.beer.dto.ReadSearchBeerListResponse;
-import com.project.candy.likes.dto.ReadLikesListByUserResponse;
-
 import java.util.List;
 
 /**
@@ -44,4 +42,11 @@ public interface BeerService {
    * @return
    */
   ReadBeerDetailResponse readBeerDetailByBarcode(String barcode, String userEmail);
+
+  /**
+   * 맥주 상세보기에 활용되는 메소드.
+   * Scheduling 메소드로 맛, 바디감 등등의 상세정보 업데이트에 활용된다.
+   * (테이블 정보만 수정하는 메소드이기에 매개변수와 리턴 값이 없다.)
+   */
+  void updateBeer();
 }
