@@ -20,6 +20,7 @@ import java.util.Map;
 import java.util.PriorityQueue;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -123,6 +124,14 @@ public class StatisticsServiceImpl implements StatisticsService {
     pieCountryList.add(new Pie("기타", 100.0 - sumCountryPercent));
 
     return ReadStatisticResponse.entityToDTO(foundStatistics, pieCountryList, pieStyleList);
+  }
+
+  @Override
+  @Scheduled
+  public void createStatisticsScheduled() {
+    List<BeerHistory> foundBeerHistories = beerHistoryRepository.findAllByUser();
+    long totalDrinkCount = foundBeerHistories.size(); //인증 개수
+    
   }
 
   private class Order {
