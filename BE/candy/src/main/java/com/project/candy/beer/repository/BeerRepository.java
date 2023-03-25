@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * packageName    : com.project.candy.beer.repository
@@ -34,4 +35,25 @@ public interface BeerRepository extends JpaRepository<Beer, Long> {
                   "group by beer.beer_id, likes.user_id) is_like " +
                   "on is_drink.beer_id = is_like.beer_id;")
   List<ReadBeerListResponse> readAllBeerList(@Param("user_id") long userId);
+
+  /**
+   * 검색을 한글 맥주 이름으로 검색했을 때 사용하는 메소드 
+   * @param beerName : 맥주 한글 이름
+   * @return
+   */
+  List<Beer> findAllByBeerKrNameContaining(String beerName);
+  
+  /**
+   * 검색을 영어 맥주 이름으로 검색했을 때 사용하는 메소드 
+   * @param beerName : 맥주 영어 이름
+   * @return
+   */
+  List<Beer> findAllByBeerEnNameContaining(String beerName);
+
+  /**
+   * 바코드로 맥주 조회
+   * @param barcode
+   * @return
+   */
+  Optional<Beer> findByBarcode(String barcode);
 }
