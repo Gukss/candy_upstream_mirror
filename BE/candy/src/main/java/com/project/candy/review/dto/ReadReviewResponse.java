@@ -22,12 +22,15 @@ public class ReadReviewResponse{
   String profile_image;
   String contents;
 
-  public static ReadReviewResponse EntityToDto(User user, Review review){
+  Integer like_count;
+
+  public static ReadReviewResponse EntityToDto(User user, Review review, int reviewLikeCount){
     ReadReviewResponse response=ReadReviewResponse.builder()
         .user_name(user.getNickname())
         .profile_image(user.getProfileImage())
         .contents(review.getContents())
         .overall(review.getOverall())
+        .like_count(reviewLikeCount)
         .build();
 
     return response;
