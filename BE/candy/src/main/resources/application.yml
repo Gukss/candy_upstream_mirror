@@ -29,6 +29,11 @@ spring:
         # 콘솔에 뜨는 sql 보기 좋게 만들어준다.
         format_sql: true
 
+  redis:
+    host: ENC(jr0SM42I4qYjhfJ8gelc8SNCmKXv7n5u60vxpRf8nRc=)
+    port: 6379
+    password: ENC(KNbWApPqG31bZT7D95uv0iLjKwbN86Ly)
+
 logging:
   level:
     org:
