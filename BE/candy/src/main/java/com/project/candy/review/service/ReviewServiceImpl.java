@@ -6,6 +6,7 @@ import com.project.candy.exception.exceptionMessage.NotFoundExceptionMessage;
 import com.project.candy.review.dto.CreateReviewRequest;
 import com.project.candy.review.dto.ReadReviewResponse;
 import com.project.candy.review.entity.Review;
+import com.project.candy.review.repository.ReviewLikeRepository;
 import com.project.candy.review.repository.ReviewRepository;
 import com.project.candy.user.entity.User;
 import com.project.candy.user.repository.UserRepository;
@@ -29,6 +30,8 @@ public class ReviewServiceImpl implements ReviewService {
   private final BeerRepository beerRepository;
   private final UserRepository userRepository;
   private final ReviewRepository reviewRepository;
+
+  private final ReviewLikeRepository reviewLikeRepository;
 
   @Override
   @Transactional
@@ -61,7 +64,9 @@ public class ReviewServiceImpl implements ReviewService {
       User user=userRepository.findById(userId)
           .orElseThrow(() -> new NotFoundExceptionMessage(NotFoundExceptionMessage.NOT_FOUND_USER));
 
-      ReadReviewResponse response=ReadReviewResponse.EntityToDto(user,review);
+      int reviewLikeCount = reviewLikeRepository.findAllByReview(review).size();
+
+      ReadReviewResponse response=ReadReviewResponse.EntityToDto(user,review,reviewLikeCount);
 
       return response;
     }).collect(Collectors.toList());

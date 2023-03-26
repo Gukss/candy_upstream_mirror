@@ -7,6 +7,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * packageName    : com.project.candy.review.entity fileName       : ReviewLike date           :
@@ -27,15 +28,15 @@ public class ReviewLike extends BaseTimeEntity {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "review_id")
-  @NotBlank
+  @NotNull
   private Review review;
 
   @OneToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id")
-  @NotBlank
+  @NotNull
   private User user;
 
   @Embedded
-  @NotBlank
+  @NotNull
   private BaseEntity baseEntity;
 }
