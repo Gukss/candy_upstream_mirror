@@ -7,13 +7,8 @@ import 'package:http/http.dart' as http;
 
 class UserApiService {
   // 회원 가입
-  static postSignup({
-    required String nickname,
-    required String gender,
-    required DateTime birth,
-    required String profileImage,
-    required String email,
-  }) async {
+  static Future<bool> postSignup(
+      {required String nickname, gender, profileImage, birth, email}) async {
     final Uri uri = Uri.parse('${RequestInfo.baseUrl}/sign-up');
     final Map<String, String> headers = {
       'Content-Type': RequestInfo.headerJson,
@@ -23,7 +18,7 @@ class UserApiService {
       {
         'nickname': nickname,
         'gender': gender,
-        'birth': birth.toString(),
+        'birth': birth,
         'profileImage': profileImage,
       },
     );
@@ -33,8 +28,10 @@ class UserApiService {
       headers: headers,
       body: body,
     );
-    print(response.statusCode);
-    print(jsonDecode(response.body));
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    }
+    throw Error();
   }
 
   // 유저 정보 조회
@@ -46,7 +43,6 @@ class UserApiService {
       'Content-Type': RequestInfo.headerJson,
       'email': email,
     };
-
     final http.Response response = await http.get(
       uri,
       headers: headers,
@@ -58,6 +54,7 @@ class UserApiService {
           utf8.decode(response.bodyBytes),
         ),
       );
+      print(instance.nickname);
       return instance;
     }
     throw Error();
