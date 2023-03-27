@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:candy/widgets/beer/beer_extra_info.dart';
 import 'package:candy/widgets/beer/beer_info.dart';
 import 'package:candy/widgets/ui/margin.dart';
+import 'package:candy/widgets/review/beer_review_info.dart';
 
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
@@ -90,7 +90,7 @@ class _ReviewCreateState extends State<ReviewCreate> {
                     ),
                   ),
                   const Margin(marginType: MarginType.height, size: 16),
-                  BeerExtraInfo(
+                  BeerReviewInfo(
                     aromaNum: aromaNum,
                     mouthfeelNum: mouthfeelNum,
                     flavorNum: flavorNum,

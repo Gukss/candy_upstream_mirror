@@ -15,9 +15,18 @@ class BeerDetailAppBar extends StatelessWidget implements PreferredSizeWidget {
         },
         icon: const Icon(
           Icons.arrow_back_ios_new_rounded,
-          size: 24,
         ),
       ),
+      title: const Text('맥주 정보 확인'),
+      actions: [
+        IconButton(
+          onPressed: () {},
+          icon: const Icon(
+            Icons.share,
+            size: 24,
+          ),
+        ),
+      ],
     );
   }
 }
