@@ -19,6 +19,6 @@ import org.springframework.data.jpa.repository.Query;
 public interface BeerHistoryRepository extends JpaRepository<BeerHistory, Long> {
 
   Optional<BeerHistory> findByBeerHistoryId(BeerHistoryId beerHistoryId);
-  @Query("select bh from BeerHistory bh join fetch bh.beer")
-  List<BeerHistory> findAllByUser();
+  @Query("select bh from BeerHistory bh join fetch bh.user u where u.id = :userId order by bh.createdAt desc")
+  List<BeerHistory> findAllByUserOrderByCreatedAtDesc(Long userId);
 }
