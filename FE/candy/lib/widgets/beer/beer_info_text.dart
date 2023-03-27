@@ -1,5 +1,6 @@
-import 'package:candy/widgets/ui/margin.dart';
 import 'package:flutter/material.dart';
+
+import 'package:candy/widgets/ui/margin.dart';
 
 class BeerInfoText extends StatelessWidget {
   final String title;
@@ -15,7 +16,10 @@ class BeerInfoText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Text(title),
+        Text(
+          title,
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+        ),
         const Margin(marginType: MarginType.width, size: 16),
         Text(value),
         if (title == '원산지')
