@@ -97,8 +97,9 @@ public class BeerServiceImpl implements BeerService {
 
   @Override
   public List<ReadSearchBeerListResponse> readAllSearchBeerList(String beerName) {
-
+    log.info("확인하자!!!"+beerName);
     boolean isKorean = Pattern.matches("^[ㄱ-ㅎ가-힣]*$", beerName);
+    log.info("김영만"+isKorean);
     List<Beer> beerList = new ArrayList<>();
     if (isKorean) {
       beerList = beerRepository.findAllByBeerKrNameContaining(beerName);
