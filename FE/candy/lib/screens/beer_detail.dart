@@ -1,6 +1,6 @@
-import 'package:candy/api/beer_api_service.dart';
 import 'package:flutter/material.dart';
 
+import 'package:candy/api/beer_api_service.dart';
 import 'package:candy/models/beer/beer_detail_model.dart';
 import 'package:candy/widgets/app_bar/beer_detail_app_bar.dart';
 import 'package:candy/widgets/beer/beer_extra_info.dart';
@@ -35,11 +35,12 @@ class BeerDetail extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  const Margin(marginType: MarginType.height, size: 16),
                   Container(
                     width: double.infinity,
                     color: Colors.grey,
                     child: Padding(
-                      padding: const EdgeInsets.all(24),
+                      padding: const EdgeInsets.fromLTRB(16, 24, 16, 24),
                       child: Column(
                         children: [
                           BeerInfo(
@@ -59,7 +60,6 @@ class BeerDetail extends StatelessWidget {
                             flavorNum: snapshot.data!.flavor,
                             aromaNum: snapshot.data!.aroma,
                             apperanceNum: snapshot.data!.appearance,
-                            readOnly: true,
                           ),
                         ],
                       ),

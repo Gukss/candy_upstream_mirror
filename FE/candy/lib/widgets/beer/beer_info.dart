@@ -1,6 +1,8 @@
-import 'package:candy/widgets/beer/beer_info_text.dart';
-import 'package:candy/widgets/ui/margin.dart';
 import 'package:flutter/material.dart';
+
+import 'package:candy/widgets/ui/margin.dart';
+import 'package:candy/widgets/beer/beer_info_text.dart';
+
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class BeerInfo extends StatelessWidget {
@@ -26,48 +28,29 @@ class BeerInfo extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        beerName['korean']!,
-                        style: const TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      const Icon(
-                        Icons.check,
-                        size: 24,
-                        color: Colors.green,
-                      ),
-                    ],
-                  ),
-                  const Margin(marginType: MarginType.height, size: 4),
-                  Text(
-                    beerName['english']!,
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.black.withOpacity(0.5),
-                    ),
-                  ),
-                ],
+        Row(
+          children: [
+            Text(
+              beerName['korean']!,
+              style: const TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.w700,
               ),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.share,
-                  size: 24,
-                ),
-              ),
-            ],
+            ),
+            const Margin(marginType: MarginType.width, size: 8),
+            const Icon(
+              Icons.check,
+              size: 24,
+              color: Colors.green,
+            ),
+          ],
+        ),
+        const Margin(marginType: MarginType.height, size: 4),
+        Text(
+          beerName['english']!,
+          style: TextStyle(
+            fontSize: 14,
+            color: Colors.black.withOpacity(0.5),
           ),
         ),
         const Margin(marginType: MarginType.height, size: 16),
@@ -86,7 +69,14 @@ class BeerInfo extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Margin(marginType: MarginType.height, size: 16),
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.favorite_rounded,
+                    size: 24,
+                    color: Colors.red,
+                  ),
+                ),
                 RatingBar.builder(
                   ignoreGestures: true,
                   itemSize: 32,
@@ -119,23 +109,6 @@ class BeerInfo extends StatelessWidget {
                   value: '$alcoholLevel%',
                 ),
                 const Margin(marginType: MarginType.height, size: 16),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TextButton.icon(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.favorite_rounded,
-                        size: 24,
-                        color: Colors.red,
-                      ),
-                      label: const Text(
-                        '찜하기',
-                        style: TextStyle(color: Colors.black),
-                      ),
-                    ),
-                  ],
-                ),
               ],
             ),
           ],
