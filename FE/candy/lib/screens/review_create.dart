@@ -1,7 +1,9 @@
+import 'package:flutter/material.dart';
+
 import 'package:candy/widgets/beer/beer_extra_info.dart';
 import 'package:candy/widgets/beer/beer_info.dart';
 import 'package:candy/widgets/ui/margin.dart';
-import 'package:flutter/material.dart';
+
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class ReviewCreate extends StatefulWidget {
@@ -13,35 +15,36 @@ class ReviewCreate extends StatefulWidget {
 
 class _ReviewCreateState extends State<ReviewCreate> {
   final reviewContentController = TextEditingController();
-  late double freshNum;
-  late double bodyNum;
-  late double tasteNum;
+  late double aromaNum;
+  late double mouthfeelNum;
+  late double flavorNum;
+  late double apperanceNum;
 
   void onFreshNumChanged(value) {
     setState(() {
-      freshNum = value;
+      aromaNum = value;
     });
     print(value);
   }
 
   void onBodyNumChanged(value) {
     setState(() {
-      bodyNum = value;
+      mouthfeelNum = value;
     });
   }
 
   void onTasteNumChanged(value) {
     setState(() {
-      tasteNum = value;
+      flavorNum = value;
     });
   }
 
   @override
   void initState() {
     super.initState();
-    freshNum = 0;
-    bodyNum = 0;
-    tasteNum = 0;
+    aromaNum = 0;
+    mouthfeelNum = 0;
+    flavorNum = 0;
   }
 
   @override
@@ -70,7 +73,6 @@ class _ReviewCreateState extends State<ReviewCreate> {
                         'https://justliquor.com.au/2735/cass-fresh-beer-can-355ml.jpg',
                     beerType: '밀맥주',
                     country: '한국',
-                    brandName: '하이트 진로',
                     alcoholLevel: 4.2,
                     rate: 3,
                   ),
@@ -89,9 +91,10 @@ class _ReviewCreateState extends State<ReviewCreate> {
                   ),
                   const Margin(marginType: MarginType.height, size: 16),
                   BeerExtraInfo(
-                    freshNum: freshNum,
-                    bodyNum: bodyNum,
-                    tasteNum: tasteNum,
+                    aromaNum: aromaNum,
+                    mouthfeelNum: mouthfeelNum,
+                    flavorNum: flavorNum,
+                    apperanceNum: apperanceNum,
                     readOnly: false,
                     changeFresh: onFreshNumChanged,
                     changeBody: onBodyNumChanged,

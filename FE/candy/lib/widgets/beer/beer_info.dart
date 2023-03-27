@@ -8,7 +8,6 @@ class BeerInfo extends StatelessWidget {
   final String beerImgSrc;
   final String beerType;
   final String country;
-  final String brandName;
   final double alcoholLevel;
   final double rate;
 
@@ -18,7 +17,6 @@ class BeerInfo extends StatelessWidget {
     required this.beerImgSrc,
     required this.beerType,
     required this.country,
-    required this.brandName,
     required this.alcoholLevel,
     required this.rate,
   });
@@ -28,31 +26,53 @@ class BeerInfo extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            Text(
-              beerName['korean']!,
-              style: const TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.w700,
+        Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        beerName['korean']!,
+                        style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      const Icon(
+                        Icons.check,
+                        size: 24,
+                        color: Colors.green,
+                      ),
+                    ],
+                  ),
+                  const Margin(marginType: MarginType.height, size: 4),
+                  Text(
+                    beerName['english']!,
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.black.withOpacity(0.5),
+                    ),
+                  ),
+                ],
               ),
-            ),
-            const Icon(
-              Icons.check,
-              size: 24,
-              color: Colors.green,
-            ),
-          ],
-        ),
-        Text(
-          beerName['english']!,
-          style: TextStyle(
-            fontSize: 14,
-            color: Colors.black.withOpacity(0.5),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.share,
+                  size: 24,
+                ),
+              ),
+            ],
           ),
         ),
         const Margin(marginType: MarginType.height, size: 16),
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
               width: 104,
@@ -66,6 +86,7 @@ class BeerInfo extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                const Margin(marginType: MarginType.height, size: 16),
                 RatingBar.builder(
                   ignoreGestures: true,
                   itemSize: 32,
@@ -94,13 +115,26 @@ class BeerInfo extends StatelessWidget {
                 ),
                 const Margin(marginType: MarginType.height, size: 24),
                 BeerInfoText(
-                  title: '브랜드',
-                  value: brandName,
-                ),
-                const Margin(marginType: MarginType.height, size: 24),
-                BeerInfoText(
                   title: '도수',
                   value: '$alcoholLevel%',
+                ),
+                const Margin(marginType: MarginType.height, size: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextButton.icon(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.favorite_rounded,
+                        size: 24,
+                        color: Colors.red,
+                      ),
+                      label: const Text(
+                        '찜하기',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

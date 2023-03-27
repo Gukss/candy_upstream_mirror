@@ -18,23 +18,6 @@ class BeerDetailAppBar extends StatelessWidget implements PreferredSizeWidget {
           size: 24,
         ),
       ),
-      actions: [
-        IconButton(
-          onPressed: () {},
-          icon: const Icon(
-            Icons.edit,
-            size: 24,
-          ),
-        ),
-        IconButton(
-          onPressed: () {},
-          icon: const Icon(
-            Icons.favorite_rounded,
-            size: 24,
-            color: Colors.red,
-          ),
-        ),
-      ],
     );
   }
 }

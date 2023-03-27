@@ -1,6 +1,7 @@
+import 'package:flutter/material.dart';
+
 import 'package:candy/widgets/beer/beer_extra_info.dart';
 import 'package:candy/widgets/beer/beer_info.dart';
-import 'package:flutter/material.dart';
 
 class BarcodeCheck extends StatelessWidget {
   const BarcodeCheck({super.key});
@@ -56,14 +57,14 @@ class BarcodeCheck extends StatelessWidget {
                         'https://justliquor.com.au/2735/cass-fresh-beer-can-355ml.jpg',
                     beerType: '밀맥주',
                     country: '한국',
-                    brandName: '하이트 진로',
                     alcoholLevel: 4.2,
                     rate: 3),
                 BeerExtraInfo(
-                  freshNum: 1,
+                  apperanceNum: 1,
+                  mouthfeelNum: 1,
+                  flavorNum: 1,
+                  aromaNum: 1,
                   readOnly: true,
-                  bodyNum: 1,
-                  tasteNum: 1,
                 ),
               ],
             ),
