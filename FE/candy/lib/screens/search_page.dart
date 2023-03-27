@@ -1,64 +1,88 @@
+import 'package:candy/api/beer_api_service.dart';
+import 'package:candy/models/beer/beer_search_list_model.dart';
+import 'package:candy/stores/store.dart';
 import 'package:candy/widgets/beer/beer_image.dart';
 import 'package:candy/widgets/ui/margin.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class SearchPage extends StatelessWidget {
-  const SearchPage({super.key});
+  final SearchController searchController;
 
-  List<Map<String, dynamic>> searchResults() {
-    return [
-      for (int i = 0; i < 11; i++)
-        {
-          'name': {
-            'korean': '카스 프레시',
-            'english': 'Cass Fresh',
-          },
-          'beerImgSrc':
-              'https://justliquor.com.au/2735/cass-fresh-beer-can-355ml.jpg',
-        }
-    ];
+  const SearchPage({
+    super.key,
+    required this.searchController,
+  });
+
+  Future<List<BeerSearchListModel>> searchResults() async {
+    final List<BeerSearchListModel> results =
+        await BeerApiService.getBeerSearch(
+            searchInput: searchController.searchText.value);
+    return results;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const SearchPageAppBar(),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              '< 카스 > 검색 결과',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            const Margin(marginType: MarginType.height, size: 16),
-            Expanded(
-              child: ListView.separated(
-                itemCount: (searchResults().length / 2).ceil(),
-                separatorBuilder: (context, index) {
-                  return const Margin(marginType: MarginType.height, size: 16);
-                },
-                itemBuilder: (context, index) {
-                  return SearchResultRow(
-                    index: index,
-                    searchResults: searchResults(),
-                  );
-                },
-              ),
-            ),
-          ],
+        appBar: SearchPageAppBar(
+          searchText: searchController.searchText.value,
         ),
-      ),
-    );
+        body: FutureBuilder(
+          future: searchResults(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      '< ${searchController.searchText.value} > 검색 결과',
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    const Margin(marginType: MarginType.height, size: 16),
+                    Expanded(
+                      child: ListView.separated(
+                        itemCount: (snapshot.data!.length / 2).ceil(),
+                        separatorBuilder: (context, index) {
+                          return const Margin(
+                              marginType: MarginType.height, size: 16);
+                        },
+                        itemBuilder: (context, index) {
+                          return SearchResultRow(
+                            index: index,
+                            searchResults: snapshot.data!,
+                            searchText: searchController.searchText.value,
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }
+            return Center(
+              child: Column(
+                children: const [
+                  CircularProgressIndicator(),
+                ],
+              ),
+            );
+          },
+        ));
   }
 }
 
 class SearchPageAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const SearchPageAppBar({super.key});
+  final String searchText;
+
+  const SearchPageAppBar({
+    super.key,
+    required this.searchText,
+  });
 
   @override
   Size get preferredSize => const Size.fromHeight(56);
@@ -68,28 +92,46 @@ class SearchPageAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: Colors.grey,
       leading: IconButton(
-        onPressed: () {},
+        onPressed: () {
+          Get.back();
+        },
         icon: const Icon(
           Icons.arrow_back_ios_new_rounded,
         ),
       ),
-      actions: const [SearchPageSearchBox()],
+      actions: [
+        SearchPageSearchBox(
+          searchText: searchText,
+        )
+      ],
     );
   }
 }
 
 class SearchPageSearchBox extends StatefulWidget {
-  const SearchPageSearchBox({super.key});
+  final String searchText;
+  const SearchPageSearchBox({
+    super.key,
+    required this.searchText,
+  });
 
   @override
   State<SearchPageSearchBox> createState() => _SearchPageSearchBoxState();
 }
 
 class _SearchPageSearchBoxState extends State<SearchPageSearchBox> {
-  final TextEditingController searchController = TextEditingController();
+  final TextEditingController searchTextFieldController =
+      TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    searchTextFieldController.text = widget.searchText;
+  }
 
   @override
   Widget build(BuildContext context) {
+    final SearchController searchController = Get.find(tag: 'search');
     return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: 10,
@@ -98,17 +140,18 @@ class _SearchPageSearchBoxState extends State<SearchPageSearchBox> {
       child: SizedBox(
         width: 280,
         child: TextField(
-          controller: searchController,
+          controller: searchTextFieldController,
           textInputAction: TextInputAction.search,
           onSubmitted: (value) {
-            print(value);
+            searchController.searchText.value = searchTextFieldController.text;
           },
           textAlignVertical: TextAlignVertical.center,
           cursorColor: Colors.black,
           decoration: InputDecoration(
             suffixIcon: IconButton(
               onPressed: () {
-                print(searchController.text);
+                searchController.searchText.value =
+                    searchTextFieldController.text;
               },
               icon: const Icon(
                 Icons.search_rounded,
@@ -132,12 +175,14 @@ class _SearchPageSearchBoxState extends State<SearchPageSearchBox> {
 
 class SearchResultRow extends StatelessWidget {
   final int index;
-  final List<Map<String, dynamic>> searchResults;
+  final String searchText;
+  final List<BeerSearchListModel> searchResults;
 
   const SearchResultRow({
     super.key,
     required this.index,
     required this.searchResults,
+    required this.searchText,
   });
 
   @override
@@ -148,13 +193,13 @@ class SearchResultRow extends StatelessWidget {
         SearchResultItem(
           index: index * 2,
           searchResults: searchResults,
-          searchedWord: '카스',
+          searchText: 'searchText',
         ),
         if (index * 2 + 1 < searchResults.length)
           SearchResultItem(
             index: index * 2 + 1,
             searchResults: searchResults,
-            searchedWord: '카스',
+            searchText: 'searchText',
           ),
       ],
     );
@@ -162,13 +207,13 @@ class SearchResultRow extends StatelessWidget {
 }
 
 class SearchResultItem extends StatelessWidget {
-  final String searchedWord;
+  final String searchText;
   final int index;
-  final List<Map<String, dynamic>> searchResults;
+  final List<BeerSearchListModel> searchResults;
 
   const SearchResultItem({
     super.key,
-    required this.searchedWord,
+    required this.searchText,
     required this.index,
     required this.searchResults,
   });
@@ -181,31 +226,37 @@ class SearchResultItem extends StatelessWidget {
         BeerImage(
           backSize: 152,
           backColor: Colors.grey,
-          beerImgSrc: searchResults[index]['beerImgSrc'],
+          beerImgSrc: searchResults[index].beerImageUrl,
         ),
         const Margin(marginType: MarginType.height, size: 4),
         Row(
           children: [
-            for (int i = 0;
-                i < searchResults[index]['name']['korean'].length;
-                i++)
+            for (int i = 0; i < searchResults[index].beerNameKR.length; i++)
               Text(
-                searchResults[index]['name']['korean'][i],
+                searchResults[index].beerNameKR[i],
                 style: TextStyle(
                     fontSize: 16,
-                    color: searchedWord
-                            .contains(searchResults[index]['name']['korean'][i])
+                    color:
+                        searchText.contains(searchResults[index].beerNameKR[i])
+                            ? Colors.amber
+                            : null),
+              )
+          ],
+        ),
+        Row(
+          children: [
+            for (int i = 0; i < searchResults[index].beerNameEn.length; i++)
+              Text(
+                searchResults[index].beerNameEn[i],
+                style: TextStyle(
+                    fontSize: 16,
+                    color: searchText.toLowerCase().contains(
+                              searchResults[index].beerNameEn[i].toLowerCase(),
+                            )
                         ? Colors.amber
                         : null),
               )
           ],
-        ),
-        Text(
-          'Cass Fresh',
-          style: TextStyle(
-            fontSize: 12,
-            color: Colors.black.withOpacity(0.5),
-          ),
         ),
       ],
     );
