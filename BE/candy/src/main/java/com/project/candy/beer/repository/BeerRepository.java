@@ -67,7 +67,7 @@ public interface BeerRepository extends JpaRepository<Beer, Long> {
    *
    * @return
    */
-  @Query(nativeQuery = true, value = "select beer_id, appearance, mouthfeel, flavor, aroma, overall, " +
+  @Query(nativeQuery = true, value = "select beer_id as beerId, appearance, mouthfeel, flavor, aroma, overall, " +
           "avg(appearance) as appearanceAvg, avg(mouthfeel) as mouthfeelAvg, avg(flavor) as flavorAvg, " +
           "avg(aroma) as aromaAvg, avg(overall) as overallAvg from review " +
           "group by beer_id, appearance, mouthfeel, flavor, aroma, overall with rollup " +

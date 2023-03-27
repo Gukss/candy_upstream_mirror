@@ -170,7 +170,7 @@ public class BeerServiceImpl implements BeerService {
                 ps.setDouble(3, beerAvg.getMouthfeelAvg());
                 ps.setDouble(4, beerAvg.getAppearanceAvg());
                 ps.setDouble(5, beerAvg.getOverallAvg());
-                ps.setLong(6, beerAvg.getBeer_id());
+                ps.setLong(6, beerAvg.getBeerId());
               }
             });
   }
