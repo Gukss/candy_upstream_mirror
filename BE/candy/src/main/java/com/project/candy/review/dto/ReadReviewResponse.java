@@ -17,20 +17,23 @@ import lombok.NoArgsConstructor;
 @Getter
 public class ReadReviewResponse{
 
-  String user_name;
+  String userName;
   double overall;
-  String profile_image;
+  String profileImage;
   String contents;
 
-  Integer like_count;
+  Integer likeCount;
 
-  public static ReadReviewResponse EntityToDto(User user, Review review, int reviewLikeCount){
+  Boolean isLikes;
+
+  public static ReadReviewResponse EntityToDto(User user, Review review, int reviewLikeCount,boolean isLikes){
     ReadReviewResponse response=ReadReviewResponse.builder()
-        .user_name(user.getNickname())
-        .profile_image(user.getProfileImage())
+        .userName(user.getNickname())
+        .profileImage(user.getProfileImage())
         .contents(review.getContents())
         .overall(review.getOverall())
-        .like_count(reviewLikeCount)
+        .likeCount(reviewLikeCount)
+        .isLikes(isLikes)
         .build();
 
     return response;

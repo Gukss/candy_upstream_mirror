@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface ReviewService {
 
-  boolean CreateReview(long beerId, CreateReviewRequest createReviewRequest);
+  boolean CreateReview(String userEmail,long beerId, CreateReviewRequest createReviewRequest);
 
-  List<ReadReviewResponse> ReadAllReview(long beerId);
+  List<ReadReviewResponse> ReadAllReview(long beerId,String userEmail);
 }

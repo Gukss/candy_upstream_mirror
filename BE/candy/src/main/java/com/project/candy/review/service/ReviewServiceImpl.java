@@ -36,8 +36,8 @@ public class ReviewServiceImpl implements ReviewService {
   @Override
   @Transactional
   // 하나의 맥주에 대해 사용자는 하나의 리뷰만 만들 수 있다.
-  public boolean CreateReview(long beerId, CreateReviewRequest createReviewRequest) {
-    User user=userRepository.findByEmail(createReviewRequest.getUserEmail())
+  public boolean CreateReview(String userEmail,long beerId, CreateReviewRequest createReviewRequest) {
+    User user=userRepository.findByEmail(userEmail)
         .orElseThrow(() -> new NotFoundExceptionMessage(NotFoundExceptionMessage.NOT_FOUND_USER));
 
     Beer beer=beerRepository.findById(beerId)
@@ -54,9 +54,12 @@ public class ReviewServiceImpl implements ReviewService {
   }
 
   @Override
-  public List<ReadReviewResponse> ReadAllReview(long beerId) {
+  public List<ReadReviewResponse> ReadAllReview(long beerId,String userEmail) {
     Beer beer = beerRepository.findById(beerId)
         .orElseThrow(() -> new NotFoundExceptionMessage(NotFoundExceptionMessage.NOT_FOUND_BEER));
+
+    User LoginUser=userRepository.findByEmail(userEmail)
+        .orElseThrow(() -> new NotFoundExceptionMessage(NotFoundExceptionMessage.NOT_FOUND_USER));
 
     List<ReadReviewResponse> reviewList =reviewRepository.findAllByBeer(beer).stream().map(review -> {
 
@@ -66,7 +69,9 @@ public class ReviewServiceImpl implements ReviewService {
 
       int reviewLikeCount = reviewLikeRepository.findAllByReview(review).size();
 
-      ReadReviewResponse response=ReadReviewResponse.EntityToDto(user,review,reviewLikeCount);
+      boolean isLikes= reviewLikeRepository.findByUserAndReview(LoginUser,review).isPresent();
+
+      ReadReviewResponse response=ReadReviewResponse.EntityToDto(user,review,reviewLikeCount,isLikes);
 
       return response;
     }).collect(Collectors.toList());

@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CreateReviewRequest {
 
-  String userEmail;
   double aroma;
   double mouthfeel;
   double flavor;

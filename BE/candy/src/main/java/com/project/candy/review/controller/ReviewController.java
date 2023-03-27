@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,18 +27,18 @@ public class ReviewController {
   private final ReviewService reviewService;
 
   @PostMapping("/{beer-id}")
-  public ResponseEntity<?> createReview(@PathVariable("beer-id") long beerId,
+  public ResponseEntity<?> createReview(@RequestHeader("email") String userEmail,@PathVariable("beer-id") long beerId,
       @RequestBody CreateReviewRequest createReviewRequest) {
 
-    if(reviewService.CreateReview(beerId, createReviewRequest)){
+    if(reviewService.CreateReview(userEmail,beerId, createReviewRequest)){
       return new ResponseEntity<>(true, HttpStatus.CREATED);
     };
     return new ResponseEntity<>(false,HttpStatus.OK);
   }
 
   @GetMapping("/{beer-id}")
-  public ResponseEntity<?> readAllReview(@PathVariable("beer-id") long beerId) {
-    List<ReadReviewResponse> response=reviewService.ReadAllReview(beerId);
+  public ResponseEntity<?> readAllReview(@RequestHeader("email") String userEmail,@PathVariable("beer-id") long beerId) {
+    List<ReadReviewResponse> response=reviewService.ReadAllReview(beerId,userEmail);
     return ResponseEntity.ok(response);
   }
 }
