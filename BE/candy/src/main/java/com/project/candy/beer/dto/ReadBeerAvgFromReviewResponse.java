@@ -8,7 +8,7 @@ package com.project.candy.beer.dto;
  */
 public interface ReadBeerAvgFromReviewResponse {
 
-  Long getBeer_id();
+  Long getBeerId();
 
   Double getAroma();
 
