@@ -80,7 +80,7 @@ class _StyleRecommendationState extends State<StyleRecommendation> {
           ),
         ),
         const Margin(marginType: MarginType.height, size: 16),
-        const SelectedStyleBeerList(),
+        SelectedStyleBeerList(Beerstyle: selectedCategory),
       ],
     );
   }
