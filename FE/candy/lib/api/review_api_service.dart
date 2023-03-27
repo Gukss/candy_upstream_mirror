@@ -42,8 +42,10 @@ class ReviewApiService {
   }
 
   // 특정 맥주 리뷰 전체 조회
-  static Future<List<AllReviewListModel>> getBeerAllReview(int beerId,
-      {required String email}) async {
+  static Future<List<AllReviewListModel>> getBeerAllReview({
+    required int beerId,
+    required String email,
+  }) async {
     final Uri uri = Uri.parse('${RequestInfo.baseUrl}/review/$beerId');
     final Map<String, String> headers = {
       'Content-Type': RequestInfo.headerJson,
@@ -65,7 +67,7 @@ class ReviewApiService {
   }
 
   // 리뷰 좋아요
-  static postReviewLike({
+  static Future<bool> postReviewLike({
     required int reviewId,
     required String email,
   }) async {
@@ -79,12 +81,14 @@ class ReviewApiService {
       uri,
       headers: headers,
     );
-    print('like');
-    print(response.statusCode);
+    if (response.statusCode == 201) {
+      return true;
+    }
+    return false;
   }
 
   // 리뷰 좋아요 취소
-  static deleteReviewLike({
+  static Future<dynamic> deleteReviewLike({
     required int reviewId,
     required String email,
   }) async {
@@ -98,7 +102,9 @@ class ReviewApiService {
       uri,
       headers: headers,
     );
-    print('delete');
-    print(response.statusCode);
+    if (response.statusCode == 200) {
+      return true;
+    }
+    return false;
   }
 }

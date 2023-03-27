@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:candy/api/request_info.dart';
+import 'package:candy/models/beer/all_beer_list_model.dart';
 import 'package:candy/models/beer/beer_detail_model.dart';
 import 'package:candy/models/beer/beer_search_list_model.dart';
 
@@ -32,7 +33,7 @@ class BeerApiService {
   }
 
   // 전체 맥주 데이터 요청
-  static Future<BeerDetailModel> getTotalBeerList({
+  static Future<List<AllBeerListModel>> getAllBeerList({
     required String email,
   }) async {
     final Uri uri = Uri.parse('${RequestInfo.baseUrl}/beer');
@@ -40,15 +41,15 @@ class BeerApiService {
       'Content-Type': RequestInfo.headerJson,
       'email': email,
     };
-    print(uri);
     final http.Response response = await http.get(uri, headers: headers);
-    print(response.statusCode);
     if (response.statusCode == 200) {
-      print(
-        jsonDecode(
-          utf8.decode(response.bodyBytes),
-        ),
-      );
+      final List<AllBeerListModel> instances = [];
+      for (final review in jsonDecode(
+        utf8.decode(response.bodyBytes),
+      )) {
+        instances.add(AllBeerListModel.fromJson(review));
+      }
+      return instances;
     }
     throw Error();
   }
@@ -82,8 +83,8 @@ class BeerApiService {
   }
 
   // 바코드로 맥주 검색
-  static getBarcodeSearch(
-    String barcode, {
+  static Future<BeerDetailModel> getBarcodeSearch({
+    required String barcode,
     required String email,
   }) async {
     final Uri uri = Uri.parse('${RequestInfo.baseUrl}/beer/barcode/$barcode');
@@ -97,9 +98,76 @@ class BeerApiService {
       headers: headers,
     );
     if (response.statusCode == 200) {
-      print(response.body);
-    } else if (response.statusCode == 204) {
-      print('없는 바코드 정보!!!');
+      final BeerDetailModel instance;
+      instance = BeerDetailModel.fromJson(
+        jsonDecode(
+          utf8.decode(response.bodyBytes),
+        ),
+      );
+      return instance;
+    } else if (response.statusCode == 204) {}
+    throw Error();
+  }
+
+  // 특정 맥주 좋아요
+  static Future<bool> postBeerLike({
+    required String email,
+    required int beerId,
+  }) async {
+    final Uri uri = Uri.parse('${RequestInfo.baseUrl}/like/$beerId');
+    final Map<String, String> headers = {
+      'Content-Type': RequestInfo.headerJson,
+      'email': email,
+    };
+
+    final http.Response response = await http.post(uri, headers: headers);
+    if (response.statusCode == 201) {
+      return true;
     }
+    return false;
+  }
+
+  // 특정 맥주 좋아요 취소
+  static Future<bool> deleteBeerLike({
+    required String email,
+    required int beerId,
+  }) async {
+    final Uri uri = Uri.parse('${RequestInfo.baseUrl}/like/$beerId');
+    final Map<String, String> headers = {
+      'Content-Type': RequestInfo.headerJson,
+      'email': email,
+    };
+
+    final http.Response response = await http.delete(
+      uri,
+      headers: headers,
+    );
+    if (response.statusCode == 201) {
+      return true;
+    }
+    return false;
+  }
+
+  // 맥주 도감 등록
+  static postBeerDrunk({
+    required String email,
+    required int beerId,
+  }) async {
+    final Uri uri = Uri.parse('${RequestInfo.baseUrl}/beer-history');
+    final Map<String, String> headers = {
+      'Content-Type': RequestInfo.headerJson,
+      'email': email,
+    };
+    final String body = '$beerId';
+
+    final http.Response response = await http.post(
+      uri,
+      headers: headers,
+      body: body,
+    );
+    if (response.statusCode == 201) {
+      return true;
+    }
+    return false;
   }
 }
