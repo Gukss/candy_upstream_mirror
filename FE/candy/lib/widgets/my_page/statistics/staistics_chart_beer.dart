@@ -1,35 +1,33 @@
 import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 
 import 'package:pie_chart/pie_chart.dart';
 
-class StatisticsChartBeer extends StatefulWidget {
-  const StatisticsChartBeer({Key? key}) : super(key: key);
+class StatisticsChartBeer extends StatelessWidget {
+  final List pieStyle;
 
-  @override
-  StatisticsChartBeerState createState() => StatisticsChartBeerState();
-}
+  StatisticsChartBeer({
+    super.key,
+    required this.pieStyle,
+  });
 
-class StatisticsChartBeerState extends State<StatisticsChartBeer> {
-  final dataMap = <String, double>{
-    "라거": 3,
-    "밀맥주": 3,
-    "흑맥주fkqslekekk": 4,
-    "아메리칸라거": 5,
-    "기타": 1,
-  };
+  late Map<String, double> dataMap = {};
 
   final colorList = <Color>[
-    Color.fromARGB(255, 252, 240, 170),
-    Color(0xFFFDD692),
-    Color.fromARGB(255, 235, 203, 128),
-    Color(0xFFF5B85E),
+    const Color.fromARGB(255, 252, 240, 170),
+    const Color(0xFFFDD692),
+    const Color.fromARGB(255, 235, 203, 128),
+    const Color(0xFFF5B85E),
     const Color(0xffa3a1a1),
   ];
 
   @override
   Widget build(BuildContext context) {
+    print(pieStyle);
+
+    for (Map<String, dynamic> data in pieStyle) {
+      dataMap['${data['name']}'] = data['value'];
+    }
     final chart = PieChart(
         dataMap: dataMap,
         chartRadius: math.min(MediaQuery.of(context).size.width, 300),
@@ -46,7 +44,7 @@ class StatisticsChartBeerState extends State<StatisticsChartBeer> {
     return Container(
       child: Column(children: [
         Container(
-            margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
+            margin: const EdgeInsets.fromLTRB(20, 0, 0, 0),
             width: double.infinity,
             child: const Text(
               '종류별 마신 맥주',
