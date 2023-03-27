@@ -26,6 +26,8 @@ public class ReadReviewResponse{
 
   Boolean isLikes;
 
+  long reviewId;
+
   public static ReadReviewResponse EntityToDto(User user, Review review, int reviewLikeCount,boolean isLikes){
     ReadReviewResponse response=ReadReviewResponse.builder()
         .userName(user.getNickname())
@@ -34,6 +36,7 @@ public class ReadReviewResponse{
         .overall(review.getOverall())
         .likeCount(reviewLikeCount)
         .isLikes(isLikes)
+        .reviewId(review.getReviewId())
         .build();
 
     return response;
