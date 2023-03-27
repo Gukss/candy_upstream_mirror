@@ -67,7 +67,7 @@ public class ReviewServiceImpl implements ReviewService {
       User user=userRepository.findById(userId)
           .orElseThrow(() -> new NotFoundExceptionMessage(NotFoundExceptionMessage.NOT_FOUND_USER));
 
-      int reviewLikeCount = reviewLikeRepository.findAllByReview(review).size();
+      int reviewLikeCount = reviewLikeRepository.findAllByReview(review).stream().filter(reviewLike -> reviewLike.getBaseEntity().isDelete()==false).collect(Collectors.toList()).size();
 
       boolean isLikes= reviewLikeRepository.findByUserAndReview(LoginUser,review).isPresent();
 

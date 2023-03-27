@@ -23,6 +23,7 @@ public interface ReviewLikeRepository extends JpaRepository<ReviewLike, Long> {
    * @param review
    * @return
    */
+
   Optional<ReviewLike> findByUserAndReview(User user, Review review);
 
   /**
