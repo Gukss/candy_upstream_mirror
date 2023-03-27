@@ -8,15 +8,15 @@ package com.project.candy.beer.dto;
  */
 public interface ReadBeerListResponse {
 
-  Long getBeer_id();
+  Long getBeerId();
 
-  String getBeer_kr_name();
+  String getBeerKrName();
 
-  String getBeer_en_name();
+  String getBeerEnName();
 
-  String getBeer_image();
+  String getBeerImageUrl();
 
-  Integer getIs_drink();
+  Integer getIsDrink();
 
-  Integer getIs_like();
+  Integer getIsLike();
 }

@@ -49,7 +49,7 @@ public class ReadBeerDetailResponse {
 
   private boolean isLike;
 
-  public static ReadBeerDetailResponse EntityToDTO(Beer beer, ReadCountryResponse readCountryResponse) {
+  public static ReadBeerDetailResponse entityToDTO(Beer beer, ReadCountryResponse readCountryResponse) {
     return ReadBeerDetailResponse.builder()
             .beerId(beer.getId())
             .abv(beer.getAbv())
@@ -57,7 +57,7 @@ public class ReadBeerDetailResponse {
             .aroma(beer.getAroma())
             .flavor(beer.getFlavor())
             .mouthfeel(beer.getMouthfeel())
-            .overall(beer.getOverall())
+            .overall(beer.getOverall() / 4.0)
             .beerKrName(beer.getBeerKrName())
             .beerEnName(beer.getBeerEnName())
             .style(beer.getStyle())
