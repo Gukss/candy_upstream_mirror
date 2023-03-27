@@ -1,9 +1,9 @@
-class TotalBeerListModel {
+class AllBeerList {
   late final int beerId;
   late final String beerNameKR, beerNameEN, beerImageUrl;
   late int isDrunk, isLiked;
 
-  TotalBeerListModel.fromJson(Map<String, dynamic> json) {
+  AllBeerList.fromJson(Map<String, dynamic> json) {
     beerId = json['beerId'];
     beerNameKR = json['beerKrName'];
     beerNameEN = json['beerEnName'];
