@@ -2,7 +2,12 @@ import 'package:candy/widgets/recommendation/recommendation_beers.dart';
 import 'package:flutter/material.dart';
 
 class SelectedStyleBeerList extends StatelessWidget {
-  const SelectedStyleBeerList({super.key});
+  final String Beerstyle;
+
+  const SelectedStyleBeerList({
+    super.key,
+    required this.Beerstyle,
+  });
 
   @override
   Widget build(BuildContext context) {
