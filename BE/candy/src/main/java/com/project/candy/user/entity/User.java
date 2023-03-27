@@ -21,6 +21,7 @@ import java.time.LocalDate;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
+@ToString
 public class User extends BaseTimeEntity {
 
     @Id
