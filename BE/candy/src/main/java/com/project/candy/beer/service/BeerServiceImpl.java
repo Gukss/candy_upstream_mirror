@@ -25,6 +25,7 @@ import org.springframework.jdbc.core.ParameterizedPreparedStatementSetter;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -54,13 +55,14 @@ public class BeerServiceImpl implements BeerService {
   @Override
   public ReadBeerDetailResponse readBeerDetail(Long beerId, String userEmail) {
     // 상세 정보에 들어갈 맥주 정보
-    Beer beer = beerRepository.findById(beerId).orElseThrow(() -> new NotFoundExceptionMessage());
+    Beer beer = beerRepository.findById(beerId).orElseThrow(
+            () -> new NotFoundExceptionMessage(NotFoundExceptionMessage.NOT_FOUND_BEER));
     // 상세 정보에 들어갈 나라 정보 (한글/영문 이름, 이미지 url)
     //todo: 예외 메시지 바꾸기
     Country foundCountry = countryRepository.findById(beer.getCountry().getId()).orElseThrow(() -> new NotFoundExceptionMessage(NotFoundExceptionMessage.NOT_FOUND_BEER));
     ReadCountryResponse readCountryResponse = ReadCountryResponse.entityToDTO(foundCountry);
     // 위 두 정보를 리턴 DTO에 넣어준다.
-    ReadBeerDetailResponse readBeerDetailResponse = ReadBeerDetailResponse.EntityToDTO(beer, readCountryResponse);
+    ReadBeerDetailResponse readBeerDetailResponse = ReadBeerDetailResponse.entityToDTO(beer, readCountryResponse);
 
     // 현재 요청을 보낸 사용자가 해당 맥주를 마셨는지, 찜했는지 판단하기 위해 사용자 정보를 불러온다.
     User user = userRepository.findByEmail(userEmail).orElseThrow(() -> new NotFoundExceptionMessage());
@@ -97,9 +99,9 @@ public class BeerServiceImpl implements BeerService {
 
   @Override
   public List<ReadSearchBeerListResponse> readAllSearchBeerList(String beerName) {
-    log.info("확인하자!!!"+beerName);
+    log.info("확인하자!!!" + beerName);
     boolean isKorean = Pattern.matches("^[ㄱ-ㅎ가-힣]*$", beerName);
-    log.info("김영만"+isKorean);
+    log.info("김영만" + isKorean);
     List<Beer> beerList = new ArrayList<>();
     if (isKorean) {
       beerList = beerRepository.findAllByBeerKrNameContaining(beerName);
@@ -120,11 +122,12 @@ public class BeerServiceImpl implements BeerService {
   @Override
   public ReadBeerDetailResponse readBeerDetailByBarcode(String barcode, String userEmail) {
 
-    Beer beer = beerRepository.findByBarcode(barcode).orElseThrow(
-            () -> new NotFoundExceptionMessage(NotFoundExceptionMessage.NOT_FOUND_BEER));
+    Beer beer = beerRepository.findByBarcode(barcode).orElse(null);
 
+    if (beer == null) {
+      return null;
+    }
     ReadBeerDetailResponse resBeerDetail = readBeerDetail(beer.getId(), userEmail);
-
     return resBeerDetail;
   }
 
@@ -150,12 +153,10 @@ public class BeerServiceImpl implements BeerService {
 
   /**
    * updateBeer() 메소드에서 배치 처리를 위해 호출하는 메소드
+   *
    * @param beerAvgList
    */
   public void batchUpdate(List<ReadBeerAvgFromReviewResponse> beerAvgList) {
-    for (ReadBeerAvgFromReviewResponse res: beerAvgList) {
-      System.out.println(res.getBeer_id() + " " + res.getAppearanceAvg() + " " + res.getAromaAvg() + " " + res.getFlavorAvg() + " " + res.getMouthfeelAvg() + " " + res.getOverallAvg());
-    }
     jdbcTemplate.batchUpdate("update test set " +
                     "test.aroma = ?, test.flavor = ?, test.mouthfeel = ?, " +
                     "test.appearance = ?, test.overall = ? where test.beer_id = ?",

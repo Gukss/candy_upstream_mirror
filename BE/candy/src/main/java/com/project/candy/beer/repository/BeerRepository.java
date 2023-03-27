@@ -24,18 +24,17 @@ public interface BeerRepository extends JpaRepository<Beer, Long> {
    * 맥주의 전체 리스트를 반환하지만, 마신 맥주인지, 찜한 맥주인지 변수와 함께 반환하는 메소드
    */
   @Query(nativeQuery = true, value =
-          "select is_drink.*, is_like.is_like " +
-                  "from " +
-                  "(select beer.beer_id, beer_kr_name, beer_en_name, beer_image, count(bh.beer_id) as is_drink " +
+          "select isDrink.*, isLike.isLike " +
+                  "from (select beer.beer_id as beerId, beer_kr_name as beerKrName, beer_en_name as beerEnName, beer_image as beerImageUrl, count(bh.beer_id) as isDrink " +
                   "from beer " +
                   "left join beer_history bh on beer.beer_id = bh.beer_id and bh.user_id = :user_id and bh.is_delete = false " +
-                  "group by beer.beer_id, bh.user_id) is_drink " +
+                  "group by beerId, bh.user_id) isDrink " +
                   "join " +
-                  "(select beer.beer_id, count(likes.beer_id) as is_like " +
+                  "(select beer.beer_id, count(likes.beer_id) as isLike " +
                   "from beer " +
                   "left join likes on beer.beer_id = likes.beer_id and likes.user_id = :user_id and likes.is_delete = false " +
-                  "group by beer.beer_id, likes.user_id) is_like " +
-                  "on is_drink.beer_id = is_like.beer_id;")
+                  "group by beer.beer_id, likes.user_id) isLike " +
+                  "on isDrink.beerId = isLike.beer_id;")
   List<ReadBeerListResponse> readAllBeerList(@Param("user_id") long userId);
 
   /**

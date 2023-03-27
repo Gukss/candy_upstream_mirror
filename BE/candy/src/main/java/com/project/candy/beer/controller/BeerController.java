@@ -1,7 +1,7 @@
 package com.project.candy.beer.controller;
 
+import com.project.candy.beer.dto.ReadBeerDetailResponse;
 import com.project.candy.beer.service.BeerService;
-import com.project.candy.exception.exceptionMessage.NotFoundExceptionMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -40,6 +40,11 @@ public class BeerController {
   @GetMapping(value = "/barcode/{barcode}")
   public ResponseEntity<?> searchBeerByBarcode(
           @RequestHeader(value = "email") String userEmail, @PathVariable(value = "barcode") String barcode) {
-    return new ResponseEntity<>(beerService.readBeerDetailByBarcode(barcode, userEmail), HttpStatus.OK);
+    ReadBeerDetailResponse res = beerService.readBeerDetailByBarcode(barcode, userEmail);
+    if (res == null) {
+      // status : 204
+      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+    return new ResponseEntity<>(res, HttpStatus.OK);
   }
 }
