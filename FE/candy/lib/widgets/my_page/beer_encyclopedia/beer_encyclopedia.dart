@@ -26,21 +26,23 @@ class _BeerEncyclopediaState extends State<BeerEncyclopedia> {
         [
           DropdownMenuItem<String>(
             value: item,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 2),
-              child: Text(
-                item,
-                style: const TextStyle(
-                  fontSize: 14,
-                ),
+            child: Text(
+              item,
+              style: const TextStyle(
+                fontSize: 14,
               ),
             ),
           ),
-          //If it's last item, we will not add Divider after it.
           if (item != items.last)
             const DropdownMenuItem<String>(
               enabled: false,
-              child: Divider(),
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                child: Divider(
+                  height: 20,
+                  thickness: 10,
+                ),
+              ),
             ),
         ],
       );
