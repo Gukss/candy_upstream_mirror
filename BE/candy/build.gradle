@@ -55,6 +55,9 @@ dependencies {
 
 	// Redis 추가
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+	//외부 api 통신을 위해, webclient 사용을 위해
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 }
 
 tasks.named('test') {
