@@ -10,7 +10,7 @@ class Splash extends StatelessWidget {
   const Splash({super.key});
 
   // 토큰 존재 확인 및 유저 정보 저장
-  Future<bool> checkIsLogined(UserController userController) async {
+  Future<bool> checkIsLogined(StoreController storeController) async {
     // 로그인 여부(토큰 유효 여부)
     bool? result;
     if (await AuthApi.instance.hasToken()) {
@@ -20,7 +20,7 @@ class Splash extends StatelessWidget {
         result = true;
         // 유저 정보 확인 및 저장
         User user = await UserApi.instance.me();
-        userController.userEmail.value = user.kakaoAccount!.email!;
+        storeController.userEmail.value = user.kakaoAccount!.email!;
       } catch (e) {}
     }
     result ??= false;
@@ -31,9 +31,9 @@ class Splash extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final UserController userController = Get.find();
+    final StoreController storeController = Get.find();
     return FutureBuilder(
-      future: checkIsLogined(userController),
+      future: checkIsLogined(storeController),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return const Center(

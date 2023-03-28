@@ -31,6 +31,7 @@ class BeerImageWithName extends StatelessWidget {
         const Margin(marginType: MarginType.height, size: 8),
         Text(
           beerName['korean']!,
+          overflow: TextOverflow.ellipsis,
           style: TextStyle(
             fontSize: beerNameStyles?['koreanFontSize'] ?? false
                 ? beerNameStyles!['koreanFontSize']
@@ -39,6 +40,7 @@ class BeerImageWithName extends StatelessWidget {
         ),
         Text(
           beerName['english']!,
+          overflow: TextOverflow.ellipsis,
           style: TextStyle(
             fontSize: beerNameStyles?['englishFontSize'] ?? false
                 ? beerNameStyles!['englishFontSize']
