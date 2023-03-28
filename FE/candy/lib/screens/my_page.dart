@@ -28,81 +28,79 @@ class _MyPageState extends State<MyPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: 16,
-            horizontal: 24,
-          ),
-          child: Column(children: [
-            Row(
-              children: const [
-                CircleAvatar(
-                  backgroundImage: NetworkImage(
-                    "https://cdnimg.melon.co.kr/resource/image/cds/musicstory/imgUrl20211207051538220.jpg/melon/optimize/90",
-                  ),
-                  radius: 48,
-                ),
-                SizedBox(
-                  width: 24,
-                ),
-                Text(
-                  '닉네임',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 8,
-              ),
-              child: Container(
-                decoration: const BoxDecoration(
-                  border: Border.symmetric(
-                    horizontal: BorderSide(
-                      width: 1,
-                    ),
-                  ),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    TextButton(
-                      onPressed: () {
-                        onTextButtonTap(0);
-                      },
-                      child: const Text('음주 기록'),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        onTextButtonTap(1);
-                      },
-                      child: const Text('국가별 맥주'),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        onTextButtonTap(2);
-                      },
-                      child: const Text('음주 내역'),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Expanded(
-              child: Container(
-                child: pages[_page_index],
-              ),
-            ),
-          ]),
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          vertical: 16,
+          horizontal: 24,
         ),
+        child: Column(children: [
+          Row(
+            children: const [
+              CircleAvatar(
+                backgroundImage: NetworkImage(
+                  "https://cdnimg.melon.co.kr/resource/image/cds/musicstory/imgUrl20211207051538220.jpg/melon/optimize/90",
+                ),
+                radius: 48,
+              ),
+              SizedBox(
+                width: 24,
+              ),
+              Text(
+                '닉네임',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 16,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: 8,
+            ),
+            child: Container(
+              decoration: const BoxDecoration(
+                border: Border.symmetric(
+                  horizontal: BorderSide(
+                    width: 1,
+                  ),
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      onTextButtonTap(0);
+                    },
+                    child: const Text('음주 기록'),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      onTextButtonTap(1);
+                    },
+                    child: const Text('국가별 맥주'),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      onTextButtonTap(2);
+                    },
+                    child: const Text('음주 내역'),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Expanded(
+            child: Container(
+              child: pages[_page_index],
+            ),
+          ),
+        ]),
       ),
     );
   }
