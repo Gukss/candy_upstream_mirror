@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-class StoreController extends GetxController {
+class UserController extends GetxController {
   RxString userEmail = ''.obs;
 }
 

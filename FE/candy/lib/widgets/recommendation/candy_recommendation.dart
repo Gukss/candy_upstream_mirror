@@ -18,6 +18,7 @@ class CandyRecommendation extends StatelessWidget {
                 'korean': '카스 프레시',
                 'english': 'Cass Fresh',
               },
+              'beerId': 1,
             },
         ];
       },

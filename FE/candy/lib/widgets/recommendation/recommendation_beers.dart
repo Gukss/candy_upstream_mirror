@@ -1,6 +1,8 @@
+import 'package:candy/screens/beer_detail.dart';
 import 'package:candy/widgets/beer/beer_image_with_name.dart';
 import 'package:candy/widgets/ui/margin.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class RecommendationBeers extends StatelessWidget {
   final double sectionSize;
@@ -24,6 +26,7 @@ class RecommendationBeers extends StatelessWidget {
                 'korean': '카스 프레시',
                 'english': 'Cass Fresh',
               },
+              'beerId': 1,
             },
         ];
       },
@@ -45,11 +48,16 @@ class RecommendationBeers extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               itemCount: snapshot.data!.length,
               itemBuilder: (context, index) {
-                return BeerImageWithName(
-                  backColor: Colors.black,
-                  backSize: imgBackgroundSize,
-                  beerImgSrc: snapshot.data![index]['imgSrc'],
-                  beerName: snapshot.data![index]['name'],
+                return GestureDetector(
+                  onTap: () {
+                    Get.to(BeerDetail(beerId: snapshot.data![index]['beerId']));
+                  },
+                  child: BeerImageWithName(
+                    backColor: Colors.black,
+                    backSize: imgBackgroundSize,
+                    beerImgSrc: snapshot.data![index]['imgSrc'],
+                    beerName: snapshot.data![index]['name'],
+                  ),
                 );
               },
             ),
