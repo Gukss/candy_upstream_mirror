@@ -65,6 +65,9 @@ dependencies:
   # dropdown
   dropdown_button2: ^2.0.0
 
+  # buttom navigation
+  convex_bottom_bar: ^3.2.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
