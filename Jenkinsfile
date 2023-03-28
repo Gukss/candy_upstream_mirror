@@ -27,7 +27,7 @@ pipeline{
             steps {
                 script{
                      sh "docker build -t ${BACK_SPRING_NAME} ./BE/candy/."
-                     sh "docker build -t ${BACK_FLASK_NAME} ./BE/."
+                     sh "docker build -t ${BACK_FLASK_NAME} ./BE/flaskServer."
                 }
             }
         }
