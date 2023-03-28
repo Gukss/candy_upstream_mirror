@@ -33,11 +33,11 @@ class Gender extends StatelessWidget {
                       end: BorderSide(width: 0.5),
                       bottom: BorderSide(width: 1),
                     ),
-                    color: gender == '남' ? Colors.amber : null,
+                    color: gender == 'M' ? Colors.amber : null,
                   ),
                   child: TextButton(
                     onPressed: () {
-                      changeGender(gender, '남');
+                      changeGender(gender, 'M');
                     },
                     child: const Text(
                       '남',
@@ -59,11 +59,11 @@ class Gender extends StatelessWidget {
                       end: BorderSide(width: 1),
                       bottom: BorderSide(width: 1),
                     ),
-                    color: gender == '여' ? Colors.amber : null,
+                    color: gender == 'W' ? Colors.amber : null,
                   ),
                   child: TextButton(
                     onPressed: () {
-                      changeGender(gender, '여');
+                      changeGender(gender, 'W');
                     },
                     child: const Text(
                       '여',
