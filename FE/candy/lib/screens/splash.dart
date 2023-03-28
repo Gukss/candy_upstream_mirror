@@ -1,6 +1,6 @@
 import 'package:candy/screens/login.dart';
-import 'package:candy/screens/main_page.dart';
 import 'package:candy/stores/store.dart';
+import 'package:candy/widgets/bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
@@ -10,7 +10,7 @@ class Splash extends StatelessWidget {
   const Splash({super.key});
 
   // 토큰 존재 확인 및 유저 정보 저장
-  Future<bool> checkIsLogined(StoreController storeController) async {
+  Future<bool> checkIsLogined(UserController userController) async {
     // 로그인 여부(토큰 유효 여부)
     bool? result;
     if (await AuthApi.instance.hasToken()) {
@@ -20,7 +20,7 @@ class Splash extends StatelessWidget {
         result = true;
         // 유저 정보 확인 및 저장
         User user = await UserApi.instance.me();
-        storeController.userEmail.value = user.kakaoAccount!.email!;
+        userController.userEmail.value = user.kakaoAccount!.email!;
       } catch (e) {}
     }
     result ??= false;
@@ -31,9 +31,9 @@ class Splash extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final StoreController storeController = Get.find();
+    final UserController userController = Get.find();
     return FutureBuilder(
-      future: checkIsLogined(storeController),
+      future: checkIsLogined(userController),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return const Center(
@@ -44,7 +44,7 @@ class Splash extends StatelessWidget {
           );
         }
         if (snapshot.data!) {
-          return const MainPage();
+          return const BottomNavigation();
         }
         return const Login();
       },

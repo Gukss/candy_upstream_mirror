@@ -33,18 +33,19 @@ class BeerExtraInfoSildebar extends StatelessWidget {
           ),
         ),
         const Margin(marginType: MarginType.width, size: 16),
-        Container(
-          child: LinearPercentIndicator(
-            padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
-            width: 230,
-            animation: true,
-            animationDuration: 500,
-            lineHeight: 15.0,
-            percent: sliderValue / 100,
-            // center: const Text('percent'),
-            barRadius: const Radius.circular(8),
-            progressColor: const Color.fromARGB(255, 255, 205, 6),
-            backgroundColor: Colors.orange[100],
+        Expanded(
+          child: SizedBox(
+            child: LinearPercentIndicator(
+              padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
+              animation: true,
+              animationDuration: 500,
+              lineHeight: 20.0,
+              percent: sliderValue / 100,
+              center: Text('$sliderValue%'),
+              barRadius: const Radius.circular(8),
+              progressColor: const Color.fromARGB(255, 255, 205, 6),
+              backgroundColor: Colors.orange[100],
+            ),
           ),
         )
       ],
