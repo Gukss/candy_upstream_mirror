@@ -1,9 +1,11 @@
 import 'package:get/get.dart';
 
-class UserController extends GetxController {
+class StoreController extends GetxController {
   RxString userEmail = ''.obs;
 }
 
 class SearchController extends GetxController {
-  RxString searchText = ''.obs;
+  RxString searchInputText;
+
+  SearchController({required this.searchInputText});
 }

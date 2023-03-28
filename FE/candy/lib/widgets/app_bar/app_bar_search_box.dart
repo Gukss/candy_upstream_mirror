@@ -1,5 +1,4 @@
 import 'package:candy/screens/search_page.dart';
-import 'package:candy/stores/store.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -17,7 +16,6 @@ class _AppBarSearchBoxState extends State<AppBarSearchBox> {
 
   @override
   Widget build(BuildContext context) {
-    final SearchController searchController = Get.find(tag: 'search');
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: SizedBox(
@@ -25,9 +23,8 @@ class _AppBarSearchBoxState extends State<AppBarSearchBox> {
         child: TextField(
           textInputAction: TextInputAction.search,
           onSubmitted: (value) {
-            searchController.searchText.value = searchInputController.text;
             Get.to(SearchPage(
-              searchController: searchController,
+              inputText: searchInputController.text.trim(),
             ));
           },
           controller: searchInputController,
@@ -38,9 +35,8 @@ class _AppBarSearchBoxState extends State<AppBarSearchBox> {
             hintText: '검색어를 입력해주세요.',
             suffixIcon: IconButton(
               onPressed: () {
-                searchController.searchText.value = searchInputController.text;
                 Get.to(SearchPage(
-                  searchController: searchController,
+                  inputText: searchInputController.text.trim(),
                 ));
               },
               icon: const Icon(
