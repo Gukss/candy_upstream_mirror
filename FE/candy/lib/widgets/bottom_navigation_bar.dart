@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:candy/widgets/app_bar/main_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -40,20 +41,22 @@ class _BottomNavigationState extends State<BottomNavigation> {
 
   @override
   Widget build(BuildContext context) {
-    Widget child = Container();
+    Widget bodychild = Container();
 
     switch (_selectedIndex) {
       case 0:
-        child = const MainPage();
+        bodychild = const MainPage();
         break;
 
       case 2:
-        child = const MyPage();
+        bodychild = const MyPage();
         break;
     }
 
     return Scaffold(
-      body: SizedBox.expand(child: child),
+      backgroundColor: const Color.fromARGB(255, 248, 248, 241),
+      appBar: const MainAppBar(),
+      body: SizedBox.expand(child: bodychild),
       bottomNavigationBar: ConvexAppBar(
         style: TabStyle.fixedCircle,
         items: const [
@@ -69,7 +72,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
             _onItemTapped(i);
           }
         },
-        backgroundColor: const Color.fromARGB(255, 245, 204, 21),
+        backgroundColor: const Color.fromARGB(255, 247, 229, 91),
         color: Colors.white,
       ),
     );

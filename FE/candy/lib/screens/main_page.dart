@@ -1,9 +1,8 @@
-import 'package:candy/widgets/app_bar/main_app_bar.dart';
+import 'package:candy/widgets/ui/margin.dart';
+
 import 'package:candy/widgets/recommendation/candy_recommendation.dart';
 import 'package:candy/widgets/recommendation/style_recommendation.dart';
 import 'package:candy/widgets/review/user_pick_card_list.dart';
-
-import 'package:candy/widgets/ui/margin.dart';
 import 'package:flutter/material.dart';
 
 class MainPage extends StatelessWidget {
@@ -11,9 +10,8 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const MainAppBar(),
-      body: SingleChildScrollView(
+    return SafeArea(
+      child: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
