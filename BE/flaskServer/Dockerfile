@@ -2,7 +2,7 @@
 FROM python:3.9.10
 
 # set working directory
-WORKDIR /app
+# WORKDIR /app
 
 # copy requirements file
 COPY requirements.txt .
@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 90
 
 # start application
-CMD ["flask", "run", "--host=0.0.0.0:90"]
+CMD ["flask", "run", "--host=0.0.0.0"]
