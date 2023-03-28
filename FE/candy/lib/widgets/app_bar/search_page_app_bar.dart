@@ -13,7 +13,6 @@ class SearchPageAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.grey,
       leading: IconButton(
         onPressed: () {
           Get.back();
@@ -50,21 +49,24 @@ class _SearchPageSearchBoxState extends State<SearchPageSearchBox> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        vertical: 10,
-        horizontal: 16,
-      ),
-      child: SizedBox(
+      padding: const EdgeInsets.all(8),
+      child: Container(
         width: 280,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(8),
+        ),
         child: TextField(
           controller: searchTextFieldController,
           textInputAction: TextInputAction.search,
+          textAlignVertical: TextAlignVertical.center,
+          expands: true,
+          maxLines: null,
+          minLines: null,
           onSubmitted: (value) {
             searchController.searchInputText.value =
                 searchTextFieldController.text.trim();
           },
-          textAlignVertical: TextAlignVertical.center,
-          cursorColor: Colors.black,
           decoration: InputDecoration(
             suffixIcon: IconButton(
               onPressed: () {
@@ -75,13 +77,8 @@ class _SearchPageSearchBoxState extends State<SearchPageSearchBox> {
                 Icons.search_rounded,
               ),
             ),
-            border: const OutlineInputBorder(
-              borderSide: BorderSide(
-                width: 1,
-              ),
-            ),
+            border: InputBorder.none,
             contentPadding: const EdgeInsets.symmetric(
-              vertical: 0,
               horizontal: 16,
             ),
           ),

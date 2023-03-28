@@ -10,8 +10,15 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.white,
-      title: const Text('CANDY'),
+      title: const Center(
+        child: Text(
+          'CANDY',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+      ),
       actions: const [
         AppBarSearchBox(),
       ],
