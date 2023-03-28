@@ -1,8 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:candy/screens/main_page.dart';
 import 'package:candy/screens/my_page.dart';
-import 'package:candy/widgets/barcode_scan.dart';
+
+import 'package:convex_bottom_bar/convex_bottom_bar.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 class BottomNavigation extends StatefulWidget {
   const BottomNavigation({super.key});
@@ -15,11 +20,17 @@ class _BottomNavigationState extends State<BottomNavigation> {
 // 탭을 이동할 때 쓸 변수!
   int _selectedIndex = 0;
 
-  List<Widget> pages = <Widget>[
-    MainPage(),
-    BarcodeScan(),
-    MyPage(),
-  ];
+  Future<void> scanBarcodeNormal() async {
+    String barcodeScanRes = '';
+    try {
+      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+          '#ff6666', ' ', false, ScanMode.BARCODE);
+      print(barcodeScanRes);
+    } on PlatformException {
+      print('Failed to get platform version.');
+    }
+    if (barcodeScanRes.isNotEmpty) return;
+  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -29,20 +40,38 @@ class _BottomNavigationState extends State<BottomNavigation> {
 
   @override
   Widget build(BuildContext context) {
+    Widget child = Container();
+
+    switch (_selectedIndex) {
+      case 0:
+        child = const MainPage();
+        break;
+
+      case 2:
+        child = const MyPage();
+        break;
+    }
+
     return Scaffold(
-        body: pages[_selectedIndex],
-        bottomNavigationBar: BottomNavigationBar(
-          selectedItemColor: Color.fromARGB(255, 255, 205, 6),
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-                icon: Icon(Icons.home_outlined), label: 'Home'),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.qr_code_scanner_outlined), label: ''),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.person_2_outlined), label: 'Mypage'),
-          ],
-          currentIndex: _selectedIndex,
-          onTap: _onItemTapped,
-        ));
+      body: SizedBox.expand(child: child),
+      bottomNavigationBar: ConvexAppBar(
+        style: TabStyle.fixedCircle,
+        items: const [
+          TabItem(icon: Icons.home_outlined, title: 'Home'),
+          TabItem(icon: Icons.qr_code_scanner),
+          TabItem(icon: Icons.person_2_outlined, title: 'Mypage'),
+        ],
+        initialActiveIndex: 0,
+        onTap: (int i) async {
+          if (i == 1) {
+            await scanBarcodeNormal();
+          } else {
+            _onItemTapped(i);
+          }
+        },
+        backgroundColor: const Color.fromARGB(255, 245, 204, 21),
+        color: Colors.white,
+      ),
+    );
   }
 }
