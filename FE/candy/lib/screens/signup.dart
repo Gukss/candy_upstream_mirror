@@ -5,6 +5,7 @@ import 'package:candy/widgets/signup/birth_date.dart';
 import 'package:candy/widgets/signup/gender.dart';
 import 'package:candy/widgets/signup/nickname.dart';
 import 'package:candy/widgets/ui/margin.dart';
+import 'package:get/get.dart';
 
 class Signup extends StatefulWidget {
   const Signup({super.key});
@@ -54,13 +55,7 @@ class _SignupState extends State<Signup> {
         ),
       );
     } else {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) {
-            return const MainPage();
-          },
-        ),
-      );
+      Get.offAll(const MainPage());
     }
   }
 
