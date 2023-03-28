@@ -10,10 +10,10 @@ class HelloWorld(Resource):
     def get(self):  # GET 요청시 리턴 값에 해당 하는 dict를 JSON 형태로 반환
         return {"hello": "world!"}
 
-@api.route('/reccomand')
-class ReccomandBeer():
-    def get(self):
-        return {"hello": "world!"}
+# @api.route('/reccomand')
+# class ReccomandBeer():
+#     def get(self):
+#         return {"hello": "world!"}
 
 
 if __name__ == "__main__":
