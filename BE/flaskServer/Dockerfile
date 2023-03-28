@@ -11,12 +11,7 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # copy application files
-COPY app.py .
-COPY templates templates/
-
-# set environment variables
-ENV FLASK_APP=app.py
-ENV FLASK_ENV=production
+COPY . .
 
 # expose port
 EXPOSE 90
