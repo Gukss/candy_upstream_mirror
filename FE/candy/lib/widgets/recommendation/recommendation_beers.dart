@@ -32,7 +32,7 @@ class RecommendationBeers extends StatelessWidget {
               Get.to(BeerDetail(beerId: beerList[index]['beerId']));
             },
             child: BeerImageWithName(
-              backColor: Colors.black,
+              backColor: const Color.fromARGB(255, 235, 238, 241),
               backSize: imgBackgroundSize,
               beerImgSrc: beerList[index]['imgSrc'],
               beerName: beerList[index]['name'],

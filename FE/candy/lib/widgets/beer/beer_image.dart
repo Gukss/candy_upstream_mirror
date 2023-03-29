@@ -18,11 +18,22 @@ class BeerImage extends StatelessWidget {
       width: backSize,
       height: backSize,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(16),
         color: backColor,
+        boxShadow: [
+          BoxShadow(
+            color: const Color.fromARGB(255, 221, 219, 216).withOpacity(0.7),
+            spreadRadius: 0,
+            blurRadius: 5.0,
+            offset: const Offset(5, 5), // changes position of shadow
+          ),
+        ],
       ),
-      child: Image.network(
-        beerImgSrc,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
+        child: Image.network(
+          beerImgSrc,
+        ),
       ),
     );
   }
