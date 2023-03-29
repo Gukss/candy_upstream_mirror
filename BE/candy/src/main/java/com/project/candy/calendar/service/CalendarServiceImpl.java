@@ -51,10 +51,14 @@ public class CalendarServiceImpl implements CalendarService {
 
   @Override
   public List<ReadCalendarResponse> readCalendarList(String userEmail, int year, int month) {
-    User customer = userRepository.findByEmail(userEmail).orElseThrow(() -> new NotFoundExceptionMessage(NotFoundExceptionMessage.NOT_FOUND_USER));
-//    List<Calendar> calendars = calendarRepository.findAllByUseridWhereYearAndMonth(customer.getId(), year, month).get();
-//    return calendars.stream().map(calendar -> ReadCalendarResponse.EntitytoDTO(calendar)).collect(Collectors.toList());
-    return calendarRepository.findAllByUseridWhereYearAndMonth(customer.getId() , year, month).get();
+   User customer = userRepository.findByEmail(userEmail).orElseThrow(() -> new NotFoundExceptionMessage(NotFoundExceptionMessage.NOT_FOUND_USER));
+   List<ReadCalendarResponse> readCalendarResponses =calendarRepository.findAllByUseridWhereYearAndMonth(customer.getId() , year, month).get();
+   if(month==1){
+      readCalendarResponses.addAll(0,calendarRepository.findAllByUseridWhereYearAndMonth(customer.getId(),year-1 ,12).get());
+   }else{
+      readCalendarResponses.addAll(0,calendarRepository.findAllByUseridWhereYearAndMonth(customer.getId(),year ,month-1).get());
+   }
+   return readCalendarResponses;
 
   }
 
