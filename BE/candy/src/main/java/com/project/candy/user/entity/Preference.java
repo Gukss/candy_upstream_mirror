@@ -1,6 +1,8 @@
 package com.project.candy.user.entity;
 
+import com.project.candy.user.dto.CreatePreferenceRequest;
 import com.project.candy.util.BaseEntity;
+import com.project.candy.util.BaseTimeEntity;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -29,7 +31,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @ToString
-public class Preference {
+public class Preference extends BaseTimeEntity {
   @Id
   @Column(name = "preference_id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,4 +53,21 @@ public class Preference {
   @Embedded
   @NotNull
   private BaseEntity baseEntity;
+
+  public static Preference create(User user, CreatePreferenceRequest createPreferenceRequest){
+      Preference preference=Preference.builder()
+          .user(user)
+          .appearance(createPreferenceRequest.getApperance())
+          .aroma(createPreferenceRequest.getAroma())
+          .flavor(createPreferenceRequest.getFlavor())
+          .mouthfeel(createPreferenceRequest.getMouthfell())
+          .baseEntity(BaseEntity.builder()
+              .constructor(user.getEmail())
+              .isDelete(false)
+              .updater(user.getEmail())
+              .build())
+          .build();
+
+      return preference;
+  }
 }
