@@ -2,6 +2,7 @@ package com.project.candy.recommendation.entity;
 
 import com.project.candy.user.entity.User;
 import com.project.candy.util.BaseEntity;
+import com.project.candy.util.BaseTimeEntity;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -30,7 +31,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
-public class RecommendationCandy extends BaseEntity {
+public class RecommendationCandy extends BaseTimeEntity {
 
   @Id
   @Column(name = "recommendation_candy_id")
