@@ -2,6 +2,7 @@ package com.project.candy.recommendation.entity;
 
 import com.project.candy.beer.entity.Beer;
 import com.project.candy.util.BaseEntity;
+import com.project.candy.util.BaseTimeEntity;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -30,7 +31,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Getter
-public class RecommendationSimilarity extends BaseEntity {
+public class RecommendationSimilarity extends BaseTimeEntity {
   @Id
   @Column(name = "recommendation_similarity_id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
