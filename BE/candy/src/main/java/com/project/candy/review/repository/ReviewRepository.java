@@ -18,7 +18,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
   List<Review> findAllByBeer(Beer beer);
 
-  List<Review> findAllByUser(User user);
+  List<Review> findAllByUserAndBeer(User user,Beer beer);
 
   /**
    * 맥주 상세조회 시 보이는 통계 값들을 구하기 위한 스케줄링 되는 메소드
