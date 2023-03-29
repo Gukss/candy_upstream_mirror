@@ -1,11 +1,11 @@
-package com.project.candy.cache.entity;
+package com.project.candy.recommendation.entity;
 
 import org.springframework.data.redis.core.RedisHash;
 import org.springframework.data.annotation.Id;
 import java.io.Serializable;
 
 /**
- * packageName    : com.project.candy.cache.entity
+ * packageName    : com.project.candy.recommendation.entity
  * fileName       : StyleCache
  * date           : 2023-03-27
  * description    :
@@ -17,11 +17,5 @@ public class StyleCache implements Serializable {
   private long userId;
 
   private long beerId;
-
-  private String beerKrName;
-
-  private String beerEnName;
-
-  private String beerImageUrl;
 
 }
