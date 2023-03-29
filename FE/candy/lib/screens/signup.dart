@@ -37,13 +37,33 @@ class _SignupState extends State<Signup> {
     super.initState();
   }
 
+  // SnackBar 생성
+  void openSnackBar(BuildContext context, String message, Color color) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: const Duration(milliseconds: 1500),
+        backgroundColor: color,
+        padding: const EdgeInsets.symmetric(
+          horizontal: 16.0,
+          vertical: 16,
+        ),
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+      ),
+    );
+  }
+
   // 등록 버튼 누르기
-  void onRegisterButtonPressed() async {
+  Future<void> onRegisterButtonPressed() async {
     final String nickname = nicknameController.text;
     final int year = birthDate['year']!;
     final int month = birthDate['month']!;
     final int day = birthDate['day']!;
 
+    // 입력값 유효성 검증
     String snackBarContent = '';
     if (nickname.length < 2 || nickname.length > 20) {
       snackBarContent = '닉네임 길이는 2~20까지 가능합니다.';
@@ -55,41 +75,42 @@ class _SignupState extends State<Signup> {
       snackBarContent = '성인이 아니면 사용할 수 없습니다.';
     }
     if (snackBarContent != '') {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(snackBarContent),
-          duration: const Duration(milliseconds: 1500),
-          backgroundColor: Colors.red,
-          padding: const EdgeInsets.symmetric(
-            horizontal: 16.0,
-            vertical: 16,
-          ),
-          behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8.0),
-          ),
-        ),
-      );
+      openSnackBar(context, snackBarContent, Colors.red);
       return;
     }
+    // 미성년자 로그인 페이지로 이동
     if (snackBarContent == '성인이 아니면 사용할 수 없습니다.') {
       Get.offAll(() => const Login());
     } else if (snackBarContent == '') {
-      if (await UserApiService.postSignup(
-        nickname: nickname,
-        gender: gender,
-        profileImage: userController.userProfileImg.value,
-        birth:
-            '$year-${month <= 10 ? '0$month' : month}-${day <= 10 ? '0$day' : day}',
-        email: userController.userEmail.value,
-      )) {
+      try {
+        // 닉네임 중복으로 회원가입 실패
+        if (!await UserApiService.postSignup(
+          nickname: nickname,
+          gender: gender,
+          profileImage: userController.userProfileImg.value,
+          birth:
+              '$year-${month <= 10 ? '0$month' : month}-${day <= 10 ? '0$day' : day}',
+          email: userController.userEmail.value,
+        )) {
+          if (!mounted) return;
+          openSnackBar(context, '중복된 닉네임입니다.', Colors.red);
+          return;
+        }
+        // 회원 가입 성공
         Get.offAll(() => const BottomNavigation());
+        if (!mounted) return;
+        openSnackBar(context, 'CANDY에 오신걸 환영합니다.', Colors.green);
+      } catch (e) {
+        // 회원가입 에러 발생
+        if (!mounted) return;
+        openSnackBar(context, '잠시 후 다시 시도해주세요.', Colors.red);
       }
     }
   }
 
   // 성별 선택
   void onGenderButtonPressed(prevGender, clickedGender) {
+    // 이미 선택한 성별 선택시 초기화
     if (prevGender == clickedGender) {
       setState(() {
         gender = '';
@@ -106,6 +127,7 @@ class _SignupState extends State<Signup> {
     setState(() {
       birthDate[type] = value;
     });
+    // 연도, 월 선택시 DayList 해당 연도, 월로 초기화
     if (type != 'day') {
       updateDayList();
     }

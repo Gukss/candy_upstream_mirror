@@ -49,7 +49,7 @@ class UserApiService {
       headers: headers,
       body: body,
     );
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
       return json.decode(response.body);
     }
     throw Error();
