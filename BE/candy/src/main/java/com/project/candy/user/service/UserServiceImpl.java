@@ -63,14 +63,11 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public ReadUserByEmailResponse readUserByEmail(String userEmail) {
-    return ReadUserByEmailResponse
-            .EntityToDto(
-                    userRepository.findByEmail(userEmail)
-                            .orElseThrow(
-                                    () -> new NotFoundExceptionMessage(NotFoundExceptionMessage.NOT_FOUND_USER)
-                            )
-            );
+  public Boolean readUserByEmail(String userEmail) {
+    if(userRepository.findByEmail(userEmail).isPresent()){
+      return false;
+    }
+    return  true;
   }
 
 

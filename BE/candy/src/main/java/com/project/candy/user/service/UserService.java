@@ -37,8 +37,9 @@ public interface UserService {
    * desc : userEmail 을 인자로 받으면 Dto를 리턴해주는 메소드
    *
    * @param userEmail
+   *
    * @return
    */
-  public ReadUserByEmailResponse readUserByEmail(String userEmail);
+  public Boolean readUserByEmail(String userEmail);
 
 }
