@@ -1,7 +1,8 @@
 import 'package:candy/models/beer/beer_search_list_model.dart';
+import 'package:flutter/material.dart';
+
 import 'package:candy/widgets/beer/beer_image.dart';
 import 'package:candy/widgets/ui/margin.dart';
-import 'package:flutter/material.dart';
 
 class SearchResultRow extends StatelessWidget {
   final int index;
@@ -17,7 +18,7 @@ class SearchResultRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         SearchResultItem(
           index: index * 2,
@@ -28,6 +29,10 @@ class SearchResultRow extends StatelessWidget {
             index: index * 2 + 1,
             searchResults: searchResults,
           ),
+        if (index * 2 + 1 == searchResults.length)
+          const SizedBox(
+            width: 144,
+          )
       ],
     );
   }
@@ -50,7 +55,7 @@ class SearchResultItem extends StatelessWidget {
       children: [
         BeerImage(
           backSize: 152,
-          backColor: Colors.grey,
+          backColor: const Color.fromARGB(255, 238, 241, 235),
           beerImgSrc: searchResults[index].beerImageUrl,
         ),
         const Margin(marginType: MarginType.height, size: 4),

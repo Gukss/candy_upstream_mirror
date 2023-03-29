@@ -1,5 +1,7 @@
-import 'package:candy/stores/store.dart';
 import 'package:flutter/material.dart';
+
+import 'package:candy/stores/store.dart';
+
 import 'package:get/get.dart';
 
 class SearchPageAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -63,7 +65,7 @@ class _SearchPageSearchBoxState extends State<SearchPageSearchBox> {
           expands: true,
           maxLines: null,
           minLines: null,
-          onSubmitted: (value) {
+          onChanged: (value) {
             searchController.searchInputText.value =
                 searchTextFieldController.text.trim();
           },

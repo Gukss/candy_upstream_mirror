@@ -38,6 +38,7 @@ class _AppBarSearchBoxState extends State<AppBarSearchBox> {
                 inputText: searchInputController.text.trim(),
               ),
             );
+            searchInputController.clear();
           },
           decoration: InputDecoration(
             border: InputBorder.none,
@@ -47,6 +48,7 @@ class _AppBarSearchBoxState extends State<AppBarSearchBox> {
                 Get.to(SearchPage(
                   inputText: searchInputController.text.trim(),
                 ));
+                searchInputController.clear();
               },
               icon: Icon(
                 Icons.search_rounded,
