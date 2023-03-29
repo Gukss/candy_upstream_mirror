@@ -43,7 +43,7 @@ public class ReviewServiceImpl implements ReviewService {
     Beer beer=beerRepository.findById(beerId)
         .orElseThrow(() -> new NotFoundExceptionMessage(NotFoundExceptionMessage.NOT_FOUND_BEER));
 
-    List<Review> review=reviewRepository.findAllByUser(user);
+    List<Review> review=reviewRepository.findAllByUserAndBeer(user,beer);
 
     // 해당 아이디로 작성된 review 데이터가 없거나 삭제된 경우에만 리뷰를 추가 할 수 있다.
     if(review.size()==0 || review.get(0).getBaseEntity().isDelete()){
