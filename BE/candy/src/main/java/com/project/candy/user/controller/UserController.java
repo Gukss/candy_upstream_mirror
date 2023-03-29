@@ -43,7 +43,7 @@ public class UserController {
    */
   @GetMapping(path = "user", headers = "email")
   public ResponseEntity<?> findUserByEmail(@RequestHeader("email") String userEmail) {
-    return new ResponseEntity<ReadUserByEmailResponse>(userService.readUserByEmail(userEmail), HttpStatus.OK);
+    return new ResponseEntity<Boolean>(userService.readUserByEmail(userEmail), HttpStatus.OK);
   }
 
 }
