@@ -1,6 +1,6 @@
 package com.project.candy.cache.repository;
 
-import com.project.candy.cache.entity.CandyCache;
+import com.project.candy.recommendation.entity.CandyCache;
 import org.springframework.data.repository.CrudRepository;
 
 /**
