@@ -1,10 +1,11 @@
+import 'package:candy/models/beer/all_beer_list_model.dart';
 import 'package:flutter/material.dart';
 import 'package:candy/widgets/beer/beer_image_with_name.dart';
 import 'package:candy/widgets/ui/margin.dart';
 
 class BeerList extends StatelessWidget {
   final double imgBackgroundSize;
-  final List newbeerlist;
+  final List<AllBeerListModel> newbeerlist;
 
   const BeerList({
     super.key,
@@ -26,18 +27,22 @@ class BeerList extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   BeerImageWithName(
-                    backColor: Colors.black,
-                    backSize: imgBackgroundSize,
-                    beerImgSrc: newbeerlist[index * 3]['imgSrc'],
-                    beerName: newbeerlist[index * 3]['name'],
-                  ),
-                  if (index * 3 + 1 < newbeerlist.length)
-                    BeerImageWithName(
                       backColor: Colors.black,
                       backSize: imgBackgroundSize,
-                      beerImgSrc: newbeerlist[index * 3 + 1]['imgSrc'],
-                      beerName: newbeerlist[index * 3 + 1]['name'],
-                    ),
+                      beerImgSrc: newbeerlist[index * 3].beerImageUrl,
+                      beerName: {
+                        'korean': newbeerlist[index * 3].beerNameKR,
+                        'english': newbeerlist[index * 3].beerNameEN,
+                      }),
+                  if (index * 3 + 1 < newbeerlist.length)
+                    BeerImageWithName(
+                        backColor: Colors.black,
+                        backSize: imgBackgroundSize,
+                        beerImgSrc: newbeerlist[index * 3].beerImageUrl,
+                        beerName: {
+                          'korean': newbeerlist[index * 3].beerNameKR,
+                          'english': newbeerlist[index * 3].beerNameEN,
+                        }),
                   if (index * 3 + 1 >= newbeerlist.length)
                     const SizedBox(
                       height: 100,
@@ -45,11 +50,13 @@ class BeerList extends StatelessWidget {
                     ),
                   if (index * 3 + 2 < newbeerlist.length)
                     BeerImageWithName(
-                      backColor: Colors.black,
-                      backSize: imgBackgroundSize,
-                      beerImgSrc: newbeerlist[index * 3 + 2]['imgSrc'],
-                      beerName: newbeerlist[index * 3 + 2]['name'],
-                    ),
+                        backColor: Colors.black,
+                        backSize: imgBackgroundSize,
+                        beerImgSrc: newbeerlist[index * 3].beerImageUrl,
+                        beerName: {
+                          'korean': newbeerlist[index * 3].beerNameKR,
+                          'english': newbeerlist[index * 3].beerNameEN,
+                        }),
                   if (index * 3 + 2 >= newbeerlist.length)
                     const SizedBox(
                       height: 100,

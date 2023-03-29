@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:candy/widgets/my_page/calendar.dart';
 import 'package:candy/widgets/my_page/statistics/statistics_list.dart';
-import 'package:candy/widgets/my_page/beer_encyclopedia/beer_encyclopedia.dart';
+import 'package:candy/widgets/my_page/beer_encyclopedia/beer_getlist.dart';
 
 class MyPage extends StatefulWidget {
   const MyPage({super.key});
@@ -16,7 +16,7 @@ class _MyPageState extends State<MyPage> {
 
   static List<Widget> pages = <Widget>[
     const Calendar2(),
-    const BeerEncyclopedia(),
+    const BeerGetList(),
     const Statistics(),
   ];
 

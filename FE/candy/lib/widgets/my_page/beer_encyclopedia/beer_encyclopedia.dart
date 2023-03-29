@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
 
 import 'package:candy/widgets/ui/margin.dart';
+import 'package:candy/models/beer/all_beer_list_model.dart';
 import 'package:candy/widgets/my_page/beer_encyclopedia/beer_list.dart';
 
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 
 class BeerEncyclopedia extends StatefulWidget {
-  const BeerEncyclopedia({super.key});
+  final List<AllBeerListModel> beerlist;
+  final double beerpercent;
+
+  const BeerEncyclopedia({
+    super.key,
+    required this.beerlist,
+    required this.beerpercent,
+  });
 
   @override
   State<BeerEncyclopedia> createState() => _BeerEncyclopediaState();
@@ -17,7 +25,8 @@ class _BeerEncyclopediaState extends State<BeerEncyclopedia> {
   String dropdownValue = '전체';
   int dropindex = 0;
   List<String> itemList = ['전체', '좋아요한 맥주', '마신맥주', '마시지않은 맥주'];
-  late List<Map<String, dynamic>> beer;
+  late List<AllBeerListModel> beerlist;
+  late double beerpercent;
 
   List<DropdownMenuItem<String>> _addDividersAfterItems(List<String> items) {
     List<DropdownMenuItem<String>> menuItems = [];
@@ -50,100 +59,26 @@ class _BeerEncyclopediaState extends State<BeerEncyclopedia> {
     return menuItems;
   }
 
-  checkdrop(int index) {
+  checkdrop(int index, List<AllBeerListModel> beer) {
     if (index == 0) {
       return beer;
     } else if (index == 1) {
-      final newbeer = beer.where((e) => e['liked'] == true).toList();
+      final newbeer = beer.where((e) => e.isLiked > 0).toList();
       return newbeer;
     } else if (index == 2) {
-      final newbeer = beer.where((e) => e['drunken'] == true).toList();
+      final newbeer = beer.where((e) => e.isDrunk > 0).toList();
       return newbeer;
     } else {
-      final newbeer = beer.where((e) => e['drunken'] == false).toList();
+      final newbeer = beer.where((e) => e.isDrunk == 0).toList();
       return newbeer;
     }
   }
 
   @override
   void initState() {
-    getBeer();
+    beerlist = widget.beerlist;
+    beerpercent = widget.beerpercent;
     super.initState();
-  }
-
-  getBeer() async {
-    beer = [
-      {
-        'imgSrc':
-            'https://cdnimage.ebn.co.kr/news/201903/news_1552435659_976191_main1.jpg',
-        'name': {
-          'korean': '버니니1',
-          'english': 'Bunini',
-        },
-        'liked': false,
-        'drunken': true,
-      },
-      {
-        'imgSrc':
-            'https://cdnimage.ebn.co.kr/news/201903/news_1552435659_976191_main1.jpg',
-        'name': {
-          'korean': '버니니2',
-          'english': 'Bunini',
-        },
-        'liked': true,
-        'drunken': false,
-      },
-      {
-        'imgSrc':
-            'https://image.shutterstock.com/image-photo/image-260nw-2108189540.jpg',
-        'name': {
-          'korean': '버니니3',
-          'english': 'Bunini',
-        },
-        'liked': false,
-        'drunken': true,
-      },
-      {
-        'imgSrc':
-            'https://cdnimage.ebn.co.kr/news/201903/news_1552435659_976191_main1.jpg',
-        'name': {
-          'korean': '버니니4',
-          'english': 'Bunini',
-        },
-        'liked': true,
-        'drunken': true,
-      },
-      {
-        'imgSrc':
-            'https://image.shutterstock.com/image-photo/image-260nw-2108189540.jpg',
-        'name': {
-          'korean': '버니니5',
-          'english': 'Bunini',
-        },
-        'liked': false,
-        'drunken': false,
-      },
-      {
-        'imgSrc':
-            'https://cdnimage.ebn.co.kr/news/201903/news_1552435659_976191_main1.jpg',
-        'name': {
-          'korean': '버니니6',
-          'english': 'Bunini',
-        },
-        'liked': true,
-        'drunken': false,
-      },
-      {
-        'imgSrc':
-            'https://image.shutterstock.com/image-photo/image-260nw-2108189540.jpg',
-        'name': {
-          'korean': '버니니7',
-          'english': 'Bunini',
-        },
-        'liked': true,
-        'drunken': true,
-      },
-    ];
   }
 
   @override
@@ -196,19 +131,20 @@ class _BeerEncyclopediaState extends State<BeerEncyclopedia> {
                 ),
               ),
             ),
-            Container(
-              padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
-              child: LinearPercentIndicator(
-                padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
-                width: 180,
-                animation: true,
-                animationDuration: 500,
-                lineHeight: 20.0,
-                percent: 0.7,
-                center: const Text("70.0%"),
-                barRadius: const Radius.circular(8),
-                progressColor: const Color.fromARGB(255, 255, 205, 6),
-                backgroundColor: Colors.orange[100],
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
+                child: LinearPercentIndicator(
+                  padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
+                  animation: true,
+                  animationDuration: 500,
+                  lineHeight: 20.0,
+                  percent: beerpercent,
+                  center: Text("${beerpercent * 100}%"),
+                  barRadius: const Radius.circular(8),
+                  progressColor: const Color.fromARGB(255, 255, 205, 6),
+                  backgroundColor: Colors.orange[100],
+                ),
               ),
             )
           ],
@@ -216,7 +152,7 @@ class _BeerEncyclopediaState extends State<BeerEncyclopedia> {
         const Margin(marginType: MarginType.height, size: 16),
         BeerList(
           imgBackgroundSize: 100,
-          newbeerlist: checkdrop(dropindex),
+          newbeerlist: checkdrop(dropindex, beerlist),
         )
       ],
     );

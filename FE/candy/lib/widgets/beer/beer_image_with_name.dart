@@ -29,23 +29,29 @@ class BeerImageWithName extends StatelessWidget {
           beerImgSrc: beerImgSrc,
         ),
         const Margin(marginType: MarginType.height, size: 8),
-        Text(
-          beerName['korean']!,
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-            fontSize: beerNameStyles?['koreanFontSize'] ?? false
-                ? beerNameStyles!['koreanFontSize']
-                : 16,
+        SizedBox(
+          width: backSize - 6,
+          child: Text(
+            beerName['korean']!,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              fontSize: beerNameStyles?['koreanFontSize'] ?? false
+                  ? beerNameStyles!['koreanFontSize']
+                  : 16,
+            ),
           ),
         ),
-        Text(
-          beerName['english']!,
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-            fontSize: beerNameStyles?['englishFontSize'] ?? false
-                ? beerNameStyles!['englishFontSize']
-                : 12,
-            color: Colors.black.withOpacity(0.6),
+        SizedBox(
+          width: backSize - 6,
+          child: Text(
+            beerName['english']!,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              fontSize: beerNameStyles?['englishFontSize'] ?? false
+                  ? beerNameStyles!['englishFontSize']
+                  : 12,
+              color: Colors.black.withOpacity(0.6),
+            ),
           ),
         ),
       ],
