@@ -27,7 +27,7 @@ class BeerList extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   BeerImageWithName(
-                      backColor: Colors.black,
+                      backColor: const Color.fromARGB(255, 255, 255, 255),
                       backSize: imgBackgroundSize,
                       beerImgSrc: newbeerlist[index * 3].beerImageUrl,
                       beerName: {
@@ -38,10 +38,10 @@ class BeerList extends StatelessWidget {
                     BeerImageWithName(
                         backColor: Colors.black,
                         backSize: imgBackgroundSize,
-                        beerImgSrc: newbeerlist[index * 3].beerImageUrl,
+                        beerImgSrc: newbeerlist[index * 3 + 1].beerImageUrl,
                         beerName: {
-                          'korean': newbeerlist[index * 3].beerNameKR,
-                          'english': newbeerlist[index * 3].beerNameEN,
+                          'korean': newbeerlist[index * 3 + 1].beerNameKR,
+                          'english': newbeerlist[index * 3 + 1].beerNameEN,
                         }),
                   if (index * 3 + 1 >= newbeerlist.length)
                     const SizedBox(
@@ -52,10 +52,10 @@ class BeerList extends StatelessWidget {
                     BeerImageWithName(
                         backColor: Colors.black,
                         backSize: imgBackgroundSize,
-                        beerImgSrc: newbeerlist[index * 3].beerImageUrl,
+                        beerImgSrc: newbeerlist[index * 3 + 2].beerImageUrl,
                         beerName: {
-                          'korean': newbeerlist[index * 3].beerNameKR,
-                          'english': newbeerlist[index * 3].beerNameEN,
+                          'korean': newbeerlist[index * 3 + 2].beerNameKR,
+                          'english': newbeerlist[index * 3 + 2].beerNameEN,
                         }),
                   if (index * 3 + 2 >= newbeerlist.length)
                     const SizedBox(

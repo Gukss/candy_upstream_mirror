@@ -47,10 +47,7 @@ class _BeerEncyclopediaState extends State<BeerEncyclopedia> {
               enabled: false,
               child: Padding(
                 padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-                child: Divider(
-                  height: 20,
-                  thickness: 10,
-                ),
+                child: Divider(),
               ),
             ),
         ],
