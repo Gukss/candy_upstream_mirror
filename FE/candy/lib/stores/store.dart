@@ -10,3 +10,22 @@ class SearchController extends GetxController {
 
   SearchController({required this.searchInputText});
 }
+
+class PriorityOrderController extends GetxController {
+  RxBool appearanceSelected = false.obs;
+  RxBool flavorSelected = false.obs;
+  RxBool mouthfeelSelected = false.obs;
+  RxBool aromaSelected = false.obs;
+  RxList<String> priorityOrder = <String>[].obs;
+
+  void changeOrder(tappedPriority) {
+    if (priorityOrder.contains(tappedPriority)) {
+      priorityOrder.assignAll(priorityOrder
+          .where((priority) => priority != tappedPriority)
+          .toList()
+          .obs);
+    } else {
+      priorityOrder.add(tappedPriority);
+    }
+  }
+}
