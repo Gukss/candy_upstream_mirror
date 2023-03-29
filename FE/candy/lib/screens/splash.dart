@@ -1,3 +1,4 @@
+import 'package:candy/api/user_api_service.dart';
 import 'package:candy/screens/login.dart';
 import 'package:candy/stores/store.dart';
 import 'package:candy/widgets/bottom_navigation_bar.dart';
@@ -10,23 +11,32 @@ class Splash extends StatelessWidget {
   const Splash({super.key});
 
   // 토큰 존재 확인 및 유저 정보 저장
-  Future<bool> checkIsLogined(UserController userController) async {
+  Future<String> checkIsLogined(UserController userController) async {
     // 로그인 여부(토큰 유효 여부)
-    bool? result;
+    bool? isLogined;
+    bool? isSignuped;
     if (await AuthApi.instance.hasToken()) {
       // 토큰 정보 확인
       try {
         await UserApi.instance.accessTokenInfo();
-        result = true;
+        isLogined = true;
         // 유저 정보 확인 및 저장
         User user = await UserApi.instance.me();
-        userController.userEmail.value = user.kakaoAccount!.email!;
+        userController.userProfileImg.value =
+            user.kakaoAccount!.profile!.profileImageUrl!;
+        userController.userEmail.value = '${user.id}@candy.com';
       } catch (e) {}
     }
-    result ??= false;
-    // Splash 제거
-    FlutterNativeSplash.remove();
-    return result;
+    isLogined ??= false;
+    if (!isLogined) {
+      FlutterNativeSplash.remove();
+      return 'login';
+    }
+    if (!await UserApiService.getUserStatus(userController.userEmail.value)) {
+      FlutterNativeSplash.remove();
+      return 'main';
+    }
+    return 'login';
   }
 
   @override
@@ -43,7 +53,7 @@ class Splash extends StatelessWidget {
             ),
           );
         }
-        if (snapshot.data!) {
+        if (snapshot.data == 'main') {
           return const BottomNavigation();
         }
         return const Login();

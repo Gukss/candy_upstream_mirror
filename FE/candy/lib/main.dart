@@ -1,12 +1,12 @@
+import 'package:candy/screens/splash.dart';
 import 'package:flutter/material.dart';
 
-import 'package:candy/screens/splash.dart';
 import 'package:candy/stores/store.dart';
 import 'package:candy/widgets/ui/no_scroll.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
 void main() async {

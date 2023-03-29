@@ -1,3 +1,4 @@
+import 'package:candy/widgets/ui/margin.dart';
 import 'package:flutter/material.dart';
 
 class Gender extends StatelessWidget {
@@ -16,23 +17,23 @@ class Gender extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text('성별'),
-        const SizedBox(
-          height: 8,
+        const Margin(
+          marginType: MarginType.height,
+          size: 8,
         ),
-        SizedBox(
+        Container(
           height: 48,
+          decoration: BoxDecoration(
+            border: Border.all(),
+            borderRadius: BorderRadius.circular(8),
+          ),
           child: Row(
             children: [
               Expanded(
                 child: Container(
                   height: double.infinity,
                   decoration: BoxDecoration(
-                    border: const BorderDirectional(
-                      start: BorderSide(width: 1),
-                      top: BorderSide(width: 1),
-                      end: BorderSide(width: 0.5),
-                      bottom: BorderSide(width: 1),
-                    ),
+                    border: const Border(right: BorderSide()),
                     color: gender == 'M' ? Colors.amber : null,
                   ),
                   child: TextButton(
@@ -53,12 +54,6 @@ class Gender extends StatelessWidget {
                 child: Container(
                   height: double.infinity,
                   decoration: BoxDecoration(
-                    border: const BorderDirectional(
-                      start: BorderSide(width: 0.5),
-                      top: BorderSide(width: 1),
-                      end: BorderSide(width: 1),
-                      bottom: BorderSide(width: 1),
-                    ),
                     color: gender == 'W' ? Colors.amber : null,
                   ),
                   child: TextButton(

@@ -1,4 +1,7 @@
-import 'package:candy/screens/main_page.dart';
+import 'package:candy/api/user_api_service.dart';
+import 'package:candy/screens/login.dart';
+import 'package:candy/stores/store.dart';
+import 'package:candy/widgets/bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
 import 'package:candy/widgets/signup/birth_date.dart';
@@ -15,47 +18,72 @@ class Signup extends StatefulWidget {
 }
 
 class _SignupState extends State<Signup> {
+  final UserController userController = Get.find();
   final TextEditingController nicknameController = TextEditingController();
-  late final List<int> yearList;
-  late final List<int> monthList;
-  late final List<int> dayList;
-  late Map<String, int> birthDate;
+  final List<int> yearList = [
+    for (int i = 1950; i <= DateTime.now().year; i++) i
+  ];
+  final List<int> monthList = [for (int i = 1; i <= 12; i++) i];
+  List<int> dayList = [];
+  Map<String, int> birthDate = {
+    'year': 0,
+    'month': 0,
+    'day': 0,
+  };
   String gender = '';
 
+  @override
+  void initState() {
+    super.initState();
+  }
+
   // 등록 버튼 누르기
-  void onRegisterButtonPressed(BuildContext context) {
+  void onRegisterButtonPressed() async {
+    final String nickname = nicknameController.text;
+    final int year = birthDate['year']!;
+    final int month = birthDate['month']!;
+    final int day = birthDate['day']!;
+
     String snackBarContent = '';
-    if (nicknameController.text.length < 2 ||
-        nicknameController.text.length > 20) {
+    if (nickname.length < 2 || nickname.length > 20) {
       snackBarContent = '닉네임 길이는 2~20까지 가능합니다.';
     } else if (gender == '') {
       snackBarContent = '성별을 선택해주세요.';
-    } else if (DateTime.now().year - birthDate['year']! < 19) {
+    } else if (year == 0 || month == 0 || day == 0) {
+      snackBarContent = '생년월일을 모두 선택해주세요.';
+    } else if (DateTime.now().year - year < 19) {
       snackBarContent = '성인이 아니면 사용할 수 없습니다.';
     }
     if (snackBarContent != '') {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          action: SnackBarAction(
-            label: 'Action',
-            onPressed: () {
-              // Code to execute.
-            },
-          ),
           content: Text(snackBarContent),
           duration: const Duration(milliseconds: 1500),
           backgroundColor: Colors.red,
           padding: const EdgeInsets.symmetric(
-            horizontal: 8.0, // Inner padding for SnackBar content.
+            horizontal: 16.0,
+            vertical: 16,
           ),
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0),
+            borderRadius: BorderRadius.circular(8.0),
           ),
         ),
       );
-    } else {
-      Get.offAll(const MainPage());
+      return;
+    }
+    if (snackBarContent == '성인이 아니면 사용할 수 없습니다.') {
+      Get.offAll(() => const Login());
+    } else if (snackBarContent == '') {
+      if (await UserApiService.postSignup(
+        nickname: nickname,
+        gender: gender,
+        profileImage: userController.userProfileImg.value,
+        birth: '$year-$month-$day',
+        email: userController.userEmail.value,
+      )) {
+        Get.offAll(() => const BottomNavigation());
+      }
     }
   }
 
@@ -77,20 +105,24 @@ class _SignupState extends State<Signup> {
     setState(() {
       birthDate[type] = value;
     });
+    if (type != 'day') {
+      updateDayList();
+    }
   }
 
-  @override
-  void initState() {
-    super.initState();
-    final today = DateTime.now();
-    yearList = [for (int i = 1950; i <= today.year; i++) i];
-    monthList = [for (int i = 1; i <= 12; i++) i];
-    dayList = [for (int i = 1; i <= 31; i++) i];
-    birthDate = {
-      'year': today.year,
-      'month': today.month,
-      'day': today.day,
-    };
+  // 일 리스트 업데이트
+  void updateDayList() {
+    if (birthDate['year'] == 0 || birthDate['month'] == 0) return;
+    setState(() {
+      final int year = birthDate['month'] == 12
+          ? birthDate['year']! + 1
+          : birthDate['year']!;
+      final int month = birthDate['month'] == 12 ? 1 : birthDate['month']!;
+      dayList = [for (int i = 1; i <= DateTime(year, month, 0).day; i++) i];
+    });
+    if (birthDate['day'] != 0 && !dayList.contains(birthDate['day'])) {
+      birthDate['day'] = 0;
+    }
   }
 
   @override
@@ -111,7 +143,7 @@ class _SignupState extends State<Signup> {
         actions: [
           TextButton(
             onPressed: () {
-              onRegisterButtonPressed(context);
+              onRegisterButtonPressed();
             },
             child: const Text(
               '등록',
@@ -128,9 +160,7 @@ class _SignupState extends State<Signup> {
           padding: const EdgeInsets.fromLTRB(16, 80, 16, 24),
           child: Container(
             decoration: BoxDecoration(
-              border: Border.all(
-                width: 1,
-              ),
+              border: Border.all(),
               borderRadius: BorderRadius.circular(16),
             ),
             padding: const EdgeInsets.all(24),

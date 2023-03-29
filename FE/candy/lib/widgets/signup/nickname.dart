@@ -1,3 +1,4 @@
+import 'package:candy/widgets/ui/margin.dart';
 import 'package:flutter/material.dart';
 
 class Nickname extends StatelessWidget {
@@ -14,15 +15,12 @@ class Nickname extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text('닉네임'),
-        const SizedBox(
-          height: 8,
-        ),
+        const Margin(marginType: MarginType.height, size: 8),
         Container(
           height: 48,
           decoration: BoxDecoration(
-            border: Border.all(
-              width: 1,
-            ),
+            border: Border.all(),
+            borderRadius: BorderRadius.circular(8),
           ),
           child: TextField(
             textAlignVertical: TextAlignVertical.center,
