@@ -7,9 +7,29 @@ import 'package:candy/models/user/user_info_model.dart';
 import 'package:http/http.dart' as http;
 
 class UserApiService {
+  // 회원 가입 대상 여부
+  static Future<bool> getUserStatus(String email) async {
+    final Uri uri = Uri.parse('${RequestInfo.baseUrl}/user');
+    final Map<String, String> headers = {
+      'Content-Type': RequestInfo.headerJson,
+      'email': email,
+    };
+
+    final http.Response response = await http.get(uri, headers: headers);
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    }
+    throw Error();
+  }
+
   // 회원 가입
-  static Future<bool> postSignup(
-      {required String nickname, gender, profileImage, birth, email}) async {
+  static Future<bool> postSignup({
+    required String nickname,
+    required String gender,
+    required String profileImage,
+    required String birth,
+    required String email,
+  }) async {
     final Uri uri = Uri.parse('${RequestInfo.baseUrl}/sign-up');
     final Map<String, String> headers = {
       'Content-Type': RequestInfo.headerJson,
@@ -55,7 +75,6 @@ class UserApiService {
           utf8.decode(response.bodyBytes),
         ),
       );
-      print(instance.nickname);
       return instance;
     }
     throw Error();
@@ -63,8 +82,8 @@ class UserApiService {
 
   // 음주 일지 조회
   static Future<List<UserDailyDataModel>> getUserDailyData({
-    int year = 2023,
-    int month = 3,
+    required int year,
+    required int month,
     required String email,
   }) async {
     final Uri uri = Uri.https(
@@ -75,7 +94,6 @@ class UserApiService {
         'month': '$month',
       },
     );
-    print(uri);
     final Map<String, String> headers = {
       'Content-Type': RequestInfo.headerJson,
       'email': email,

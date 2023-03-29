@@ -1,3 +1,4 @@
+import 'package:candy/widgets/ui/margin.dart';
 import 'package:flutter/material.dart';
 
 import 'package:candy/widgets/signup/birth_dropbox.dart';
@@ -24,11 +25,13 @@ class BirthDate extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text('생년월일'),
-        const SizedBox(
-          height: 8,
-        ),
-        SizedBox(
+        const Margin(marginType: MarginType.height, size: 8),
+        Container(
           height: 48,
+          decoration: BoxDecoration(
+            border: Border.all(),
+            borderRadius: BorderRadius.circular(8),
+          ),
           child: Row(
             children: [
               BirthDropbox(
