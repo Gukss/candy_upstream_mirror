@@ -11,8 +11,9 @@ class BeerGetList extends StatelessWidget {
     return await BeerApiService.getAllBeerList(email: 'ac@naver.com');
   }
 
-  checkpercent(allbeer) {
-    return 0.3;
+  checkpercent(List<AllBeerListModel> allbeer) {
+    final drunkbeer = allbeer.where((e) => e.isDrunk > 0).toList();
+    return drunkbeer.length / allbeer.length;
   }
 
   @override
