@@ -1,7 +1,7 @@
-import 'package:candy/widgets/recommendation/recommendation_beers.dart';
+import 'package:flutter/material.dart';
 
 import 'package:candy/widgets/ui/margin.dart';
-import 'package:flutter/material.dart';
+import 'package:candy/widgets/recommendation/recommendation_beers.dart';
 
 class CandyRecommendation extends StatelessWidget {
   const CandyRecommendation({super.key});
@@ -37,7 +37,7 @@ class CandyRecommendation extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              'CANDY가 추천하는 맥주는 어떠세요?',
+              '오늘 CANDY가 추천하는 맥주 어떠세요?',
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w700,

@@ -27,7 +27,7 @@ class BeerList extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   BeerImageWithName(
-                      backColor: const Color.fromARGB(255, 255, 255, 255),
+                      backColor: const Color.fromARGB(255, 243, 239, 247),
                       backSize: imgBackgroundSize,
                       beerImgSrc: newbeerlist[index * 3].beerImageUrl,
                       beerName: {
@@ -36,7 +36,7 @@ class BeerList extends StatelessWidget {
                       }),
                   if (index * 3 + 1 < newbeerlist.length)
                     BeerImageWithName(
-                        backColor: Colors.black,
+                        backColor: const Color.fromARGB(255, 243, 239, 247),
                         backSize: imgBackgroundSize,
                         beerImgSrc: newbeerlist[index * 3 + 1].beerImageUrl,
                         beerName: {
@@ -50,7 +50,7 @@ class BeerList extends StatelessWidget {
                     ),
                   if (index * 3 + 2 < newbeerlist.length)
                     BeerImageWithName(
-                        backColor: Colors.black,
+                        backColor: const Color.fromARGB(255, 243, 239, 247),
                         backSize: imgBackgroundSize,
                         beerImgSrc: newbeerlist[index * 3 + 2].beerImageUrl,
                         beerName: {
