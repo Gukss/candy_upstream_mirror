@@ -79,7 +79,8 @@ class _SignupState extends State<Signup> {
         nickname: nickname,
         gender: gender,
         profileImage: userController.userProfileImg.value,
-        birth: '$year-$month-$day',
+        birth:
+            '$year-${month <= 10 ? '0$month' : month}-${day <= 10 ? '0$day' : day}',
         email: userController.userEmail.value,
       )) {
         Get.offAll(() => const BottomNavigation());
