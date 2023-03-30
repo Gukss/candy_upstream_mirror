@@ -11,7 +11,7 @@ import java.io.Serializable;
  * description    :
  */
 @RedisHash(value = "style")
-public class StyleCache implements Serializable {
+public class SimilarityCache implements Serializable {
 
   @Id
   private long userId;

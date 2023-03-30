@@ -74,4 +74,6 @@ public interface BeerRepository extends JpaRepository<Beer, Long> {
           "having beer_id is not null and appearance is null and mouthfeel is null and flavor is null " +
           "and aroma is null and overall is null;")
   List<ReadBeerAvgFromReviewResponse> readAllBeerAvgList();
+
+  List<Beer> findTop10ByOrderById();
 }

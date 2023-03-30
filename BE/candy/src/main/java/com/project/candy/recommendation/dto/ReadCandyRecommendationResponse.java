@@ -1,5 +1,6 @@
 package com.project.candy.recommendation.dto;
 
+import com.project.candy.recommendation.entity.CandyCache;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,7 +14,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-public class ReadCanndyRecommendationResponse {
+public class ReadCandyRecommendationResponse {
+
   private long beerId;
 
   private String beerKrName;
@@ -22,4 +24,12 @@ public class ReadCanndyRecommendationResponse {
 
   private String beerImageUrl;
 
+  public static ReadCandyRecommendationResponse cacheToDTO(CandyCache candyCache) {
+    return ReadCandyRecommendationResponse.builder()
+            .beerId(candyCache.getBeerId())
+            .beerKrName(candyCache.getBeerKrName())
+            .beerEnName(candyCache.getBeerEnName())
+            .beerImageUrl(candyCache.getBeerImageUrl())
+            .build();
+  }
 }

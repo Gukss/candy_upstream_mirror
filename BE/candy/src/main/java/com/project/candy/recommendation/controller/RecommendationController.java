@@ -1,18 +1,21 @@
 package com.project.candy.recommendation.controller;
 
-import com.project.candy.recommendation.dto.ReadCanndyRecommendationResponse;
-import com.project.candy.recommendation.dto.RecReadCandyRecommendationResponse;
+import com.project.candy.beer.entity.Beer;
+import com.project.candy.beer.repository.BeerRepository;
+import com.project.candy.recommendation.dto.ReadCandyRecommendationResponse;
+import com.project.candy.recommendation.dto.ReadReviewRecommendationResponse;
+import com.project.candy.recommendation.dto.ReadSimilarityRecommendationResponse;
 import com.project.candy.recommendation.service.RecommendationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.reactive.function.client.WebClient;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * packageName    : com.project.candy.recommendation.controller fileName       :
@@ -23,41 +26,34 @@ import org.springframework.web.reactive.function.client.WebClient;
 @RequiredArgsConstructor
 @Slf4j
 public class RecommendationController {
-//  private final DefaultUriBuilderFactory factory = new DefaultUriBuilderFactory(BASE_URL);
 
   private final RecommendationService recommendationService;
-
-  @Autowired
-  private WebClient webClient;
-
-  public RecReadCandyRecommendationResponse readCandyRecommendationByEmail(String email, String endPoint) {
-    return webClient.get()
-//        .uri("/candy")
-            .uri("/" + endPoint)
-            .header("email", email)
-            .retrieve()
-            .bodyToMono(RecReadCandyRecommendationResponse.class)
-            .block();
-  }
+  private final BeerRepository beerRepository;
 
   @GetMapping("/candy")
-  public ResponseEntity<ReadCanndyRecommendationResponse> readCandyRecommendation(@RequestHeader(value = "email") String email) {
-    RecReadCandyRecommendationResponse recReadCandyRecommendationResponse = readCandyRecommendationByEmail(
-            "ac@naver.com", "candy");
-    log.info(recReadCandyRecommendationResponse.toString());
-    return null;
+  public ResponseEntity<List<ReadCandyRecommendationResponse>> readCandyRecommendation(@RequestHeader(value = "email") String userEmail) {
+    return new ResponseEntity<>(recommendationService.readCandyByCache(userEmail), HttpStatus.OK);
   }
 
-  @GetMapping("/style")
-  public ResponseEntity<ReadCanndyRecommendationResponse> readStyleRecommendation(@RequestHeader(value = "email") String email) {
-    RecReadCandyRecommendationResponse recReadCandyRecommendationResponse = readCandyRecommendationByEmail(
-            "ac@naver.com", "style");
-    log.info(recReadCandyRecommendationResponse.toString());
-    return null;
+  @GetMapping("/similarity")
+  public ResponseEntity<List<?>> readStyleRecommendation(@RequestHeader(value = "email") String userEmail) {
+    List<ReadSimilarityRecommendationResponse> list = new ArrayList<>();
+    List<Beer> beerList = beerRepository.findTop10ByOrderById();
+
+    for (Beer beer: beerList) {
+      list.add(ReadSimilarityRecommendationResponse.entityToDTO(beer));
+    }
+    return new ResponseEntity<>(list, HttpStatus.OK);
   }
+
+//  @GetMapping("/similarity")
+//  public ResponseEntity<List<?>> readStyleRecommendation(@RequestHeader(value = "email") String userEmail) {
+//    List<ReadSimilarityRecommendationResponse> list = new ArrayList<>();
+//    return new ResponseEntity<>(list, HttpStatus.OK);
+//  }
 
   @GetMapping("/review")
-  public ResponseEntity<?> readReviewRecommendation() {
-    return new ResponseEntity<>(recommendationService.readReviewByCache(), HttpStatus.OK);
+  public ResponseEntity<List<ReadReviewRecommendationResponse>> readReviewRecommendation(@RequestHeader("email") String userEmail) {
+    return new ResponseEntity<>(recommendationService.readReviewByCache(userEmail), HttpStatus.OK);
   }
 }

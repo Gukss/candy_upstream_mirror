@@ -3,13 +3,13 @@ package com.project.candy.recommendation.repository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.candy.exception.exceptionMessage.NotFoundExceptionMessage;
+import com.project.candy.recommendation.entity.CandyCache;
 import com.project.candy.recommendation.entity.ReviewCache;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
-
 import java.time.Duration;
 import java.util.*;
 
@@ -27,14 +27,14 @@ public class RecommendationRepositoryImpl implements RecommendationRepository {
   private final ObjectMapper objectMapper;
 
   /**
-   * redis에서 데이터 받아올때 JSON TO Object 매핑
+   * redis에서 데이터 받아온 후 JSON TO Object 작업
    *
    * @param key
    * @param classType
    * @param <T>
    * @return
    */
-  private <T> Optional<T> getData(String key, Class<T> classType) {
+  private <T> Optional<T> getCacheDataToObject(String key, Class<T> classType) {
     String jsonData = (String) reviewRedisTemplate.opsForValue().get(key);
 
     try {
@@ -47,10 +47,16 @@ public class RecommendationRepositoryImpl implements RecommendationRepository {
     }
   }
 
-  private <T> String setData(T data) {
+  /**
+   * redis에 값 넣기 전 Object to JSON 작업
+   *
+   * @param data
+   * @param <T>
+   * @return
+   */
+  private <T> String setObjectToJSON(T data) {
     try {
       String value = objectMapper.writeValueAsString(data);
-      System.out.println(value);
       return value;
     } catch (Exception e) {
       return null;
@@ -58,11 +64,44 @@ public class RecommendationRepositoryImpl implements RecommendationRepository {
   }
 
   @Override
+  public void createCandyCache(long id, CandyCache candyCache) {
+
+    ValueOperations valueOperations = reviewRedisTemplate.opsForValue();
+    String jsonCandyCache = setObjectToJSON(candyCache);
+    valueOperations.set("candy:" + id + "+" + candyCache.getUserId(),
+            jsonCandyCache, Duration.ofDays(1));
+  }
+
+  @Override
+  public List<CandyCache> readCandyByCache(long userId) {
+
+    // key pattern으로 Redis에 있는 key 값들을 전부 가져온다.
+    // candy 추천은 키 값이 candy:{auto_incr}+userId 형태로 된다.
+    // -> 유저 아이디를 키값으로 가져야 하는데 레디스는 중복 키값의 경우 덮어쓰는 특징이 있다.
+    // -> 따라서 auto increment 되는 값을 userId 앞에 붙여주고 + 를 기준으로 나눠준다.
+    Set<String> candyKeys = reviewRedisTemplate.keys("candy:" + "*+" + userId);
+    if (candyKeys.isEmpty() || candyKeys == null) {
+      return null;
+    }
+    Iterator<String> keyIter = candyKeys.iterator();
+
+    List<CandyCache> candyCacheList = new ArrayList<>();
+    while (keyIter.hasNext()) {
+      String key = keyIter.next();
+      CandyCache candyCache = getCacheDataToObject(key, CandyCache.class)
+              // todo : 에러 메세지 정의하기
+              .orElseThrow(() -> new NotFoundExceptionMessage());
+      candyCacheList.add(candyCache);
+    }
+
+    return candyCacheList;
+  }
+
+  @Override
   public void createReviewCache(ReviewCache reviewCache) {
 
-    // todo : Redis Transaction 적용해보기
     ValueOperations valueOperations = reviewRedisTemplate.opsForValue();
-    String jsonReviewCache = setData(reviewCache);
+    String jsonReviewCache = setObjectToJSON(reviewCache);
     valueOperations.set("review:" + reviewCache.getReviewId(), jsonReviewCache, Duration.ofDays(1));
   }
 
@@ -71,21 +110,16 @@ public class RecommendationRepositoryImpl implements RecommendationRepository {
 
     // key pattern으로 Redis에 있는 key 값들을 전부 가져온다.
     Set<String> reviewKeys = reviewRedisTemplate.keys("review*");
-
     if (reviewKeys.isEmpty() || reviewKeys == null) {
       return null;
     }
-
     Iterator<String> keyIter = reviewKeys.iterator();
-
-    // key 값을 읽기 위한 ValueOperations
-    ValueOperations valueOperations = reviewRedisTemplate.opsForValue();
 
     // key에 해당하는 값들을 리스트에 넣어준다.
     List<ReviewCache> reviewCacheList = new ArrayList<>();
     while (keyIter.hasNext()) {
       String key = keyIter.next();
-      ReviewCache reviewCache = getData(key, ReviewCache.class)
+      ReviewCache reviewCache = getCacheDataToObject(key, ReviewCache.class)
               // todo : 에러 메세지 정의하기
               .orElseThrow(() -> new NotFoundExceptionMessage());
       reviewCacheList.add(reviewCache);
