@@ -27,13 +27,27 @@ class RecommendationApiService {
     throw Error();
   }
 
-  // 최근 본 맥주와 유사한 맥주 추천
-  static Future<List<RecommendationListModel>> getSimilarRecommendation(
-      String email) async {
-    final Uri uri = Uri.parse('${RequestInfo.baseUrl}/$extraUrl/similarity');
+  // 최근 본 맥주 정보
+  static Future<Map<String, dynamic>> getRecentBeer(String email) async {
+    final Uri uri = Uri.parse('${RequestInfo.baseUrl}/$extraUrl/recently');
     final Map<String, String> headers = {
       'Content-Type': RequestInfo.headerJson,
       'email': email,
+    };
+    final http.Response response = await http.get(uri, headers: headers);
+    if (response.statusCode == 200) {
+      return (jsonDecode(utf8.decode(response.bodyBytes)));
+    }
+    throw Error();
+  }
+
+  // 최근 본 맥주와 유사한 맥주 추천
+  static Future<List<RecommendationListModel>> getSimilarRecommendation(
+      int beerId) async {
+    final Uri uri =
+        Uri.parse('${RequestInfo.baseUrl}/$extraUrl/similarity/$beerId');
+    final Map<String, String> headers = {
+      'Content-Type': RequestInfo.headerJson,
     };
     final http.Response response = await http.get(uri, headers: headers);
     if (response.statusCode == 200) {
@@ -54,6 +68,7 @@ class RecommendationApiService {
       'email': email,
     };
     final http.Response response = await http.get(uri, headers: headers);
+    print(response.body);
     if (response.statusCode == 200) {
       final List<UserPickListModel> instances = [];
       for (Map<String, dynamic> userPick
