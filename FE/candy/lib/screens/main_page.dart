@@ -18,28 +18,42 @@ class MainPage extends StatelessWidget {
   Future<Map<String, dynamic>> recommendationInfo() async {
     final Map<String, dynamic> result = {};
     final String email = userController.userEmail.value;
+
     try {
       final List<RecommendationListModel> candyRecommendation =
           await RecommendationApiService.getCandyRecommendation(email);
       result['candyRecommendation'] = candyRecommendation;
+      result['candyError'] = false;
+    } catch (_) {
+      result['candyError'] = true;
+    }
 
+    try {
       final Map<String, dynamic> similarBeerName =
           await RecommendationApiService.getRecentBeer(email);
       result['similarBeerName'] = similarBeerName;
+      result['similarBeerNameError'] = false;
+    } catch (_) {
+      result['similarBeerNameError'] = true;
+    }
 
+    try {
       // final List<RecommendationListModel> similarRecommendation =
       //     await RecommendationApiService.getSimilarRecommendation(
       //         similarBeerName['beerId']);
       // result['similarRecommendation'] = similarRecommendation;
+      result['similarListError'] = false;
+    } catch (_) {
+      result['similarListError'] = false;
+    }
 
+    try {
       final List<UserPickListModel> userPickList =
           await RecommendationApiService.getUserPcik(email);
       result['userPickList'] = userPickList;
-      print(userPickList);
-      // 에러 없는 경우
-      result['error'] = false;
+      result['userPickError'] = false;
     } catch (_) {
-      result['error'] = true;
+      result['userPickError'] = true;
     }
     return result;
   }
@@ -56,9 +70,6 @@ class MainPage extends StatelessWidget {
               color: Colors.amber,
             ),
           );
-        }
-        if (snapshot.data!['error']) {
-          return const Text('오류가 발생했습니다ㅠㅠ');
         }
         return SingleChildScrollView(
           padding: const EdgeInsets.all(16),
