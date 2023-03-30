@@ -68,7 +68,6 @@ class RecommendationApiService {
       'email': email,
     };
     final http.Response response = await http.get(uri, headers: headers);
-    print(response.body);
     if (response.statusCode == 200) {
       final List<UserPickListModel> instances = [];
       for (Map<String, dynamic> userPick
