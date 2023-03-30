@@ -11,6 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 import com.project.candy.beer_history.entity.BeerHistoryId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 /**
  * packageName    : com.project.candy.beer_history.repository fileName       : BeerHistoryRepository
@@ -19,6 +20,9 @@ import org.springframework.data.jpa.repository.Query;
 public interface BeerHistoryRepository extends JpaRepository<BeerHistory, Long> {
 
   Optional<BeerHistory> findByBeerHistoryId(BeerHistoryId beerHistoryId);
-  @Query("select bh from BeerHistory bh join fetch bh.user u where u.id = :userId order by bh.createdAt desc")
-  List<BeerHistory> findAllByUserOrderByCreatedAtDesc(Long userId);
+  @Query(nativeQuery = true, value = "select * "
+      + "from beer_history "
+      + "where user_id = :user_id "
+      + "order by created_at desc")
+  List<BeerHistory> findAllByUserOrderByCreatedAtDesc(@Param("user_id")Long userId);
 }
