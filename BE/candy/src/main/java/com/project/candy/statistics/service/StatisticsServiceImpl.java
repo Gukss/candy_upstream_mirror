@@ -118,20 +118,25 @@ public class StatisticsServiceImpl implements StatisticsService {
       Order styleCur = stylePq.poll();
       String style = styleCur.string;
       Long styleValue = styleCur.value;
-      double stylePercent = styleValue / size;
+      double stylePercent = (double) styleValue / (double) size;
       sumStylePercent += stylePercent;
+      System.out.println("sumStylePercent = " + sumStylePercent);
       pieStyleList.add(new Pie(style, stylePercent));
     }
     for (int i = 0; i < countrySize; i++) {
       Order countryCur = countryPq.poll();
       String country = countryCur.string;
       Long countryValue = countryCur.value;
-      double countryPercent = countryValue / size;
+      double countryPercent = (double) countryValue / (double) size;
       sumCountryPercent += countryPercent;
       pieCountryList.add(new Pie(country, countryPercent));
     }
-    pieStyleList.add(new Pie("기타", 100.0 - sumStylePercent));
-    pieCountryList.add(new Pie("기타", 100.0 - sumCountryPercent));
+    if(1.0 - sumStylePercent > 0){
+      pieStyleList.add(new Pie("기타", 1.0 - sumStylePercent));
+    }
+    if(1.0 - sumCountryPercent > 0) {
+      pieCountryList.add(new Pie("기타", 1.0 - sumCountryPercent));
+    }
 
     return ReadStatisticResponse.entityToDTO(foundStatistics, pieCountryList, pieStyleList);
   }
