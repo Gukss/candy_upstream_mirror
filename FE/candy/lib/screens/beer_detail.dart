@@ -1,3 +1,4 @@
+import 'package:candy/stores/store.dart';
 import 'package:flutter/material.dart';
 
 import 'package:candy/api/beer_api_service.dart';
@@ -7,6 +8,7 @@ import 'package:candy/widgets/beer/beer_extra_info.dart';
 import 'package:candy/widgets/beer/beer_info.dart';
 import 'package:candy/widgets/review/beer_review_list.dart';
 import 'package:candy/widgets/ui/margin.dart';
+import 'package:get/get.dart';
 
 class BeerDetail extends StatelessWidget {
   final int beerId;
@@ -17,8 +19,9 @@ class BeerDetail extends StatelessWidget {
   });
 
   Future<BeerDetailModel> beerdetail() async {
+    UserController userController = Get.find();
     return await BeerApiService.getBeerDetailInfo(
-        email: 'ac@naver.com', beerId: beerId);
+        email: userController.userEmail.value, beerId: beerId);
   }
 
   @override

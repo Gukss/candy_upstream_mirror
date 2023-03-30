@@ -30,8 +30,8 @@ class MyApp extends StatelessWidget {
         appBarTheme: const AppBarTheme(
           color: Color.fromARGB(255, 245, 204, 21),
         ),
-        bottomAppBarTheme: const BottomAppBarTheme(
-          color: Color.fromARGB(255, 245, 204, 21),
+        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+          backgroundColor: Color.fromARGB(255, 245, 204, 21),
         ),
         fontFamily: 'SCDream',
       ),

@@ -22,14 +22,21 @@ class MainPage extends StatelessWidget {
       final List<RecommendationListModel> candyRecommendation =
           await RecommendationApiService.getCandyRecommendation(email);
       result['candyRecommendation'] = candyRecommendation;
-      const String similarBeerName = '일단 예시';
+
+      final Map<String, dynamic> similarBeerName =
+          await RecommendationApiService.getRecentBeer(email);
       result['similarBeerName'] = similarBeerName;
-      final List<RecommendationListModel> similarRecommendation =
-          await RecommendationApiService.getSimilarRecommendation(email);
-      result['similarRecommendation'] = similarRecommendation;
+
+      // final List<RecommendationListModel> similarRecommendation =
+      //     await RecommendationApiService.getSimilarRecommendation(
+      //         similarBeerName['beerId']);
+      // result['similarRecommendation'] = similarRecommendation;
+
       final List<UserPickListModel> userPickList =
           await RecommendationApiService.getUserPcik(email);
       result['userPickList'] = userPickList;
+      print(userPickList);
+      // 에러 없는 경우
       result['error'] = false;
     } catch (_) {
       result['error'] = true;

@@ -14,7 +14,7 @@ class Splash extends StatelessWidget {
   Future<String> checkIsLogined(UserController userController) async {
     // 로그인 여부(토큰 유효 여부)
     bool? isLogined;
-    bool? isSignuped;
+
     if (await AuthApi.instance.hasToken()) {
       // 토큰 정보 확인
       try {
@@ -25,7 +25,7 @@ class Splash extends StatelessWidget {
         userController.userProfileImg.value =
             user.kakaoAccount!.profile!.profileImageUrl!;
         userController.userEmail.value = '${user.id}@candy.com';
-      } catch (e) {}
+      } catch (_) {}
     }
     isLogined ??= false;
     if (!isLogined) {

@@ -13,7 +13,6 @@ class Login extends StatelessWidget {
   // 로그인 함수
   Future<void> onLoginButtonTap(UserController userController) async {
     bool? isLogined;
-    bool? isSignuped;
     // 카카오톡 설치 여부 확인
     if (await isKakaoTalkInstalled()) {
       try {
@@ -49,6 +48,7 @@ class Login extends StatelessWidget {
         if (!await UserApiService.getUserStatus(
             userController.userEmail.value)) {
           Get.offAll(() => const BottomNavigation());
+          return;
         }
         Get.to(() => const Signup());
       } catch (_) {}
