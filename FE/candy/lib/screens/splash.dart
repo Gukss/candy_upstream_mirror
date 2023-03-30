@@ -32,12 +32,14 @@ class Splash extends StatelessWidget {
       FlutterNativeSplash.remove();
       return 'login';
     }
-    if (!await UserApiService.getUserStatus(userController.userEmail.value)) {
-      FlutterNativeSplash.remove();
-      return 'main';
-    }
+    try {
+      if (await UserApiService.getUserStatus(userController.userEmail.value)) {
+        FlutterNativeSplash.remove();
+        return 'login';
+      }
+    } catch (_) {}
     FlutterNativeSplash.remove();
-    return 'login';
+    return 'main';
   }
 
   @override

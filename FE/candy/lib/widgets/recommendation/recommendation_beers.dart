@@ -1,3 +1,4 @@
+import 'package:candy/models/beer/recommendation_list_model.dart';
 import 'package:candy/screens/beer_detail.dart';
 import 'package:candy/widgets/beer/beer_image_with_name.dart';
 import 'package:candy/widgets/ui/margin.dart';
@@ -8,7 +9,7 @@ class RecommendationBeers extends StatelessWidget {
   final double radiusSize;
   final double sectionSize;
   final double imgBackgroundSize;
-  final List<Map<String, dynamic>> beerList;
+  final List<RecommendationListModel> beerList;
 
   const RecommendationBeers({
     super.key,
@@ -31,14 +32,17 @@ class RecommendationBeers extends StatelessWidget {
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () {
-              Get.to(BeerDetail(beerId: beerList[index]['beerId']));
+              Get.to(BeerDetail(beerId: beerList[index].beerId));
             },
             child: BeerImageWithName(
               radiusSize: radiusSize,
               backColor: const Color.fromARGB(255, 235, 238, 241),
               backSize: imgBackgroundSize,
-              beerImgSrc: beerList[index]['imgSrc'],
-              beerName: beerList[index]['name'],
+              beerImgSrc: beerList[index].beerImageUrl,
+              beerName: {
+                'korean': beerList[index].beerNameKR,
+                'english': beerList[index].beerNameEN,
+              },
             ),
           );
         },

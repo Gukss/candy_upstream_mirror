@@ -30,14 +30,14 @@ class Login extends StatelessWidget {
         try {
           await UserApi.instance.loginWithKakaoAccount();
           isLogined = true;
-        } catch (error) {}
+        } catch (_) {}
       }
       // 카카오톡이 설치되지 않은 경우
     } else {
       try {
         await UserApi.instance.loginWithKakaoAccount();
         isLogined = true;
-      } catch (error) {}
+      } catch (_) {}
     }
     isLogined ??= false;
     if (isLogined) {
@@ -48,12 +48,10 @@ class Login extends StatelessWidget {
       try {
         if (!await UserApiService.getUserStatus(
             userController.userEmail.value)) {
-          Get.offAll(const BottomNavigation());
+          Get.offAll(() => const BottomNavigation());
         }
         Get.to(() => const Signup());
-      } catch (e) {
-        print('계정 오류');
-      }
+      } catch (_) {}
     }
   }
 

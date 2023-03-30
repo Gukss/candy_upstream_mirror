@@ -1,13 +1,12 @@
 import 'package:candy/models/beer/recommendation_list_model.dart';
+import 'package:candy/widgets/recommendation/similar_beer_list.dart';
+import 'package:candy/widgets/ui/margin.dart';
 import 'package:flutter/material.dart';
 
-import 'package:candy/widgets/ui/margin.dart';
-import 'package:candy/widgets/recommendation/recommendation_beers.dart';
-
-class CandyRecommendation extends StatelessWidget {
+class SimilarityRecommendation extends StatelessWidget {
   final List<RecommendationListModel> beerList;
 
-  const CandyRecommendation({
+  const SimilarityRecommendation({
     super.key,
     required this.beerList,
   });
@@ -18,19 +17,14 @@ class CandyRecommendation extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          '오늘 CANDY가 추천하는 맥주 어떠세요?',
+          '스타일별 맥주 추천',
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w700,
           ),
         ),
-        const Margin(marginType: MarginType.height, size: 16),
-        RecommendationBeers(
-          radiusSize: 300,
-          sectionSize: 168,
-          imgBackgroundSize: 120,
-          beerList: beerList,
-        ),
+        const Margin(marginType: MarginType.height, size: 8),
+        SimilarBeerList(beerList: beerList),
       ],
     );
   }

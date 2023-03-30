@@ -1,32 +1,55 @@
+import 'package:candy/api/recommendation_api_service.dart';
+import 'package:candy/models/beer/recommendation_list_model.dart';
+import 'package:candy/models/user/user_pick_list_model.dart';
+import 'package:candy/stores/store.dart';
 import 'package:candy/widgets/recommendation/candy_recommendation.dart';
-import 'package:candy/widgets/recommendation/style_recommendation.dart';
+import 'package:candy/widgets/recommendation/similarity_recommendation.dart';
 import 'package:candy/widgets/review/user_pick_card_list.dart';
 
 import 'package:candy/widgets/ui/margin.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class MainPage extends StatelessWidget {
-  const MainPage({super.key});
+  MainPage({super.key});
 
-  Future<List<String>> categories() async {
-    return [
-      '밀맥주',
-      '라거',
-      '에일',
-      '흑맥주',
-      '종류5',
-      '종류6',
-      '종류7',
-    ];
+  final UserController userController = Get.find();
+
+  Future<Map<String, dynamic>> recommendationInfo() async {
+    final Map<String, dynamic> result = {};
+    final String email = userController.userEmail.value;
+    try {
+      final List<RecommendationListModel> candyRecommendation =
+          await RecommendationApiService.getCandyRecommendation(email);
+      result['candyRecommendation'] = candyRecommendation;
+      final List<RecommendationListModel> similarRecommendation =
+          await RecommendationApiService.getSimilarRecommendation(email);
+      result['similarRecommendation'] = similarRecommendation;
+      final List<UserPickListModel> userPickList =
+          await RecommendationApiService.getUserPcik(email);
+      result['userPickList'] = userPickList;
+      result['error'] = false;
+    } catch (_) {
+      result['error'] = true;
+    }
+    return result;
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: categories(),
+      future: recommendationInfo(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
-          return Container();
+          return const Center(
+            child: CircularProgressIndicator(
+              strokeWidth: 10,
+              color: Colors.amber,
+            ),
+          );
+        }
+        if (snapshot.data!['error']) {
+          return const Text('오류가 발생했습니다ㅠㅠ');
         }
         return SingleChildScrollView(
           padding: const EdgeInsets.all(16),
@@ -46,11 +69,12 @@ class MainPage extends StatelessWidget {
                 ],
               ),
               const Margin(marginType: MarginType.height, size: 24),
-              const CandyRecommendation(),
-              const Margin(marginType: MarginType.height, size: 24),
-              StyleRecommendation(
-                categories: snapshot.data!,
+              CandyRecommendation(
+                beerList: snapshot.data!['candyRecommendation'],
               ),
+              const Margin(marginType: MarginType.height, size: 24),
+              SimilarityRecommendation(
+                  beerList: snapshot.data!['similarRecommendation']),
               const Margin(marginType: MarginType.height, size: 24),
               Column(
                 children: [

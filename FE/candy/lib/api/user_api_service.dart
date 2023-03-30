@@ -9,7 +9,7 @@ import 'package:http/http.dart' as http;
 class UserApiService {
   // 회원 가입 대상 여부
   static Future<bool> getUserStatus(String email) async {
-    final Uri uri = Uri.parse('${RequestInfo.baseUrl}/user');
+    final Uri uri = Uri.parse('${RequestInfo.baseUrl}/user/verification');
     final Map<String, String> headers = {
       'Content-Type': RequestInfo.headerJson,
       'email': email,
@@ -53,6 +53,27 @@ class UserApiService {
       return json.decode(response.body);
     }
     throw Error();
+  }
+
+  // 선호도 입력
+  static Future<bool> postPriorityOrder(
+      String email, List<String> priorityOrder) async {
+    final Uri uri = Uri.parse('${RequestInfo.baseUrl}/preference');
+    final Map<String, String> headers = {
+      'Content-Type': RequestInfo.headerJson,
+      // 'email': email,
+      'email': 'ac@naver.com',
+    };
+
+    final encodedOrder = {};
+    for (int i = 0; i < 4; i++) {
+      encodedOrder[priorityOrder[i]] = i + 1;
+    }
+    final String body = jsonEncode(encodedOrder);
+    final http.Response response =
+        await http.post(uri, headers: headers, body: body);
+    if (response.statusCode == 200) return true;
+    return false;
   }
 
   // 유저 정보 조회
