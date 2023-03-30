@@ -1,7 +1,7 @@
-import 'package:candy/api/statistics_api_service.dart';
-import 'package:candy/models/user/user_statistics.model.dart';
 import 'package:flutter/material.dart';
 
+import 'package:candy/api/statistics_api_service.dart';
+import 'package:candy/models/user/user_statistics.model.dart';
 import 'package:candy/widgets/my_page/statistics/staistics_text.dart';
 import 'package:candy/widgets/my_page/statistics/staistics_chart_beer.dart';
 import 'package:candy/widgets/my_page/statistics/staistics_chart_country.dart';
@@ -16,7 +16,6 @@ class Statistics extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final PageController pageController = PageController(initialPage: 0);
-    print(statistics());
 
     return FutureBuilder(
         future: statistics(),
