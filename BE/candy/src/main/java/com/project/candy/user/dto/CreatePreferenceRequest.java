@@ -15,12 +15,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CreatePreferenceRequest {
   @NotNull
-  Integer apperance;
+  Integer appearance;
   @NotNull
   Integer aroma;
   @NotNull
   Integer flavor;
   @NotNull
-  Integer mouthfell;
+  Integer mouthfeel;
 
 }
