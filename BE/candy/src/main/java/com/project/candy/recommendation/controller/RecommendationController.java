@@ -1,7 +1,5 @@
 package com.project.candy.recommendation.controller;
 
-import com.project.candy.beer.entity.Beer;
-import com.project.candy.beer.repository.BeerRepository;
 import com.project.candy.recommendation.dto.ReadCandyRecommendationResponse;
 import com.project.candy.recommendation.dto.ReadReviewRecommendationResponse;
 import com.project.candy.recommendation.dto.ReadSimilarityRecommendationResponse;
@@ -12,8 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,7 +23,6 @@ import java.util.List;
 public class RecommendationController {
 
   private final RecommendationService recommendationService;
-  private final BeerRepository beerRepository;
 
   @GetMapping("/candy")
   public ResponseEntity<List<ReadCandyRecommendationResponse>> readCandyRecommendation(@RequestHeader(value = "email") String userEmail) {
@@ -39,8 +34,8 @@ public class RecommendationController {
     return new ResponseEntity<>(recommendationService.readRecentlyBeer(userEmail), HttpStatus.OK);
   }
 
-  @GetMapping("/similarity")
-  public ResponseEntity<List<ReadSimilarityRecommendationResponse>> readStyleRecommendation(@RequestBody long beerId) {
+  @GetMapping("/similarity/{beer-id}")
+  public ResponseEntity<List<ReadSimilarityRecommendationResponse>> readStyleRecommendation(@PathVariable(value = "beer-id") long beerId) {
     return new ResponseEntity<>(recommendationService.readSimilarityByCache(beerId), HttpStatus.OK);
   }
 
