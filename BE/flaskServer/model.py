@@ -273,4 +273,8 @@ def recommend_flow() :
     return "전부 순회 완료!"
 # print(recommend_flow())
 # reccomend_beer_similar()
+<<<<<<< HEAD
+
+=======
+>>>>>>> fb10eae495a5fbd38a4b629fcfe6b9d8df67b9b1
 
