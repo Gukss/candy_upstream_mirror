@@ -36,6 +36,19 @@ public class UserController {
 
   /**
    * 한명의 Email을 헤더로 받으면,
+   * 해당 유저의 정보가 있으면 false
+   * 없으면 true 리턴
+   *
+   * @param userEmail
+   * @return
+   */
+  @GetMapping(path = "user/verification", headers = "email")
+  public ResponseEntity<?> findisUserByEmail(@RequestHeader("email") String userEmail) {
+    return new ResponseEntity<Boolean>(userService.readIsdUserByEmail(userEmail), HttpStatus.OK);
+  }
+
+  /**
+   * 한명의 Email을 헤더로 받으면,
    * 해당 유저의 nickName , profileImage 를 리턴
    *
    * @param userEmail
@@ -43,7 +56,8 @@ public class UserController {
    */
   @GetMapping(path = "user", headers = "email")
   public ResponseEntity<?> findUserByEmail(@RequestHeader("email") String userEmail) {
-    return new ResponseEntity<Boolean>(userService.readUserByEmail(userEmail), HttpStatus.OK);
+    return new ResponseEntity<ReadUserByEmailResponse>(userService.readUserByEmail(userEmail), HttpStatus.OK);
   }
+
 
 }

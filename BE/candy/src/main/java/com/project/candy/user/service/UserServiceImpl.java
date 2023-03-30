@@ -12,6 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 /**
  * packageName    : com.project.candy.user.service
  * fileName       : UserServiceImpl
@@ -63,11 +65,18 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public Boolean readUserByEmail(String userEmail) {
-    if(userRepository.findByEmail(userEmail).isPresent()){
+  public Boolean readIsdUserByEmail(String userEmail) {
+    if (userRepository.findByEmail(userEmail).isPresent()) {
       return false;
     }
-    return  true;
+    return true;
+  }
+
+  @Override
+  public ReadUserByEmailResponse readUserByEmail(String userEmail) {
+    User user =userRepository.findByEmail(userEmail).orElseThrow(() -> new NotFoundExceptionMessage(NotFoundExceptionMessage.NOT_FOUND_USER));
+
+    return ReadUserByEmailResponse.EntityToDto(user);
   }
 
 

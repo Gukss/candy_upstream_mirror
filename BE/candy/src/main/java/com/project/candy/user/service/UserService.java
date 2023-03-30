@@ -34,12 +34,20 @@ public interface UserService {
   public User findUserByEmail(String Email);
 
   /**
+   * desc : userEmail 을 인자로 받으면 true ,false를 리턴해주는 메소드
+   *
+   * @param userEmail
+   *
+   * @return
+   */
+  public Boolean readIsdUserByEmail(String userEmail);
+  /**
    * desc : userEmail 을 인자로 받으면 Dto를 리턴해주는 메소드
    *
    * @param userEmail
    *
    * @return
    */
-  public Boolean readUserByEmail(String userEmail);
+  public ReadUserByEmailResponse readUserByEmail(String userEmail);
 
 }
