@@ -232,12 +232,18 @@ def reccomend_candy(conn,email) :
     review_beer = pd.read_sql_query(sql,conn)
     if review_beer.empty :
         sql = "SELECT flavor , aroma , appearance , mouthfeel  FROM candy.preference where user_id ="+str(cur_user_id)
-        prefer = pd.read_sql_query(sql ,conn).transpose()
-        prefer_list=['','','','']
-        for i in range(prefer.shape[0]) :
-            prefer_list[prefer[0].iloc[i]-1] =prefer.index[i] 
-        print(prefer_list)
-        reccomend_beer_prefer_base( prefer_list ,cur_user_id)
+        prefer = pd.read_sql_query(sql ,conn)
+        if prefer.empty :
+            print('here!')
+            prefer_list =['aroma','mouthfeel' , 'appearance' ,'flavor']
+            reccomend_beer_prefer_base(  prefer_list,cur_user_id)    
+        else :
+            prefer = prefer.transpose()
+            prefer_list=['','','','']
+            for i in range(prefer.shape[0]) :
+                prefer_list[prefer[0].iloc[i]-1] =prefer.index[i] 
+            print(prefer_list)
+            reccomend_beer_prefer_base( prefer_list ,cur_user_id)
     else :
         reccomend_cf(email,cur_user_id)
     return "분기완료"
@@ -273,3 +279,14 @@ def recommend_flow() :
     return "전부 순회 완료!"
 # print(recommend_flow())
 # reccomend_beer_similar()
+# conn = pymysql.connect(
+# host='j8b105.p.ssafy.io',
+# port=8306,
+# user='candy',
+# password='candy@b105',
+# db='candy',
+# charset="utf8"
+# )
+# reccomend_candy(conn ,'ttt@naver.com')
+
+# conn.close()
