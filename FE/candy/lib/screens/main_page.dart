@@ -4,7 +4,7 @@ import 'package:candy/models/user/user_pick_list_model.dart';
 import 'package:candy/stores/store.dart';
 import 'package:candy/widgets/recommendation/candy_recommendation.dart';
 import 'package:candy/widgets/recommendation/similarity_recommendation.dart';
-import 'package:candy/widgets/review/user_pick_card_list.dart';
+import 'package:candy/widgets/recommendation/user_pick_recommendation.dart';
 
 import 'package:candy/widgets/ui/margin.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +22,8 @@ class MainPage extends StatelessWidget {
       final List<RecommendationListModel> candyRecommendation =
           await RecommendationApiService.getCandyRecommendation(email);
       result['candyRecommendation'] = candyRecommendation;
+      const String similarBeerName = '일단 예시';
+      result['similarBeerName'] = similarBeerName;
       final List<RecommendationListModel> similarRecommendation =
           await RecommendationApiService.getSimilarRecommendation(email);
       result['similarRecommendation'] = similarRecommendation;
@@ -74,26 +76,11 @@ class MainPage extends StatelessWidget {
               ),
               const Margin(marginType: MarginType.height, size: 24),
               SimilarityRecommendation(
+                  similarBeerName: snapshot.data!['similarBeerName'],
                   beerList: snapshot.data!['similarRecommendation']),
               const Margin(marginType: MarginType.height, size: 24),
-              Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: const [
-                      Text(
-                        '유저 PICK',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const Margin(marginType: MarginType.height, size: 16),
-                  const UserPickCardList(),
-                ],
-              ),
+              UserPickRecommendation(
+                  userPickList: snapshot.data!['userPickList']),
             ],
           ),
         );
