@@ -72,7 +72,8 @@ class _BottomNavigationState extends State<BottomNavigation> {
             _onItemTapped(i);
           }
         },
-        backgroundColor: const Color.fromARGB(255, 247, 229, 91),
+        backgroundColor:
+            Theme.of(context).bottomNavigationBarTheme.backgroundColor,
         color: Colors.white,
       ),
     );
