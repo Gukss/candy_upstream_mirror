@@ -32,6 +32,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 public class RecommendationSimilarity extends BaseTimeEntity {
+
   @Id
   @Column(name = "recommendation_similarity_id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,6 +49,5 @@ public class RecommendationSimilarity extends BaseTimeEntity {
   @Embedded
   @NotNull
   private BaseEntity baseEntity;
-
 
 }

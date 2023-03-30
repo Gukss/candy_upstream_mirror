@@ -1,6 +1,6 @@
 package com.project.candy.cache.repository;
 
-import com.project.candy.recommendation.entity.StyleCache;
+import com.project.candy.recommendation.entity.SimilarityCache;
 import org.springframework.data.repository.CrudRepository;
 
 /**
@@ -9,5 +9,5 @@ import org.springframework.data.repository.CrudRepository;
  * date           : 2023-03-27
  * description    :
  */
-public interface StyleCacheRepository extends CrudRepository<StyleCache, Long> {
+public interface StyleCacheRepository extends CrudRepository<SimilarityCache, Long> {
 }

@@ -18,6 +18,14 @@ import lombok.NoArgsConstructor;
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class ReadReviewRecommendationResponse {
 
+  private long beerId;
+
+  private String beerKrName;
+
+  private String beerEnName;
+
+  private String beerImageUrl;
+
   private String profileImgae;
 
   private String nickName;
@@ -28,13 +36,20 @@ public class ReadReviewRecommendationResponse {
 
   private int likeCount;
 
+  private boolean isLike;
+
   public static ReadReviewRecommendationResponse cacheToDTO(ReviewCache reviewCache) {
     return ReadReviewRecommendationResponse.builder()
+            .beerId(reviewCache.getBeerId())
+            .beerKrName(reviewCache.getBeerKrName())
+            .beerEnName(reviewCache.getBeerEnName())
+            .beerImageUrl(reviewCache.getBeerImageUrl())
             .profileImgae(reviewCache.getProfileImage())
             .nickName(reviewCache.getNickName())
             .overall(reviewCache.getOverall())
             .contents(reviewCache.getContents())
             .likeCount(reviewCache.getLikeCount())
+            .isLike(reviewCache.isLike())
             .build();
   }
 }

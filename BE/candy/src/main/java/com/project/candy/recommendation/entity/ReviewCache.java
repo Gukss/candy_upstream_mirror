@@ -23,6 +23,14 @@ public class ReviewCache implements Serializable {
   @Id
   private long reviewId;
 
+  private long beerId;
+
+  private String beerKrName;
+
+  private String beerEnName;
+
+  private String beerImageUrl;
+
   private String profileImage;
 
   private String nickName;
@@ -33,13 +41,23 @@ public class ReviewCache implements Serializable {
 
   private int likeCount;
 
+  private boolean isLike;
+
   public static ReviewCache entityToCache(Review review) {
     return ReviewCache.builder()
             .reviewId(review.getReviewId())
+            .beerId(review.getBeer().getId())
+            .beerKrName(review.getBeer().getBeerKrName())
+            .beerEnName(review.getBeer().getBeerEnName())
+            .beerImageUrl(review.getBeer().getBeerImage())
             .nickName(review.getUser().getNickname())
             .overall(review.getOverall())
             .contents(review.getContents())
             .likeCount(review.getLikeCount())
             .build();
+  }
+
+  public void updateIsLike(boolean isLike) {
+    this.isLike = isLike;
   }
 }
