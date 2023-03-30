@@ -33,6 +33,7 @@ class UserPickCardItem extends StatelessWidget {
               ),
               const Margin(marginType: MarginType.height, size: 8),
               const BeerImage(
+                radiusSize: 16,
                 backSize: 184,
                 backColor: Colors.white,
                 beerImgSrc:

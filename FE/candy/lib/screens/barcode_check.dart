@@ -70,6 +70,8 @@ class BarcodeCheck extends StatelessWidget {
                         alcoholLevel: snapshot.data!.abv,
                         beerType: snapshot.data!.style,
                         rate: snapshot.data!.overall,
+                        beerDrunk: true,
+                        beerLike: true,
                       ),
                       const Margin(marginType: MarginType.height, size: 16),
                       BeerExtraInfo(

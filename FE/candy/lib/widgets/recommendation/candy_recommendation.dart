@@ -13,7 +13,7 @@ class CandyRecommendation extends StatelessWidget {
           for (int i = 0; i <= 10; i++)
             {
               'imgSrc':
-                  'https://image.shutterstock.com/image-photo/image-260nw-2108189540.jpg',
+                  'https://user-images.githubusercontent.com/76477531/228699909-f15acd29-3da7-41de-8082-97536e004298.png',
               'name': {
                 'korean': '카스 프레시',
                 'english': 'Cass Fresh',
@@ -45,6 +45,7 @@ class CandyRecommendation extends StatelessWidget {
             ),
             const Margin(marginType: MarginType.height, size: 16),
             RecommendationBeers(
+              radiusSize: 300,
               sectionSize: 168,
               imgBackgroundSize: 120,
               beerList: snapshot.data!,

@@ -38,7 +38,19 @@ class BeerDetail extends StatelessWidget {
                   const Margin(marginType: MarginType.height, size: 16),
                   Container(
                     width: double.infinity,
-                    color: Colors.grey,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      color: const Color.fromARGB(255, 230, 234, 241),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color.fromARGB(255, 221, 219, 216)
+                              .withOpacity(0.7),
+                          spreadRadius: 0,
+                          blurRadius: 5.0,
+                          offset: const Offset(10, 10),
+                        ),
+                      ],
+                    ),
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(16, 24, 16, 24),
                       child: Column(
@@ -53,6 +65,8 @@ class BeerDetail extends StatelessWidget {
                             alcoholLevel: snapshot.data!.abv,
                             beerType: snapshot.data!.style,
                             rate: snapshot.data!.overall,
+                            beerDrunk: snapshot.data!.isDrunk,
+                            beerLike: snapshot.data!.isLiked,
                           ),
                           const Margin(marginType: MarginType.height, size: 16),
                           BeerExtraInfo(

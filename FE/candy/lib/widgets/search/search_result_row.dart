@@ -54,6 +54,7 @@ class SearchResultItem extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         BeerImage(
+          radiusSize: 16,
           backSize: 152,
           backColor: const Color.fromARGB(255, 238, 241, 235),
           beerImgSrc: searchResults[index].beerImageUrl,
