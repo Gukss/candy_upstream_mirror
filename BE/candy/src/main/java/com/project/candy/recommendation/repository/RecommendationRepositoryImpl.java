@@ -4,12 +4,15 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.candy.exception.exceptionMessage.NotFoundExceptionMessage;
 import com.project.candy.recommendation.entity.CandyCache;
+import com.project.candy.recommendation.entity.RecentlyCache;
 import com.project.candy.recommendation.entity.ReviewCache;
+import com.project.candy.recommendation.entity.SimilarityCache;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
+
 import java.time.Duration;
 import java.util.*;
 
@@ -23,7 +26,7 @@ import java.util.*;
 @RequiredArgsConstructor
 public class RecommendationRepositoryImpl implements RecommendationRepository {
 
-  private final RedisTemplate reviewRedisTemplate;
+  private final RedisTemplate redisTemplate;
   private final ObjectMapper objectMapper;
 
   /**
@@ -35,7 +38,7 @@ public class RecommendationRepositoryImpl implements RecommendationRepository {
    * @return
    */
   private <T> Optional<T> getCacheDataToObject(String key, Class<T> classType) {
-    String jsonData = (String) reviewRedisTemplate.opsForValue().get(key);
+    String jsonData = (String) redisTemplate.opsForValue().get(key);
 
     try {
       if (StringUtils.hasText(jsonData)) {
@@ -66,7 +69,7 @@ public class RecommendationRepositoryImpl implements RecommendationRepository {
   @Override
   public void createCandyCache(long id, CandyCache candyCache) {
 
-    ValueOperations valueOperations = reviewRedisTemplate.opsForValue();
+    ValueOperations valueOperations = redisTemplate.opsForValue();
     String jsonCandyCache = setObjectToJSON(candyCache);
     valueOperations.set("candy:" + id + "+" + candyCache.getUserId(),
             jsonCandyCache, Duration.ofDays(1));
@@ -79,7 +82,7 @@ public class RecommendationRepositoryImpl implements RecommendationRepository {
     // candy 추천은 키 값이 candy:{auto_incr}+userId 형태로 된다.
     // -> 유저 아이디를 키값으로 가져야 하는데 레디스는 중복 키값의 경우 덮어쓰는 특징이 있다.
     // -> 따라서 auto increment 되는 값을 userId 앞에 붙여주고 + 를 기준으로 나눠준다.
-    Set<String> candyKeys = reviewRedisTemplate.keys("candy:" + "*+" + userId);
+    Set<String> candyKeys = redisTemplate.keys("candy:" + "*+" + userId);
     if (candyKeys.isEmpty() || candyKeys == null) {
       return null;
     }
@@ -98,9 +101,55 @@ public class RecommendationRepositoryImpl implements RecommendationRepository {
   }
 
   @Override
+  public void createRecentlyCache(long userId, RecentlyCache recentlyCache) {
+    ValueOperations valueOperations = redisTemplate.opsForValue();
+    String jsonRecentlyCache = setObjectToJSON(recentlyCache);
+    valueOperations.set("recentlyBeer:" + userId, jsonRecentlyCache);
+  }
+
+  @Override
+  public RecentlyCache readRecentlyBeerName(long userId) {
+
+    String key = "recentlyBeer:" + userId;
+    RecentlyCache recentlyCache = getCacheDataToObject(key, RecentlyCache.class)
+            // todo : 에러 메세지 정의하기
+            .orElseThrow(() -> new NotFoundExceptionMessage());
+
+    return recentlyCache;
+  }
+
+  @Override
+  public void createSimilarityCache(SimilarityCache similarityCache) {
+    ValueOperations valueOperations = redisTemplate.opsForValue();
+    String jsonSimilarityCache = setObjectToJSON(similarityCache);
+    valueOperations.set("similarity:" + similarityCache.getBeerId(), jsonSimilarityCache);
+  }
+
+  @Override
+  public List<SimilarityCache> readSimilarityByCache(long beerId) {
+
+    Set<String> similarityKeys = redisTemplate.keys("similarity:" + beerId);
+    if (similarityKeys.isEmpty() || similarityKeys == null) {
+      return null;
+    }
+    Iterator<String> keyIter = similarityKeys.iterator();
+
+    List<SimilarityCache> similarityCacheList = new ArrayList<>();
+    while (keyIter.hasNext()) {
+      String key = keyIter.next();
+      SimilarityCache similarityCache = getCacheDataToObject(key, SimilarityCache.class)
+              // todo : 에러 메세지 정의하기
+              .orElseThrow(() -> new NotFoundExceptionMessage());
+      similarityCacheList.add(similarityCache);
+    }
+
+    return similarityCacheList;
+  }
+
+  @Override
   public void createReviewCache(ReviewCache reviewCache) {
 
-    ValueOperations valueOperations = reviewRedisTemplate.opsForValue();
+    ValueOperations valueOperations = redisTemplate.opsForValue();
     String jsonReviewCache = setObjectToJSON(reviewCache);
     valueOperations.set("review:" + reviewCache.getReviewId(), jsonReviewCache, Duration.ofDays(1));
   }
@@ -109,7 +158,7 @@ public class RecommendationRepositoryImpl implements RecommendationRepository {
   public List<ReviewCache> readReviewByCache() {
 
     // key pattern으로 Redis에 있는 key 값들을 전부 가져온다.
-    Set<String> reviewKeys = reviewRedisTemplate.keys("review*");
+    Set<String> reviewKeys = redisTemplate.keys("review*");
     if (reviewKeys.isEmpty() || reviewKeys == null) {
       return null;
     }

@@ -1,6 +1,7 @@
 package com.project.candy.recommendation.dto;
 
 import com.project.candy.beer.entity.Beer;
+import com.project.candy.recommendation.entity.SimilarityCache;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -26,12 +27,12 @@ public class ReadSimilarityRecommendationResponse {
 
   private String beerImageUrl;
 
-  public static ReadSimilarityRecommendationResponse entityToDTO(Beer beer) {
+  public static ReadSimilarityRecommendationResponse cacheToDTO(SimilarityCache similarityCache) {
     return ReadSimilarityRecommendationResponse.builder()
-            .beerId(beer.getId())
-            .beerKrName(beer.getBeerKrName())
-            .beerEnName(beer.getBeerEnName())
-            .beerImageUrl(builder().beerImageUrl)
+            .beerId(similarityCache.getBeerId())
+            .beerKrName(similarityCache.getBeerKrName())
+            .beerEnName(similarityCache.getBeerEnName())
+            .beerImageUrl(similarityCache.getBeerImageUrl())
             .build();
   }
 }

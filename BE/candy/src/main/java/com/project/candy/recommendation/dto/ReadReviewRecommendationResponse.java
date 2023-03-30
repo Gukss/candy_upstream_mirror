@@ -26,9 +26,9 @@ public class ReadReviewRecommendationResponse {
 
   private String beerImageUrl;
 
-  private String profileImgae;
+  private String profileImage;
 
-  private String nickName;
+  private String nickname;
 
   private double overall;
 
@@ -44,8 +44,8 @@ public class ReadReviewRecommendationResponse {
             .beerKrName(reviewCache.getBeerKrName())
             .beerEnName(reviewCache.getBeerEnName())
             .beerImageUrl(reviewCache.getBeerImageUrl())
-            .profileImgae(reviewCache.getProfileImage())
-            .nickName(reviewCache.getNickName())
+            .profileImage(reviewCache.getProfileImage())
+            .nickname(reviewCache.getNickName())
             .overall(reviewCache.getOverall())
             .contents(reviewCache.getContents())
             .likeCount(reviewCache.getLikeCount())
