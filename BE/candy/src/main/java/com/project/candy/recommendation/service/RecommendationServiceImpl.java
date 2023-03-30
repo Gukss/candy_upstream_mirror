@@ -7,11 +7,11 @@ import com.project.candy.likes.entity.Likes;
 import com.project.candy.likes.repository.LikesRepository;
 import com.project.candy.recommendation.dto.ReadCandyRecommendationResponse;
 import com.project.candy.recommendation.dto.ReadReviewRecommendationResponse;
-import com.project.candy.recommendation.entity.CandyCache;
-import com.project.candy.recommendation.entity.RecommendationCandy;
-import com.project.candy.recommendation.entity.ReviewCache;
+import com.project.candy.recommendation.dto.ReadSimilarityRecommendationResponse;
+import com.project.candy.recommendation.entity.*;
 import com.project.candy.recommendation.repository.RecommendationCandyRepository;
 import com.project.candy.recommendation.repository.RecommendationRepository;
+import com.project.candy.recommendation.repository.RecommendationSimilarityRepository;
 import com.project.candy.review.entity.Review;
 import com.project.candy.review.repository.ReviewRepository;
 import com.project.candy.user.entity.User;
@@ -40,6 +40,7 @@ public class RecommendationServiceImpl implements RecommendationService {
   private final UserRepository userRepository;
   private final LikesRepository likesRepository;
   private final RecommendationCandyRepository recommendationCandyRepository;
+  private final RecommendationSimilarityRepository recommendationSimilarityRepository;
   private final BeerRepository beerRepository;
 
   @Override
@@ -104,6 +105,75 @@ public class RecommendationServiceImpl implements RecommendationService {
     }
 
     return resCandyRecommendationList;
+  }
+
+  @Override
+  public RecentlyCache readRecentlyBeer(String userEmail) {
+
+    User user = userRepository.findByEmail(userEmail)
+            .orElseThrow(() -> new NotFoundExceptionMessage(NotFoundExceptionMessage.NOT_FOUND_USER));
+
+    RecentlyCache recentlyCache = recommendationRepository.readRecentlyBeerName(user.getId());
+    if (recentlyCache == null) {
+      return null;
+    }
+    return recentlyCache;
+  }
+
+  @Override
+  public List<ReadSimilarityRecommendationResponse> readSimilarityByCache(long beerId) {
+
+    // 캐시 데이터 읽어오기
+    List<SimilarityCache> similarityCacheList = recommendationRepository.readSimilarityByCache(beerId);
+
+    // 캐시에 데이터가 없다면 db 조회 메소드 호출 후 받아온 데이터 캐시에 저장하고 리턴
+    if (similarityCacheList == null || similarityCacheList.isEmpty()) {
+      List<ReadSimilarityRecommendationResponse> resSimilarityList = readSimilarityByRdbAndCreateCache(beerId);
+      return resSimilarityList;
+    }
+
+    // 캐시에 데이터가 있다면 Response DTO 형식으로 변환 후 리턴
+    List<ReadSimilarityRecommendationResponse> resSimilarityList = new ArrayList<>();
+    for (SimilarityCache similarityCache : similarityCacheList) {
+      resSimilarityList.add(ReadSimilarityRecommendationResponse.cacheToDTO(similarityCache));
+    }
+
+    return resSimilarityList;
+  }
+
+  @Override
+  public List<ReadSimilarityRecommendationResponse> readSimilarityByRdbAndCreateCache(long beerId) {
+
+    // 추천된 데이터가 들어가 있는 rdb에서 해당 유저의 추천 데이터를 받아온다.
+    LocalDateTime startTime = LocalDateTime.now().minusDays(1);
+    LocalDateTime endTime = LocalDateTime.now();
+    RecommendationSimilarity recommendationSimilarity =
+            recommendationSimilarityRepository.findByBeerIdAndCreatedAtBetween(beerId, startTime, endTime);
+    if (recommendationSimilarity == null) {
+      // todo : 에러 메세지 정의하기
+      throw new NotFoundExceptionMessage();
+    }
+
+    List<ReadSimilarityRecommendationResponse> resSimilarityRecommendationList = new ArrayList<>();
+
+    // 캐시에 저장할 형태로 바꾸고, 캐시에 저장
+    // beerIdList 나누는 작업 필요
+    String[] beerIdArray = recommendationSimilarity.getBeerIdList().split(" ");
+    // 레디스 키 값을 구분짓기 위한 변수
+    for (String beerIdStr : beerIdArray) {
+      long similarityBeerId = Long.parseLong(beerIdStr);
+
+      // 맥주 아이디로 맥주 정보 조회
+      Beer beer = beerRepository.findById(similarityBeerId)
+              .orElseThrow(() -> new NotFoundExceptionMessage(NotFoundExceptionMessage.NOT_FOUND_BEER));
+
+      SimilarityCache similarityCache = SimilarityCache.entityToCache(beer);
+
+      recommendationRepository.createSimilarityCache(similarityCache);
+      resSimilarityRecommendationList.add(ReadSimilarityRecommendationResponse.cacheToDTO(similarityCache));
+    }
+
+    return resSimilarityRecommendationList;
   }
 
   @Override

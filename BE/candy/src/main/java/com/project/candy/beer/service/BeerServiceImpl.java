@@ -14,6 +14,8 @@ import com.project.candy.country.repository.CountryRepository;
 import com.project.candy.exception.exceptionMessage.NotFoundExceptionMessage;
 import com.project.candy.likes.entity.Likes;
 import com.project.candy.likes.repository.LikesRepository;
+import com.project.candy.recommendation.entity.RecentlyCache;
+import com.project.candy.recommendation.repository.RecommendationRepository;
 import com.project.candy.review.entity.Review;
 import com.project.candy.review.repository.ReviewRepository;
 import com.project.candy.user.entity.User;
@@ -51,6 +53,7 @@ public class BeerServiceImpl implements BeerService {
   private final LikesRepository likeRepository;
   private final ReviewRepository reviewRepository;
   private final JdbcTemplate jdbcTemplate;
+  private final RecommendationRepository recommendationRepository;
 
   @Override
   public ReadBeerDetailResponse readBeerDetail(Long beerId, String userEmail) {
@@ -59,7 +62,8 @@ public class BeerServiceImpl implements BeerService {
             () -> new NotFoundExceptionMessage(NotFoundExceptionMessage.NOT_FOUND_BEER));
     // 상세 정보에 들어갈 나라 정보 (한글/영문 이름, 이미지 url)
     //todo: 예외 메시지 바꾸기
-    Country foundCountry = countryRepository.findById(beer.getCountry().getId()).orElseThrow(() -> new NotFoundExceptionMessage(NotFoundExceptionMessage.NOT_FOUND_BEER));
+    Country foundCountry = countryRepository.findById(beer.getCountry().getId())
+            .orElseThrow(() -> new NotFoundExceptionMessage());
     ReadCountryResponse readCountryResponse = ReadCountryResponse.entityToDTO(foundCountry);
     // 위 두 정보를 리턴 DTO에 넣어준다.
     ReadBeerDetailResponse readBeerDetailResponse = ReadBeerDetailResponse.entityToDTO(beer, readCountryResponse);
@@ -75,8 +79,7 @@ public class BeerServiceImpl implements BeerService {
     if (calendarList != null) {
       isDrink = true;
     }
-    log.info(String.valueOf(user.getId()));
-    log.info(String.valueOf(beer.getId()));
+
     Likes likes = likeRepository.readByUserAndBeerAndIsDeleteFalse(user.getId(), beer.getId());
     if (likes != null) {
       isLike = true;
@@ -84,6 +87,9 @@ public class BeerServiceImpl implements BeerService {
 
     // 마셨는지, 찜했는지에 대한 변수 업데이트
     readBeerDetailResponse.setDrinkAndLike(isDrink, isLike);
+
+    // 캐시에 조회한 맥주의 정보를 저장한다. -> 메인페이지 비슷한 맥주 추천을 위해
+    recommendationRepository.createRecentlyCache(user.getId(), RecentlyCache.entityToCache(beer));
 
     return readBeerDetailResponse;
   }
@@ -99,9 +105,9 @@ public class BeerServiceImpl implements BeerService {
 
   @Override
   public List<ReadSearchBeerListResponse> readAllSearchBeerList(String beerName) {
-    log.info("확인하자!!!" + beerName);
+
     boolean isKorean = Pattern.matches("^[ㄱ-ㅎ가-힣]*$", beerName);
-    log.info("김영만" + isKorean);
+
     List<Beer> beerList = new ArrayList<>();
     if (isKorean) {
       beerList = beerRepository.findAllByBeerKrNameContaining(beerName);
@@ -127,6 +133,7 @@ public class BeerServiceImpl implements BeerService {
     if (beer == null) {
       return null;
     }
+
     ReadBeerDetailResponse resBeerDetail = readBeerDetail(beer.getId(), userEmail);
     return resBeerDetail;
   }
