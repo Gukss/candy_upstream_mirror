@@ -5,6 +5,7 @@ class BeerImage extends StatelessWidget {
   final double backSize;
   final Color backColor;
   final String beerImgSrc;
+  final int? isDrunk;
 
   const BeerImage({
     super.key,
@@ -12,6 +13,7 @@ class BeerImage extends StatelessWidget {
     required this.backSize,
     required this.backColor,
     required this.beerImgSrc,
+    this.isDrunk,
   });
 
   @override
@@ -21,7 +23,9 @@ class BeerImage extends StatelessWidget {
       height: backSize,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(radiusSize),
-        color: backColor,
+        color: isDrunk == 0
+            ? const Color.fromARGB(255, 106, 105, 126).withOpacity(0.3)
+            : backColor,
         boxShadow: [
           BoxShadow(
             color: const Color.fromARGB(255, 221, 219, 216).withOpacity(0.7),
@@ -35,8 +39,12 @@ class BeerImage extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
         child: Image.network(
           beerImgSrc,
+          color: isDrunk == 0
+              ? const Color.fromARGB(19, 104, 104, 120).withOpacity(0.9)
+              : null,
+          colorBlendMode: isDrunk == 0 ? BlendMode.modulate : null,
           errorBuilder: (context, error, stackTrace) {
-            return Container();
+            return Image.asset('assets/images/no-drink.png');
           },
         ),
       ),

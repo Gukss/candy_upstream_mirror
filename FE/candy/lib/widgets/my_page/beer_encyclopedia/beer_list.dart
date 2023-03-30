@@ -36,6 +36,7 @@ class BeerList extends StatelessWidget {
                       radiusSize: 16,
                       backColor: const Color.fromARGB(255, 247, 251, 249),
                       backSize: imgBackgroundSize,
+                      isDrunk: newbeerlist[index * 3].isDrunk,
                       beerImgSrc: newbeerlist[index * 3].beerImageUrl,
                       beerName: {
                         'korean': newbeerlist[index * 3].beerNameKR,
@@ -53,6 +54,7 @@ class BeerList extends StatelessWidget {
                         radiusSize: 16,
                         backColor: const Color.fromARGB(255, 247, 251, 249),
                         backSize: imgBackgroundSize,
+                        isDrunk: newbeerlist[index * 3 + 1].isDrunk,
                         beerImgSrc: newbeerlist[index * 3 + 1].beerImageUrl,
                         beerName: {
                           'korean': newbeerlist[index * 3 + 1].beerNameKR,
@@ -75,6 +77,7 @@ class BeerList extends StatelessWidget {
                         radiusSize: 16,
                         backColor: const Color.fromARGB(255, 247, 251, 249),
                         backSize: imgBackgroundSize,
+                        isDrunk: newbeerlist[index * 3 + 2].isDrunk,
                         beerImgSrc: newbeerlist[index * 3 + 2].beerImageUrl,
                         beerName: {
                           'korean': newbeerlist[index * 3 + 2].beerNameKR,

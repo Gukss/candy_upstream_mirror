@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 
 class BeerImageWithName extends StatelessWidget {
   final double radiusSize;
+  final int? isDrunk;
   final double backSize;
   final Color backColor;
   final String beerImgSrc;
   final Map<String, String> beerName;
-  final Map<String, dynamic>? beerNameStyles;
 
   const BeerImageWithName({
     super.key,
@@ -17,7 +17,7 @@ class BeerImageWithName extends StatelessWidget {
     required this.backSize,
     required this.beerImgSrc,
     required this.beerName,
-    this.beerNameStyles,
+    this.isDrunk,
   });
 
   @override
@@ -26,6 +26,7 @@ class BeerImageWithName extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         BeerImage(
+          isDrunk: isDrunk,
           radiusSize: radiusSize,
           backSize: backSize,
           backColor: backColor,
@@ -37,10 +38,8 @@ class BeerImageWithName extends StatelessWidget {
           child: Text(
             beerName['korean']!,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              fontSize: beerNameStyles?['koreanFontSize'] ?? false
-                  ? beerNameStyles!['koreanFontSize']
-                  : 16,
+            style: const TextStyle(
+              fontSize: 16,
             ),
           ),
         ),
@@ -50,9 +49,7 @@ class BeerImageWithName extends StatelessWidget {
             beerName['english']!,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
-              fontSize: beerNameStyles?['englishFontSize'] ?? false
-                  ? beerNameStyles!['englishFontSize']
-                  : 12,
+              fontSize: 12,
               color: Colors.black.withOpacity(0.6),
             ),
           ),
