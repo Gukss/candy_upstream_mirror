@@ -75,6 +75,8 @@ class _ReviewCreateState extends State<ReviewCreate> {
                     country: '한국',
                     alcoholLevel: 4.2,
                     rate: 3,
+                    beerDrunk: true,
+                    beerLike: true,
                   ),
                 ),
               ),

@@ -3,6 +3,7 @@ import 'package:candy/widgets/ui/margin.dart';
 import 'package:flutter/material.dart';
 
 class BeerImageWithName extends StatelessWidget {
+  final double radiusSize;
   final double backSize;
   final Color backColor;
   final String beerImgSrc;
@@ -11,6 +12,7 @@ class BeerImageWithName extends StatelessWidget {
 
   const BeerImageWithName({
     super.key,
+    required this.radiusSize,
     required this.backColor,
     required this.backSize,
     required this.beerImgSrc,
@@ -24,6 +26,7 @@ class BeerImageWithName extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         BeerImage(
+          radiusSize: radiusSize,
           backSize: backSize,
           backColor: backColor,
           beerImgSrc: beerImgSrc,

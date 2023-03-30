@@ -1,7 +1,9 @@
 import 'package:candy/models/beer/all_beer_list_model.dart';
+import 'package:candy/screens/beer_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:candy/widgets/beer/beer_image_with_name.dart';
 import 'package:candy/widgets/ui/margin.dart';
+import 'package:get/get.dart';
 
 class BeerList extends StatelessWidget {
   final double imgBackgroundSize;
@@ -24,39 +26,62 @@ class BeerList extends StatelessWidget {
           itemBuilder: (context, index) {
             return Column(children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  BeerImageWithName(
-                      backColor: const Color.fromARGB(255, 243, 239, 247),
+                  GestureDetector(
+                    onTap: () {
+                      Get.to(BeerDetail(beerId: newbeerlist[index * 3].beerId));
+                    },
+                    child: BeerImageWithName(
+                      radiusSize: 16,
+                      backColor: const Color.fromARGB(255, 247, 251, 249),
                       backSize: imgBackgroundSize,
                       beerImgSrc: newbeerlist[index * 3].beerImageUrl,
                       beerName: {
                         'korean': newbeerlist[index * 3].beerNameKR,
                         'english': newbeerlist[index * 3].beerNameEN,
-                      }),
+                      },
+                    ),
+                  ),
                   if (index * 3 + 1 < newbeerlist.length)
-                    BeerImageWithName(
-                        backColor: const Color.fromARGB(255, 243, 239, 247),
+                    GestureDetector(
+                      onTap: () {
+                        Get.to(BeerDetail(
+                            beerId: newbeerlist[index * 3 + 1].beerId));
+                      },
+                      child: BeerImageWithName(
+                        radiusSize: 16,
+                        backColor: const Color.fromARGB(255, 247, 251, 249),
                         backSize: imgBackgroundSize,
                         beerImgSrc: newbeerlist[index * 3 + 1].beerImageUrl,
                         beerName: {
                           'korean': newbeerlist[index * 3 + 1].beerNameKR,
                           'english': newbeerlist[index * 3 + 1].beerNameEN,
-                        }),
+                        },
+                      ),
+                    ),
                   if (index * 3 + 1 >= newbeerlist.length)
                     const SizedBox(
                       height: 100,
                       width: 100,
                     ),
                   if (index * 3 + 2 < newbeerlist.length)
-                    BeerImageWithName(
-                        backColor: const Color.fromARGB(255, 243, 239, 247),
+                    GestureDetector(
+                      onTap: () {
+                        Get.to(BeerDetail(
+                            beerId: newbeerlist[index * 3 + 2].beerId));
+                      },
+                      child: BeerImageWithName(
+                        radiusSize: 16,
+                        backColor: const Color.fromARGB(255, 247, 251, 249),
                         backSize: imgBackgroundSize,
                         beerImgSrc: newbeerlist[index * 3 + 2].beerImageUrl,
                         beerName: {
                           'korean': newbeerlist[index * 3 + 2].beerNameKR,
                           'english': newbeerlist[index * 3 + 2].beerNameEN,
-                        }),
+                        },
+                      ),
+                    ),
                   if (index * 3 + 2 >= newbeerlist.length)
                     const SizedBox(
                       height: 100,

@@ -137,7 +137,7 @@ class _BeerEncyclopediaState extends State<BeerEncyclopedia> {
                   animationDuration: 500,
                   lineHeight: 20.0,
                   percent: beerpercent,
-                  center: Text("${beerpercent * 100}%"),
+                  center: Text("${(beerpercent * 100).toStringAsFixed(1)}%"),
                   barRadius: const Radius.circular(8),
                   progressColor: const Color.fromARGB(255, 255, 205, 6),
                   backgroundColor: Colors.orange[100],

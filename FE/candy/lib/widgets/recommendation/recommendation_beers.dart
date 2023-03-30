@@ -5,12 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class RecommendationBeers extends StatelessWidget {
+  final double radiusSize;
   final double sectionSize;
   final double imgBackgroundSize;
   final List<Map<String, dynamic>> beerList;
 
   const RecommendationBeers({
     super.key,
+    required this.radiusSize,
     required this.sectionSize,
     required this.imgBackgroundSize,
     required this.beerList,
@@ -32,6 +34,7 @@ class RecommendationBeers extends StatelessWidget {
               Get.to(BeerDetail(beerId: beerList[index]['beerId']));
             },
             child: BeerImageWithName(
+              radiusSize: radiusSize,
               backColor: const Color.fromARGB(255, 235, 238, 241),
               backSize: imgBackgroundSize,
               beerImgSrc: beerList[index]['imgSrc'],

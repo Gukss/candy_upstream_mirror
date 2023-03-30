@@ -33,6 +33,7 @@ class SelectedStyleBeerList extends StatelessWidget {
           return Container();
         }
         return RecommendationBeers(
+          radiusSize: 16,
           sectionSize: 126,
           imgBackgroundSize: 80,
           beerList: snapshot.data!,

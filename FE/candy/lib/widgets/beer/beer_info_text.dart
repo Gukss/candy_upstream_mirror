@@ -21,7 +21,16 @@ class BeerInfoText extends StatelessWidget {
           style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
         ),
         const Margin(marginType: MarginType.width, size: 16),
-        Text(value),
+        if (title == '종류   ')
+          Expanded(
+            child: Text(
+              value,
+            ),
+          ),
+        if (title != '종류   ')
+          Text(
+            value,
+          ),
         if (title == '원산지')
           const Margin(marginType: MarginType.width, size: 16),
         if (title == '원산지')
