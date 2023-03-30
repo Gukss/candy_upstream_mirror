@@ -4,10 +4,12 @@ import 'package:candy/widgets/ui/margin.dart';
 import 'package:flutter/material.dart';
 
 class SimilarityRecommendation extends StatelessWidget {
+  final String similarBeerName;
   final List<RecommendationListModel> beerList;
 
   const SimilarityRecommendation({
     super.key,
+    required this.similarBeerName,
     required this.beerList,
   });
 
@@ -16,9 +18,9 @@ class SimilarityRecommendation extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          '스타일별 맥주 추천',
-          style: TextStyle(
+        Text(
+          ' $similarBeerName ',
+          style: const TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w700,
           ),

@@ -1,9 +1,15 @@
+import 'package:candy/models/user/user_pick_list_model.dart';
 import 'package:candy/widgets/beer/beer_image.dart';
 import 'package:candy/widgets/ui/margin.dart';
 import 'package:flutter/material.dart';
 
 class UserPickCardItem extends StatelessWidget {
-  const UserPickCardItem({super.key});
+  final UserPickListModel userPcik;
+
+  const UserPickCardItem({
+    super.key,
+    required this.userPcik,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -14,30 +20,29 @@ class UserPickCardItem extends StatelessWidget {
           height: 304,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
-            color: Colors.grey,
+            color: const Color.fromARGB(255, 250, 247, 237),
           ),
           child: Column(
             children: [
               const Margin(marginType: MarginType.height, size: 16),
               Row(
-                children: const [
-                  Margin(marginType: MarginType.width, size: 16),
+                children: [
+                  const Margin(marginType: MarginType.width, size: 16),
                   CircleAvatar(
                     radius: 16,
-                    foregroundImage: NetworkImage(
-                        'https://cdnimg.melon.co.kr/cm2/album/images/105/54/246/10554246_20210325161233_500.jpg?304eb9ed9c07a16ec6d6e000dc0e7d91'),
+                    foregroundImage: NetworkImage(userPcik.profileImage),
+                    onForegroundImageError: (exception, stackTrace) {},
                   ),
-                  Margin(marginType: MarginType.width, size: 8),
-                  Text('닉네임'),
+                  const Margin(marginType: MarginType.width, size: 8),
+                  const Text('닉네임'),
                 ],
               ),
               const Margin(marginType: MarginType.height, size: 8),
-              const BeerImage(
+              BeerImage(
                 radiusSize: 16,
                 backSize: 184,
                 backColor: Colors.white,
-                beerImgSrc:
-                    'https://image.shutterstock.com/image-photo/image-260nw-2108189540.jpg',
+                beerImgSrc: userPcik.beerImageUrl,
               ),
               const Margin(marginType: MarginType.height, size: 8),
               Padding(
@@ -48,13 +53,13 @@ class UserPickCardItem extends StatelessWidget {
                   children: [
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
+                      children: [
                         Text(
-                          '별점',
+                          '${userPcik.overall}',
                           textAlign: TextAlign.start,
                         ),
                         Text(
-                          '리뷰 내용',
+                          userPcik.contents,
                           textAlign: TextAlign.start,
                         ),
                       ],

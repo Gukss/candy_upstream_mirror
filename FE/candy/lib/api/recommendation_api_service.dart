@@ -56,10 +56,8 @@ class RecommendationApiService {
     final http.Response response = await http.get(uri, headers: headers);
     if (response.statusCode == 200) {
       final List<UserPickListModel> instances = [];
-      print(jsonDecode(utf8.decode(response.bodyBytes)));
       for (Map<String, dynamic> userPick
           in jsonDecode(utf8.decode(response.bodyBytes))) {
-        print(userPick);
         instances.add(UserPickListModel.fromJson(userPick));
       }
       return instances;
