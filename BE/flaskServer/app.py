@@ -2,6 +2,7 @@ from flask import Flask  # 서버 구현을 위한 Flask 객체 import
 from flask_restx import Api, Resource  # Api 구현을 위한 Api 객체 import
 from apscheduler.schedulers.background import BackgroundScheduler
 import model
+import logging 
 app = Flask(__name__)  # Flask 객체 선언, 파라미터로 어플리케이션 패키지의 이름을 넣어줌.
 api = Api(app)  # Flask 객체에 Api 객체 등록
 schedule = BackgroundScheduler(daemon=True, timezone='Asia/Seoul')
@@ -11,6 +12,7 @@ def recommend_and_schedule():
     print("오늘의 스케줄링 끝!")
 
 def make_log():
+    logger.info("hello world!")
     print("5초마다 확인! ")
 
 schedule.add_job(recommend_and_schedule, 'cron', week='1-53', day_of_week='0-6', hour='4')
@@ -28,6 +30,15 @@ class ReccomandBeer(Resource):
     def put(self):
         return {"hello": "world!"}
 
+LOG_FORMATTER = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s', datefmt='%Y-%m-%d:%H:%M:%S')
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
 
+my_test_log_handler = logging.StreamHandler()
+my_test_log_handler.setLevel(logging.INFO)
+
+my_test_log_handler.setFormatter(LOG_FORMATTER)
+
+logger.addHandler(my_test_log_handler)
 if __name__ == "__main__":
     app.run(debug=False,use_reloader=False, host='0.0.0.0', port=90)
