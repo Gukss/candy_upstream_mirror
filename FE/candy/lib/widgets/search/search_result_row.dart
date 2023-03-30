@@ -1,12 +1,13 @@
 import 'package:candy/models/beer/beer_search_list_model.dart';
+import 'package:candy/screens/beer_detail.dart';
 import 'package:flutter/material.dart';
 
 import 'package:candy/widgets/beer/beer_image.dart';
 import 'package:candy/widgets/ui/margin.dart';
+import 'package:get/get.dart';
 
 class SearchResultRow extends StatelessWidget {
   final int index;
-
   final List<BeerSearchListModel> searchResults;
 
   const SearchResultRow({
@@ -20,14 +21,24 @@ class SearchResultRow extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        SearchResultItem(
-          index: index * 2,
-          searchResults: searchResults,
+        GestureDetector(
+          onTap: () {
+            Get.to(BeerDetail(beerId: searchResults[index * 2].beerId));
+          },
+          child: SearchResultItem(
+            index: index * 2,
+            searchResults: searchResults,
+          ),
         ),
         if (index * 2 + 1 < searchResults.length)
-          SearchResultItem(
-            index: index * 2 + 1,
-            searchResults: searchResults,
+          GestureDetector(
+            onTap: () {
+              Get.to(BeerDetail(beerId: searchResults[index * 2 + 1].beerId));
+            },
+            child: SearchResultItem(
+              index: index * 2 + 1,
+              searchResults: searchResults,
+            ),
           ),
         if (index * 2 + 1 == searchResults.length)
           const SizedBox(

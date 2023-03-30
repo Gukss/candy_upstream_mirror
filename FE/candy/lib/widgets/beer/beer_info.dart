@@ -33,12 +33,15 @@ class BeerInfo extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
+          mainAxisSize: MainAxisSize.max,
           children: [
-            Text(
-              beerName['korean']!,
-              style: const TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.w700,
+            Expanded(
+              child: Text(
+                beerName['korean']!,
+                style: const TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             ),
             const Margin(marginType: MarginType.width, size: 8),
