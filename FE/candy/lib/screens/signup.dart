@@ -1,7 +1,7 @@
 import 'package:candy/api/user_api_service.dart';
 import 'package:candy/screens/login.dart';
+import 'package:candy/screens/select_priority.dart';
 import 'package:candy/stores/store.dart';
-import 'package:candy/widgets/bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
 import 'package:candy/widgets/signup/birth_date.dart';
@@ -39,6 +39,7 @@ class _SignupState extends State<Signup> {
 
   // SnackBar 생성
   void openSnackBar(BuildContext context, String message, Color color) {
+    if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
@@ -97,7 +98,7 @@ class _SignupState extends State<Signup> {
           return;
         }
         // 회원 가입 성공
-        Get.offAll(() => const BottomNavigation());
+        Get.offAll(() => const SelectPriority());
         if (!mounted) return;
         openSnackBar(context, 'CANDY에 오신걸 환영합니다.', Colors.green);
       } catch (e) {

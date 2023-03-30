@@ -28,7 +28,6 @@ class PriorityItem extends StatelessWidget {
         onTap: () {
           final tappedPriority = matchTitle[title];
           priorityOrderController.changeOrder(tappedPriority);
-          print(priorityOrderController.priorityOrder);
         },
         child: Column(
           children: [

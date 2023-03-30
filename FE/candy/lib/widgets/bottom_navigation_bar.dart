@@ -45,7 +45,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
 
     switch (_selectedIndex) {
       case 0:
-        bodychild = const MainPage();
+        bodychild = MainPage();
         break;
 
       case 2:
@@ -54,7 +54,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
     }
 
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 248, 248, 241),
+      backgroundColor: const Color.fromARGB(255, 247, 251, 249),
       appBar: const MainAppBar(),
       body: SizedBox.expand(child: bodychild),
       bottomNavigationBar: ConvexAppBar(

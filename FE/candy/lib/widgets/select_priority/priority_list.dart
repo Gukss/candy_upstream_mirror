@@ -1,4 +1,5 @@
 import 'package:candy/widgets/select_priority/priority_item.dart';
+import 'package:candy/widgets/ui/margin.dart';
 import 'package:flutter/material.dart';
 
 class PriorityList extends StatelessWidget {
@@ -10,6 +11,16 @@ class PriorityList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        const Margin(marginType: MarginType.height, size: 16),
+        const Text(
+          '우선 순위가 높은 순서로 선택해주세요.',
+          style: TextStyle(
+            fontSize: 20,
+            color: Colors.orangeAccent,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        const Margin(marginType: MarginType.height, size: 16),
         Expanded(
           child: Row(
             children: [

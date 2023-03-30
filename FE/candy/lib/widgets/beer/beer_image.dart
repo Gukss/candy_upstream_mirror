@@ -35,6 +35,9 @@ class BeerImage extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(0, 8, 0, 8),
         child: Image.network(
           beerImgSrc,
+          errorBuilder: (context, error, stackTrace) {
+            return Container();
+          },
         ),
       ),
     );
