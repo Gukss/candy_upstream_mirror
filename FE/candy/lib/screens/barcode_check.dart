@@ -1,17 +1,27 @@
 import 'package:flutter/material.dart';
 
+import 'package:candy/stores/store.dart';
 import 'package:candy/api/beer_api_service.dart';
 import 'package:candy/models/beer/beer_detail_model.dart';
 import 'package:candy/widgets/ui/margin.dart';
 import 'package:candy/widgets/beer/beer_info.dart';
 import 'package:candy/widgets/beer/beer_extra_info.dart';
 
+import 'package:get/get.dart';
+
 class BarcodeCheck extends StatelessWidget {
-  const BarcodeCheck({super.key});
+  UserController userController = Get.find();
+
+  final String barcodeScanRes;
+
+  BarcodeCheck({
+    super.key,
+    required this.barcodeScanRes,
+  });
 
   Future<BeerDetailModel> beerdetail() async {
-    return await BeerApiService.getBeerDetailInfo(
-        email: 'ac@naver.com', beerId: 1);
+    return await BeerApiService.getBarcodeSearch(
+        barcode: barcodeScanRes, email: userController.userEmail.value);
   }
 
   @override
@@ -45,42 +55,52 @@ class BarcodeCheck extends StatelessWidget {
         future: beerdetail(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16,
-                vertical: 40,
-              ),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.grey,
-                  borderRadius: BorderRadius.circular(8),
+            return Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      BeerInfo(
-                        beerName: {
-                          'korean': snapshot.data!.beerNameKR,
-                          'english': snapshot.data!.beerNameEN,
-                        },
-                        beerImgSrc: snapshot.data!.beerImageUrl,
-                        country: snapshot.data!.countryNameKR,
-                        alcoholLevel: snapshot.data!.abv,
-                        beerType: snapshot.data!.style,
-                        rate: snapshot.data!.overall,
-                        beerDrunk: true,
-                        beerLike: true,
-                      ),
-                      const Margin(marginType: MarginType.height, size: 16),
-                      BeerExtraInfo(
-                        mouthfeelNum: snapshot.data!.mouthfeel,
-                        flavorNum: snapshot.data!.flavor,
-                        aromaNum: snapshot.data!.aroma,
-                        apperanceNum: snapshot.data!.appearance,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(255, 225, 236, 244),
+                    borderRadius: BorderRadius.circular(8),
+                    boxShadow: [
+                      BoxShadow(
+                        color: const Color.fromARGB(255, 221, 219, 216)
+                            .withOpacity(0.8),
+                        spreadRadius: 0,
+                        blurRadius: 5.0,
+                        offset: const Offset(3, 10),
                       ),
                     ],
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        BeerInfo(
+                          beerName: {
+                            'korean': snapshot.data!.beerNameKR,
+                            'english': snapshot.data!.beerNameEN,
+                          },
+                          beerImgSrc: snapshot.data!.beerImageUrl,
+                          country: snapshot.data!.countryNameKR,
+                          alcoholLevel: snapshot.data!.abv,
+                          beerType: snapshot.data!.style,
+                          rate: snapshot.data!.overall,
+                          beerDrunk: snapshot.data!.isDrunk,
+                          beerLike: snapshot.data!.isLiked,
+                        ),
+                        const Margin(marginType: MarginType.height, size: 16),
+                        BeerExtraInfo(
+                          mouthfeelNum: snapshot.data!.mouthfeel,
+                          flavorNum: snapshot.data!.flavor,
+                          aromaNum: snapshot.data!.aroma,
+                          apperanceNum: snapshot.data!.appearance,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

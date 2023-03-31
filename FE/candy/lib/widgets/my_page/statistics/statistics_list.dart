@@ -1,3 +1,4 @@
+import 'package:candy/stores/store.dart';
 import 'package:flutter/material.dart';
 
 import 'package:candy/api/statistics_api_service.dart';
@@ -5,12 +6,16 @@ import 'package:candy/models/user/user_statistics.model.dart';
 import 'package:candy/widgets/my_page/statistics/staistics_text.dart';
 import 'package:candy/widgets/my_page/statistics/staistics_chart_beer.dart';
 import 'package:candy/widgets/my_page/statistics/staistics_chart_country.dart';
+import 'package:get/get.dart';
 
 class Statistics extends StatelessWidget {
-  const Statistics({super.key});
+  Statistics({super.key});
+
+  UserController userController = Get.find();
 
   Future<UserStatisticsModel> statistics() async {
-    return await StatisticsApiService.getUserStatistics(email: 'ac@naver.com');
+    return await StatisticsApiService.getUserStatistics(
+        email: userController.userEmail.value);
   }
 
   @override

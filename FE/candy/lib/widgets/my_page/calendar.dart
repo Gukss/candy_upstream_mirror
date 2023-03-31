@@ -1,24 +1,30 @@
+import 'package:candy/stores/store.dart';
 import 'package:flutter/material.dart';
 
 import 'package:candy/api/user_api_service.dart';
 import 'package:candy/models/user/user_daily_data_model.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import 'package:table_calendar/table_calendar.dart';
 
-class Calendar2 extends StatefulWidget {
-  const Calendar2({Key? key}) : super(key: key);
+class Calendar extends StatefulWidget {
+  const Calendar({Key? key}) : super(key: key);
 
   @override
-  _Calendar2State createState() => _Calendar2State();
+  _CalendarState createState() => _CalendarState();
 }
 
-class _Calendar2State extends State<Calendar2> {
+class _CalendarState extends State<Calendar> {
   DateTime focusedDay = DateTime.now();
+
+  UserController userController = Get.find();
 
   Future<List<UserDailyDataModel>> events() async {
     return await UserApiService.getUserDailyData(
-        year: focusedDay.year, month: focusedDay.month, email: 'ac@naver.com');
+        year: focusedDay.year,
+        month: focusedDay.month,
+        email: userController.userEmail.value);
   }
 
   drunkDay(DateTime day, List<UserDailyDataModel> allday) {
