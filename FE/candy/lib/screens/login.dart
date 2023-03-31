@@ -2,6 +2,7 @@ import 'package:candy/api/user_api_service.dart';
 import 'package:candy/screens/signup.dart';
 import 'package:candy/stores/store.dart';
 import 'package:candy/widgets/bottom_navigation_bar.dart';
+import 'package:candy/widgets/ui/margin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -60,35 +61,40 @@ class Login extends StatelessWidget {
     final UserController userController = Get.find();
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Text(
-                  'CANDY',
-                  style: TextStyle(
-                    fontSize: 64,
-                    fontWeight: FontWeight.w700,
-                  ),
+        child: Padding(
+          padding: const EdgeInsets.all(32),
+          child: Column(
+            children: [
+              const Margin(marginType: MarginType.height, size: 80),
+              const Text(
+                'CANDY',
+                style: TextStyle(
+                  fontSize: 64,
+                  fontWeight: FontWeight.w700,
                 ),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    onLoginButtonTap(userController);
-                  },
+              ),
+              const Expanded(
+                child: Margin(marginType: MarginType.height, size: 0),
+              ),
+              GestureDetector(
+                onTap: () => onLoginButtonTap(userController),
+                child: Container(
+                  decoration: BoxDecoration(
+                    boxShadow: <BoxShadow>[
+                      BoxShadow(
+                        blurRadius: 8,
+                        spreadRadius: 2,
+                        color: Colors.grey.withOpacity(0.4),
+                        offset: const Offset(3, 7),
+                      ),
+                    ],
+                  ),
                   child: Image.asset(
-                    'assets/images/kakao/kakao_login_medium_wide.png',
-                  ),
+                      'assets/images/kakao/kakao_login_large_wide.png'),
                 ),
-              ],
-            ),
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );

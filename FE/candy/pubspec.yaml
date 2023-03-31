@@ -96,7 +96,6 @@ flutter:
   assets:
     - assets/images/kakao/
     - assets/images/beers/
-    - assets/images/logo/
     - assets/images/countries/
     - assets/images/priority/
     - assets/images/recommend/
