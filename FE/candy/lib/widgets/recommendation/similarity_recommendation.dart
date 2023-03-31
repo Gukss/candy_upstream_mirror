@@ -1,5 +1,6 @@
 import 'package:candy/models/beer/recent_beer_model.dart';
 import 'package:candy/models/beer/recommendation_list_model.dart';
+import 'package:candy/widgets/recommendation/no_recommendation.dart';
 import 'package:candy/widgets/recommendation/similar_beer_list.dart';
 import 'package:candy/widgets/ui/margin.dart';
 import 'package:flutter/material.dart';
@@ -52,7 +53,10 @@ class SimilarityRecommendation extends StatelessWidget {
             ),
           ),
         const Margin(marginType: MarginType.height, size: 16),
-        if (!error) SimilarBeerList(beerList: beerList!) else Container(),
+        if (!error)
+          SimilarBeerList(beerList: beerList!)
+        else
+          const NoRecommendation(section: 'Recent'),
       ],
     );
   }

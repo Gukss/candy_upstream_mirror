@@ -4,19 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class PriorityItem extends StatelessWidget {
-  final String imageUrl;
-  final String title;
-  final Map<String, String> matchTitle = {
-    '맛': 'flavor',
-    '향': 'aroma',
-    '식감': 'mouthfeel',
-    '색감': 'appearance',
-  };
+  final Map<String, String> priorityItem;
 
-  PriorityItem({
+  const PriorityItem({
     super.key,
-    required this.imageUrl,
-    required this.title,
+    required this.priorityItem,
   });
 
   @override
@@ -26,8 +18,7 @@ class PriorityItem extends StatelessWidget {
     return Expanded(
       child: GestureDetector(
         onTap: () {
-          final tappedPriority = matchTitle[title];
-          priorityOrderController.changeOrder(tappedPriority);
+          priorityOrderController.changeOrder(priorityItem['titleValue']);
         },
         child: Column(
           children: [
@@ -40,9 +31,9 @@ class PriorityItem extends StatelessWidget {
                       () => Container(
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: NetworkImage(imageUrl),
+                            image: AssetImage(priorityItem['imgUrl']!),
                             opacity: priorityOrderController.priorityOrder
-                                    .contains(matchTitle[title])
+                                    .contains(priorityItem['titleValue'])
                                 ? 0.5
                                 : 1,
                             fit: BoxFit.fill,
@@ -57,11 +48,11 @@ class PriorityItem extends StatelessWidget {
                     child: Obx(
                       () {
                         if (priorityOrderController.priorityOrder
-                            .contains(matchTitle[title])) {
+                            .contains(priorityItem['titleValue'])) {
                           return Container(
                             padding: const EdgeInsets.all(16),
                             child: Text(
-                              '${priorityOrderController.priorityOrder.indexOf(matchTitle[title]) + 1}',
+                              '${priorityOrderController.priorityOrder.indexOf(priorityItem['titleValue']) + 1}',
                               style: const TextStyle(
                                 fontSize: 24,
                                 fontWeight: FontWeight.w700,
@@ -78,7 +69,7 @@ class PriorityItem extends StatelessWidget {
             ),
             const Margin(marginType: MarginType.height, size: 16),
             Text(
-              title,
+              priorityItem['titleLabel']!,
               style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w700,

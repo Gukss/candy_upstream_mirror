@@ -64,13 +64,14 @@ class SelectPriority extends StatelessWidget {
               child: const Text(
                 '등록',
                 style: TextStyle(
-                  color: Colors.black,
+                  color: Colors.white,
                   fontSize: 18,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ),
           ],
         ),
-        body: const PriorityList());
+        body: PriorityList());
   }
 }

@@ -38,7 +38,6 @@ class Splash extends StatelessWidget {
         return 'login';
       }
     } catch (_) {}
-    FlutterNativeSplash.remove();
     return 'main';
   }
 

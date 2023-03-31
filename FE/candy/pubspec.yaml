@@ -98,6 +98,8 @@ flutter:
     - assets/images/beers/
     - assets/images/logo/
     - assets/images/countries/
+    - assets/images/priority/
+    - assets/images/recommend/
     - assets/images/no-drink.png
 
   # An image asset can refer to one or more resolution-specific "variants", see

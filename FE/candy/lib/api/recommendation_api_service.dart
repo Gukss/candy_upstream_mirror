@@ -12,12 +12,10 @@ class RecommendationApiService {
   // CANDY 추천
   static Future<List<RecommendationListModel>> getCandyRecommendation(
       String email) async {
-    final Uri uri = Uri.parse('${RequestInfo.baseUrl}/$extraUrl/candy');
-    final Map<String, String> headers = {
-      'Content-Type': RequestInfo.headerJson,
-      'email': email,
-    };
-    final http.Response response = await http.get(uri, headers: headers);
+    final Uri url = RequestInfo.requestUrl('$extraUrl/candy');
+    final Map<String, String> headers = RequestInfo.emailHeaders(email);
+
+    final http.Response response = await http.get(url, headers: headers);
     if (response.statusCode == 200) {
       final List<RecommendationListModel> instances = [];
       for (final beer in jsonDecode(utf8.decode(response.bodyBytes))) {
@@ -30,12 +28,10 @@ class RecommendationApiService {
 
   // 최근 본 맥주 정보
   static Future<RecentBeerModel> getRecentBeer(String email) async {
-    final Uri uri = Uri.parse('${RequestInfo.baseUrl}/$extraUrl/recently');
-    final Map<String, String> headers = {
-      'Content-Type': RequestInfo.headerJson,
-      'email': email,
-    };
-    final http.Response response = await http.get(uri, headers: headers);
+    final Uri url = RequestInfo.requestUrl('$extraUrl/recently');
+    final Map<String, String> headers = RequestInfo.emailHeaders(email);
+
+    final http.Response response = await http.get(url, headers: headers);
     if (response.statusCode == 200) {
       final RecentBeerModel instance;
       instance = RecentBeerModel.fromJson(
@@ -51,12 +47,10 @@ class RecommendationApiService {
   // 최근 본 맥주와 유사한 맥주 추천
   static Future<List<RecommendationListModel>> getSimilarRecommendation(
       int beerId) async {
-    final Uri uri =
-        Uri.parse('${RequestInfo.baseUrl}/$extraUrl/similarity/$beerId');
-    final Map<String, String> headers = {
-      'Content-Type': RequestInfo.headerJson,
-    };
-    final http.Response response = await http.get(uri, headers: headers);
+    final Uri url = RequestInfo.requestUrl('$extraUrl/similarity/$beerId');
+    const Map<String, String> headers = RequestInfo.baseHeaders;
+
+    final http.Response response = await http.get(url, headers: headers);
     if (response.statusCode == 200) {
       final List<RecommendationListModel> instances = [];
       for (final beer in jsonDecode(utf8.decode(response.bodyBytes))) {
@@ -69,12 +63,10 @@ class RecommendationApiService {
 
   // 유저 Pick
   static Future<List<UserPickListModel>> getUserPcik(String email) async {
-    final Uri uri = Uri.parse('${RequestInfo.baseUrl}/$extraUrl/review');
-    final Map<String, String> headers = {
-      'Content-Type': RequestInfo.headerJson,
-      'email': email,
-    };
-    final http.Response response = await http.get(uri, headers: headers);
+    final Uri url = RequestInfo.requestUrl('$extraUrl/review');
+    final Map<String, String> headers = RequestInfo.emailHeaders(email);
+
+    final http.Response response = await http.get(url, headers: headers);
     if (response.statusCode == 200) {
       final List<UserPickListModel> instances = [];
       for (Map<String, dynamic> userPick

@@ -1,4 +1,5 @@
 import 'package:candy/models/beer/recommendation_list_model.dart';
+import 'package:candy/widgets/recommendation/no_recommendation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:candy/widgets/ui/margin.dart';
@@ -35,7 +36,7 @@ class CandyRecommendation extends StatelessWidget {
             beerList: beerList!,
           )
         else
-          Container(),
+          const NoRecommendation(section: 'CANDY'),
       ],
     );
   }
