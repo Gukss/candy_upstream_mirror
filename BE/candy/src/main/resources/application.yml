@@ -44,3 +44,19 @@ logging:
           descriptor:
             sql:
               BasicBinder: TRACE
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    prometheus:
+      enabled: true
+  metrics:
+    tags:
+      application: candy
+  export:
+    prometheus:
+      enabled: true

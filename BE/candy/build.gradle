@@ -40,6 +40,10 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+	// 프로메테우스 설정
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'io.micrometer:micrometer-core'
+	implementation 'io.micrometer:micrometer-registry-prometheus'
 	//yml 암호화
 	implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.3'
 
