@@ -131,10 +131,10 @@ public class StatisticsServiceImpl implements StatisticsService {
       sumCountryPercent += countryPercent;
       pieCountryList.add(new Pie(country, countryPercent));
     }
-    if(1.0 - sumStylePercent > 0){
+    if(1.0 - sumStylePercent != 0){
       pieStyleList.add(new Pie("기타", 1.0 - sumStylePercent));
     }
-    if(1.0 - sumCountryPercent > 0) {
+    if(1.0 - sumCountryPercent != 0) {
       pieCountryList.add(new Pie("기타", 1.0 - sumCountryPercent));
     }
 
