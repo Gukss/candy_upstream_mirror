@@ -25,21 +25,36 @@ class SimilarityRecommendation extends StatelessWidget {
         if (!error)
           Row(
             children: [
-              const Icon(Icons.arrow_back_ios),
-              Text(
-                similarBeer!.beerName,
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.amber,
+              const Icon(
+                Icons.arrow_back_ios,
+                size: 16,
+              ),
+              Expanded(
+                child: SizedBox(
+                  child: Text(
+                    similarBeer!.beerName,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.amber,
+                    ),
+                  ),
                 ),
               ),
-              const Icon(Icons.arrow_forward_ios),
-              const Text(
-                '를 좋아하시나요?',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
+              const Icon(
+                Icons.arrow_forward_ios,
+                size: 16,
+              ),
+              const Expanded(
+                child: SizedBox(
+                  child: Text(
+                    '를 좋아하시나요?',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
                 ),
               ),
             ],
