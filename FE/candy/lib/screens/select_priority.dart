@@ -40,6 +40,9 @@ class SelectPriority extends StatelessWidget {
       priorityOrderController.priorityOrder,
     )) {
       openSnackBar(context, '선호 우선 순위를 등록했습니다.', Colors.green);
+      await UserApiService.postCreateRecommendation(
+        email: userController.userEmail.value,
+      );
       Get.offAll(() => const BottomNavigation());
       return;
     }

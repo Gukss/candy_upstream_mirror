@@ -62,18 +62,18 @@ class Login extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(32),
+          padding: const EdgeInsets.symmetric(
+            vertical: 60,
+            horizontal: 24,
+          ),
           child: Column(
             children: [
-              const Margin(marginType: MarginType.height, size: 80),
-              const Text(
-                'CANDY',
-                style: TextStyle(
-                  fontSize: 64,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
               const Expanded(
+                child: Margin(marginType: MarginType.height, size: 0),
+              ),
+              Image.asset('assets/images/logo/candy3.png'),
+              const Expanded(
+                flex: 3,
                 child: Margin(marginType: MarginType.height, size: 0),
               ),
               GestureDetector(

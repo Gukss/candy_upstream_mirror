@@ -75,33 +75,31 @@ class MainPage extends StatelessWidget {
           );
         }
         return SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.symmetric(
+            vertical: 32,
+            horizontal: 16,
+          ),
           child: Column(
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    color: Colors.grey,
-                    width: 200,
-                    height: 80,
-                    child: const Center(
-                      child: Text('배너'),
-                    ),
-                  ),
-                ],
+              Container(
+                color: Colors.grey,
+                width: 240,
+                height: 80,
+                child: const Center(
+                  child: Text('배너'),
+                ),
               ),
-              const Margin(marginType: MarginType.height, size: 24),
+              const Margin(marginType: MarginType.height, size: 32),
               CandyRecommendation(
                 error: snapshot.data!['candyError'],
                 beerList: snapshot.data!['candyRecommendation'],
               ),
-              const Margin(marginType: MarginType.height, size: 24),
+              const Margin(marginType: MarginType.height, size: 32),
               SimilarityRecommendation(
                   error: snapshot.data!['similarError'],
                   similarBeer: snapshot.data!['similarBeer'],
                   beerList: snapshot.data!['similarRecommendation']),
-              const Margin(marginType: MarginType.height, size: 24),
+              const Margin(marginType: MarginType.height, size: 32),
               UserPickRecommendation(
                   error: snapshot.data!['userPickError'],
                   userPickList: snapshot.data!['userPickList']),

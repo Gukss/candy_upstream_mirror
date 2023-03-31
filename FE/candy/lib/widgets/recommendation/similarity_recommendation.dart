@@ -30,6 +30,7 @@ class SimilarityRecommendation extends StatelessWidget {
                 size: 16,
               ),
               Expanded(
+                flex: similarBeer!.beerName.length >= 12 ? 1 : 0,
                 child: SizedBox(
                   child: Text(
                     similarBeer!.beerName,
