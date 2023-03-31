@@ -1,8 +1,9 @@
-from flask import Flask  # 서버 구현을 위한 Flask 객체 import
+from flask import Flask ,   request # 서버 구현을 위한 Flask 객체 import
 from flask_restx import Api, Resource  # Api 구현을 위한 Api 객체 import
 from apscheduler.schedulers.background import BackgroundScheduler
 import model
 import logging 
+import pymysql
 app = Flask(__name__)  # Flask 객체 선언, 파라미터로 어플리케이션 패키지의 이름을 넣어줌.
 api = Api(app)  # Flask 객체에 Api 객체 등록
 schedule = BackgroundScheduler(daemon=True, timezone='Asia/Seoul')
@@ -15,7 +16,7 @@ def make_log():
     logger.info("hello world!")
     print("5초마다 확인! ")
 
-schedule.add_job(recommend_and_schedule, 'cron', week='1-53', day_of_week='0-6', hour='4')
+# schedule.add_job(recommend_and_schedule, 'cron', week='1-53', day_of_week='0-6', hour='4')
 schedule.add_job(make_log, 'cron', week='1-53', day_of_week='0-6', second='5,15,25')
 
 schedule.start()
@@ -27,8 +28,20 @@ class HelloWorld(Resource):
 
 @api.route('/reccomand')
 class ReccomandBeer(Resource):
-    def put(self):
-        return {"hello": "world!"}
+    def post(self):
+        email  = request.headers.get('email')
+        print(email)
+        conn = pymysql.connect(
+        host='j8b105.p.ssafy.io',
+        port=8306,
+        user='candy',
+        password='candy@b105',
+        db='candy',
+        charset="utf8"
+        )
+        model.reccomend_candy(conn, email)
+        conn.close()
+        return {"result": "success"}
 
 LOG_FORMATTER = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s', datefmt='%Y-%m-%d:%H:%M:%S')
 logger = logging.getLogger()
