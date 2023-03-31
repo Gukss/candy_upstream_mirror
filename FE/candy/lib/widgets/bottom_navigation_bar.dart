@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:candy/screens/barcode_check.dart';
 import 'package:candy/widgets/app_bar/main_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,6 +10,7 @@ import 'package:candy/screens/my_page.dart';
 
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:get/get.dart';
 
 class BottomNavigation extends StatefulWidget {
   const BottomNavigation({super.key});
@@ -20,6 +22,7 @@ class BottomNavigation extends StatefulWidget {
 class _BottomNavigationState extends State<BottomNavigation> {
 // 탭을 이동할 때 쓸 변수!
   int _selectedIndex = 0;
+  String barcodeScan = '';
 
   Future<void> scanBarcodeNormal() async {
     String barcodeScanRes = '';
@@ -30,6 +33,12 @@ class _BottomNavigationState extends State<BottomNavigation> {
     } on PlatformException {
       print('Failed to get platform version.');
     }
+
+    setState(() {
+      barcodeScan = barcodeScanRes;
+      print(barcodeScan);
+    });
+
     if (barcodeScanRes.isNotEmpty) return;
   }
 
@@ -68,6 +77,15 @@ class _BottomNavigationState extends State<BottomNavigation> {
         onTap: (int i) async {
           if (i == 1) {
             await scanBarcodeNormal();
+            print('${barcodeScan}3423');
+            if (barcodeScan != '-1') {
+              print('$barcodeScan@@@@');
+              WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                Get.to(BarcodeCheck(barcodeScanRes: barcodeScan));
+              });
+            } else {
+              bodychild = MainPage();
+            }
           } else {
             _onItemTapped(i);
           }

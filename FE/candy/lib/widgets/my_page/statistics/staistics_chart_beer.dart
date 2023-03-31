@@ -23,8 +23,6 @@ class StatisticsChartBeer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(pieStyle);
-
     for (Map<String, dynamic> data in pieStyle) {
       dataMap['${data['name']}'] = data['value'];
     }

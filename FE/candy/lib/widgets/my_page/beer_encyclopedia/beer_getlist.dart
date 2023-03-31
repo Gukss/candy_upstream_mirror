@@ -1,14 +1,19 @@
+import 'package:candy/stores/store.dart';
 import 'package:flutter/material.dart';
 
 import 'package:candy/api/beer_api_service.dart';
 import 'package:candy/models/beer/all_beer_list_model.dart';
 import 'package:candy/widgets/my_page/beer_encyclopedia/beer_encyclopedia.dart';
+import 'package:get/get.dart';
 
 class BeerGetList extends StatelessWidget {
-  const BeerGetList({super.key});
+  BeerGetList({super.key});
+
+  UserController userController = Get.find();
 
   Future<List<AllBeerListModel>> beerlist() async {
-    return await BeerApiService.getAllBeerList(email: 'ac@naver.com');
+    return await BeerApiService.getAllBeerList(
+        email: userController.userEmail.value);
   }
 
   checkpercent(List<AllBeerListModel> allbeer) {

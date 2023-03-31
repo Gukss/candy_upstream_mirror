@@ -21,7 +21,6 @@ class BeerImage extends StatelessWidget {
     return Container(
       width: backSize,
       height: backSize,
-      clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(radiusSize),
         color: isDrunk == 0
@@ -29,7 +28,7 @@ class BeerImage extends StatelessWidget {
             : backColor,
         boxShadow: [
           BoxShadow(
-            color: const Color.fromARGB(255, 221, 219, 216).withOpacity(0.7),
+            color: const Color.fromARGB(255, 221, 219, 216).withOpacity(0.8),
             spreadRadius: 0,
             blurRadius: 5.0,
             offset: const Offset(3, 10),
@@ -41,7 +40,7 @@ class BeerImage extends StatelessWidget {
         child: Image.network(
           beerImgSrc,
           color: isDrunk == 0
-              ? const Color.fromARGB(19, 104, 104, 120).withOpacity(0.9)
+              ? const Color.fromARGB(255, 104, 104, 120).withOpacity(0.9)
               : null,
           colorBlendMode: isDrunk == 0 ? BlendMode.modulate : null,
           errorBuilder: (context, error, stackTrace) {
