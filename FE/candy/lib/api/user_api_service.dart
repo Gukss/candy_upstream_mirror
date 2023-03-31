@@ -75,7 +75,7 @@ class UserApiService {
     return false;
   }
 
-  // 유저 정보 조회
+  // 추천 생성
   static Future<UserInfoModel> getUserInfo({
     required String email,
   }) async {
@@ -96,6 +96,25 @@ class UserApiService {
         ),
       );
       return instance;
+    }
+    throw Error();
+  }
+
+  // 유저 정보 조회
+  static Future<bool> postCreateRecommendation({
+    required String email,
+  }) async {
+    final Uri uri = Uri.parse('https://j8b105.p.ssafy.io/src/reccomand');
+    final Map<String, String> headers = {
+      'Content-Type': RequestInfo.headerJson,
+      'email': email,
+    };
+    final http.Response response = await http.post(
+      uri,
+      headers: headers,
+    );
+    if (response.statusCode == 200) {
+      return true;
     }
     throw Error();
   }
