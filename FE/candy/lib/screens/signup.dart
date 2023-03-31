@@ -18,6 +18,7 @@ class Signup extends StatefulWidget {
 }
 
 class _SignupState extends State<Signup> {
+  final FocusNode focusNode = FocusNode();
   final UserController userController = Get.find();
   final TextEditingController nicknameController = TextEditingController();
   final List<int> yearList = [
@@ -109,6 +110,10 @@ class _SignupState extends State<Signup> {
     }
   }
 
+  void focusOut() {
+    focusNode.unfocus();
+  }
+
   // 성별 선택
   void onGenderButtonPressed(prevGender, clickedGender) {
     // 이미 선택한 성별 선택시 초기화
@@ -155,7 +160,7 @@ class _SignupState extends State<Signup> {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
+            Get.back();
           },
           icon: const Icon(
             Icons.arrow_back_ios_new_rounded,
@@ -167,6 +172,7 @@ class _SignupState extends State<Signup> {
         actions: [
           TextButton(
             onPressed: () {
+              focusOut();
               onRegisterButtonPressed();
             },
             child: const Text(
@@ -179,42 +185,59 @@ class _SignupState extends State<Signup> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 80, 16, 24),
-          child: Container(
-            decoration: BoxDecoration(
-              border: Border.all(),
-              borderRadius: BorderRadius.circular(16),
-            ),
-            padding: const EdgeInsets.all(24),
-            width: double.infinity,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const Text(
-                  '추가 정보 입력',
-                  style: TextStyle(
-                    fontSize: 24,
+      body: GestureDetector(
+        onTap: focusOut,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16, 80, 16, 24),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(
+                  width: 0,
+                ),
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: <BoxShadow>[
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 5,
+                    blurRadius: 5,
                   ),
-                ),
-                const Margin(marginType: MarginType.height, size: 24),
-                Nickname(nicknameController: nicknameController),
-                const Margin(marginType: MarginType.height, size: 16),
-                Gender(
-                  gender: gender,
-                  changeGender: onGenderButtonPressed,
-                ),
-                const Margin(marginType: MarginType.height, size: 16),
-                BirthDate(
-                  yearList: yearList,
-                  monthList: monthList,
-                  dayList: dayList,
-                  birthDate: birthDate,
-                  changeDate: onBirthDateSelected,
-                ),
-              ],
+                ],
+              ),
+              padding: const EdgeInsets.all(24),
+              width: double.infinity,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Text(
+                    '추가 정보 입력',
+                    style: TextStyle(
+                      fontSize: 24,
+                    ),
+                  ),
+                  const Margin(marginType: MarginType.height, size: 24),
+                  Nickname(
+                    nicknameController: nicknameController,
+                    focusNode: focusNode,
+                  ),
+                  const Margin(marginType: MarginType.height, size: 16),
+                  Gender(
+                    gender: gender,
+                    changeGender: onGenderButtonPressed,
+                    focusOut: focusOut,
+                  ),
+                  const Margin(marginType: MarginType.height, size: 16),
+                  BirthDate(
+                    yearList: yearList,
+                    monthList: monthList,
+                    dayList: dayList,
+                    birthDate: birthDate,
+                    changeDate: onBirthDateSelected,
+                  ),
+                ],
+              ),
             ),
           ),
         ),

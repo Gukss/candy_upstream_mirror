@@ -22,16 +22,6 @@ class BirthDropbox extends StatelessWidget {
           horizontal: 8,
         ),
         decoration: BoxDecoration(
-          // border: BorderDirectional(
-          //   start: type == 'year'
-          //       ? const BorderSide(width: 1)
-          //       : const BorderSide(width: 0.5),
-          //   top: const BorderSide(width: 1),
-          //   end: type == 'day'
-          //       ? const BorderSide(width: 1)
-          //       : const BorderSide(width: 0.5),
-          //   bottom: const BorderSide(width: 1),
-          // ),
           border: Border(
             right: type != 'day' ? const BorderSide() : BorderSide.none,
           ),

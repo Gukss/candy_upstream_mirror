@@ -24,7 +24,13 @@ class BirthDate extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('생년월일'),
+        const Text(
+          '생년월일',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
         const Margin(marginType: MarginType.height, size: 8),
         Container(
           height: 48,
