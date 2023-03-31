@@ -4,11 +4,13 @@ import 'package:candy/widgets/ui/margin.dart';
 import 'package:flutter/material.dart';
 
 class UserPickRecommendation extends StatelessWidget {
-  final List<UserPickListModel> userPickList;
+  final bool error;
+  final List<UserPickListModel>? userPickList;
 
   const UserPickRecommendation({
     super.key,
-    required this.userPickList,
+    required this.error,
+    this.userPickList,
   });
 
   @override
@@ -28,7 +30,10 @@ class UserPickRecommendation extends StatelessWidget {
           ],
         ),
         const Margin(marginType: MarginType.height, size: 16),
-        UserPickCardList(userPickList: userPickList),
+        if (!error)
+          UserPickCardList(userPickList: userPickList!)
+        else
+          Container(),
       ],
     );
   }

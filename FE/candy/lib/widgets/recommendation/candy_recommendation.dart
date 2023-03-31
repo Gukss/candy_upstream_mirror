@@ -5,11 +5,13 @@ import 'package:candy/widgets/ui/margin.dart';
 import 'package:candy/widgets/recommendation/recommendation_beers.dart';
 
 class CandyRecommendation extends StatelessWidget {
-  final List<RecommendationListModel> beerList;
+  final bool error;
+  final List<RecommendationListModel>? beerList;
 
   const CandyRecommendation({
     super.key,
-    required this.beerList,
+    required this.error,
+    this.beerList,
   });
 
   @override
@@ -25,12 +27,15 @@ class CandyRecommendation extends StatelessWidget {
           ),
         ),
         const Margin(marginType: MarginType.height, size: 16),
-        RecommendationBeers(
-          radiusSize: 300,
-          sectionSize: 168,
-          imgBackgroundSize: 120,
-          beerList: beerList,
-        ),
+        if (!error)
+          RecommendationBeers(
+            radiusSize: 300,
+            sectionSize: 168,
+            imgBackgroundSize: 120,
+            beerList: beerList!,
+          )
+        else
+          Container(),
       ],
     );
   }

@@ -1,4 +1,5 @@
 import 'package:candy/api/recommendation_api_service.dart';
+import 'package:candy/models/beer/recent_beer_model.dart';
 import 'package:candy/models/beer/recommendation_list_model.dart';
 import 'package:candy/models/user/user_pick_list_model.dart';
 import 'package:candy/stores/store.dart';
@@ -18,7 +19,7 @@ class MainPage extends StatelessWidget {
   Future<Map<String, dynamic>> recommendationInfo() async {
     final Map<String, dynamic> result = {};
     final String email = userController.userEmail.value;
-
+    // 캔디 추천
     try {
       final List<RecommendationListModel> candyRecommendation =
           await RecommendationApiService.getCandyRecommendation(email);
@@ -28,25 +29,25 @@ class MainPage extends StatelessWidget {
       result['candyError'] = true;
     }
 
+    // 최근 맥주 유사 추천
     try {
-      final Map<String, dynamic> similarBeerName =
+      // 최근 본 맥주 이름 및 ID 저장
+      final RecentBeerModel similarBeer =
           await RecommendationApiService.getRecentBeer(email);
-      result['similarBeerName'] = similarBeerName;
-      result['similarBeerNameError'] = false;
+      result['similarBeer'] = similarBeer;
+
+      // 최근 본 맥주와 유사한 맥주 추천
+      final List<RecommendationListModel> similarRecommendation =
+          await RecommendationApiService.getSimilarRecommendation(
+              similarBeer.beerId);
+      result['similarRecommendation'] = similarRecommendation;
+
+      result['similarError'] = false;
     } catch (_) {
-      result['similarBeerNameError'] = true;
+      result['similarError'] = true;
     }
 
-    try {
-      // final List<RecommendationListModel> similarRecommendation =
-      //     await RecommendationApiService.getSimilarRecommendation(
-      //         similarBeerName['beerId']);
-      // result['similarRecommendation'] = similarRecommendation;
-      result['similarListError'] = false;
-    } catch (_) {
-      result['similarListError'] = false;
-    }
-
+    // 유저 PICK
     try {
       final List<UserPickListModel> userPickList =
           await RecommendationApiService.getUserPcik(email);
@@ -90,14 +91,17 @@ class MainPage extends StatelessWidget {
               ),
               const Margin(marginType: MarginType.height, size: 24),
               CandyRecommendation(
+                error: snapshot.data!['candyError'],
                 beerList: snapshot.data!['candyRecommendation'],
               ),
               const Margin(marginType: MarginType.height, size: 24),
               SimilarityRecommendation(
-                  similarBeerName: snapshot.data!['similarBeerName'],
+                  error: snapshot.data!['similarError'],
+                  similarBeer: snapshot.data!['similarBeer'],
                   beerList: snapshot.data!['similarRecommendation']),
               const Margin(marginType: MarginType.height, size: 24),
               UserPickRecommendation(
+                  error: snapshot.data!['userPickError'],
                   userPickList: snapshot.data!['userPickList']),
             ],
           ),

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:candy/api/request_info.dart';
+import 'package:candy/models/beer/recent_beer_model.dart';
 import 'package:candy/models/beer/recommendation_list_model.dart';
 import 'package:candy/models/user/user_pick_list_model.dart';
 import 'package:http/http.dart' as http;
@@ -28,7 +29,7 @@ class RecommendationApiService {
   }
 
   // 최근 본 맥주 정보
-  static Future<Map<String, dynamic>> getRecentBeer(String email) async {
+  static Future<RecentBeerModel> getRecentBeer(String email) async {
     final Uri uri = Uri.parse('${RequestInfo.baseUrl}/$extraUrl/recently');
     final Map<String, String> headers = {
       'Content-Type': RequestInfo.headerJson,
@@ -36,7 +37,13 @@ class RecommendationApiService {
     };
     final http.Response response = await http.get(uri, headers: headers);
     if (response.statusCode == 200) {
-      return (jsonDecode(utf8.decode(response.bodyBytes)));
+      final RecentBeerModel instance;
+      instance = RecentBeerModel.fromJson(
+        jsonDecode(
+          utf8.decode(response.bodyBytes),
+        ),
+      );
+      return instance;
     }
     throw Error();
   }
