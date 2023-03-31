@@ -61,8 +61,7 @@ class UserApiService {
     final Uri uri = Uri.parse('${RequestInfo.baseUrl}/preference');
     final Map<String, String> headers = {
       'Content-Type': RequestInfo.headerJson,
-      // 'email': email,
-      'email': 'ac@naver.com',
+      'email': email,
     };
 
     final encodedOrder = {};

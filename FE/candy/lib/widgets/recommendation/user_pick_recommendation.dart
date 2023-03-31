@@ -1,4 +1,5 @@
 import 'package:candy/models/user/user_pick_list_model.dart';
+import 'package:candy/widgets/recommendation/no_recommendation.dart';
 import 'package:candy/widgets/recommendation/user_pick_card_list.dart';
 import 'package:candy/widgets/ui/margin.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +34,9 @@ class UserPickRecommendation extends StatelessWidget {
         if (!error)
           UserPickCardList(userPickList: userPickList!)
         else
-          Container(),
+          const NoRecommendation(
+            section: '유저 PICK',
+          ),
       ],
     );
   }
