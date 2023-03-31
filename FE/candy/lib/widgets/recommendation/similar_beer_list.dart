@@ -13,9 +13,9 @@ class SimilarBeerList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RecommendationBeers(
-      radiusSize: 16,
-      sectionSize: 126,
-      imgBackgroundSize: 80,
+      radiusSize: 8,
+      sectionSize: 134,
+      imgBackgroundSize: 88,
       beerList: beerList,
     );
   }

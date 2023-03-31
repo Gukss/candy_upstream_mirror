@@ -21,6 +21,7 @@ class BeerImage extends StatelessWidget {
     return Container(
       width: backSize,
       height: backSize,
+      clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(radiusSize),
         color: isDrunk == 0
