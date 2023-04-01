@@ -1,17 +1,23 @@
-import 'package:candy/widgets/review/beer_review_item.dart';
-import 'package:candy/widgets/ui/margin.dart';
 import 'package:flutter/material.dart';
 
+import 'package:candy/widgets/ui/margin.dart';
+import 'package:candy/widgets/review/beer_review_item.dart';
+
 class BeerReviewList extends StatelessWidget {
-  const BeerReviewList({super.key});
+  final int beerId;
+
+  const BeerReviewList({
+    super.key,
+    required this.beerId,
+  });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
-          Text(
+        children: [
+          const Text(
             '사람들의 리뷰',
             textAlign: TextAlign.start,
             style: TextStyle(
@@ -19,14 +25,8 @@ class BeerReviewList extends StatelessWidget {
               fontWeight: FontWeight.w700,
             ),
           ),
-          Margin(marginType: MarginType.height, size: 16),
-          BeerReviewItem(),
-          Margin(marginType: MarginType.height, size: 16),
-          BeerReviewItem(),
-          Margin(marginType: MarginType.height, size: 16),
-          BeerReviewItem(),
-          Margin(marginType: MarginType.height, size: 16),
-          BeerReviewItem(),
+          const Margin(marginType: MarginType.height, size: 16),
+          BeerReviewItem(beerId: beerId),
         ],
       ),
     );
