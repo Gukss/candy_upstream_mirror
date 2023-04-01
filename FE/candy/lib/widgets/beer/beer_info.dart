@@ -1,20 +1,35 @@
+import 'package:candy/api/beer_api_service.dart';
 import 'package:candy/models/beer/beer_detail_model.dart';
+import 'package:candy/stores/store.dart';
 import 'package:flutter/material.dart';
 
 import 'package:candy/widgets/ui/margin.dart';
 import 'package:candy/widgets/beer/beer_info_text.dart';
 
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:get/get.dart';
 
 class BeerInfo extends StatelessWidget {
   final Map<String, String> beerName;
   final BeerDetailModel beerInfo;
 
-  const BeerInfo({
+  BeerInfo({
     super.key,
     required this.beerName,
     required this.beerInfo,
   });
+
+  UserController userController = Get.find();
+
+  Future<bool> beerlike() async {
+    return BeerApiService.postBeerLike(
+        email: userController.userEmail.value, beerId: beerInfo.beerId);
+  }
+
+  Future<bool> beerDislike() async {
+    return BeerApiService.deleteBeerLike(
+        email: userController.userEmail.value, beerId: beerInfo.beerId);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +85,9 @@ class BeerInfo extends StatelessWidget {
                 children: [
                   if (beerInfo.isLiked == true)
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        beerDislike();
+                      },
                       icon: const Icon(
                         Icons.favorite_rounded,
                         size: 24,
@@ -79,7 +96,9 @@ class BeerInfo extends StatelessWidget {
                     ),
                   if (beerInfo.isLiked == false)
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        beerlike();
+                      },
                       icon: const Icon(
                         Icons.favorite_border_outlined,
                         size: 24,
