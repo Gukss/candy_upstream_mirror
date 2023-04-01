@@ -80,10 +80,6 @@ class BarcodeCheck extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         BeerInfo(
-                          beerName: {
-                            'korean': snapshot.data!.beerNameKR,
-                            'english': snapshot.data!.beerNameEN,
-                          },
                           beerInfo: snapshot.data!,
                         ),
                         const Margin(marginType: MarginType.height, size: 16),

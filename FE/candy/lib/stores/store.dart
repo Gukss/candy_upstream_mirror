@@ -25,3 +25,12 @@ class PriorityOrderController extends GetxController {
     }
   }
 }
+
+class ReviewController extends GetxController {
+  RxDouble aroma = 0.0.obs;
+  RxDouble appearance = 0.0.obs;
+  RxDouble flavor = 0.0.obs;
+  RxDouble mouthfeel = 0.0.obs;
+  RxDouble overall = 0.0.obs;
+  RxString content = ''.obs;
+}

@@ -10,16 +10,16 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 
 class BeerInfo extends StatelessWidget {
-  final Map<String, String> beerName;
   final BeerDetailModel beerInfo;
+  final bool? isReviewPage;
 
   BeerInfo({
     super.key,
-    required this.beerName,
     required this.beerInfo,
+    this.isReviewPage,
   });
 
-  UserController userController = Get.find();
+  final UserController userController = Get.find();
 
   Future<bool> beerlike() async {
     return BeerApiService.postBeerLike(
@@ -41,7 +41,7 @@ class BeerInfo extends StatelessWidget {
           children: [
             Expanded(
               child: Text(
-                beerName['korean']!,
+                beerInfo.beerNameKR,
                 style: const TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.w700,
@@ -59,7 +59,7 @@ class BeerInfo extends StatelessWidget {
         ),
         const Margin(marginType: MarginType.height, size: 4),
         Text(
-          beerName['english']!,
+          beerInfo.beerNameEN,
           style: TextStyle(
             fontSize: 14,
             color: Colors.black.withOpacity(0.5),
@@ -75,7 +75,7 @@ class BeerInfo extends StatelessWidget {
               height: 240,
               child: Image.network(
                 beerInfo.beerImageUrl,
-                fit: BoxFit.cover,
+                fit: BoxFit.fill,
               ),
             ),
             const Margin(marginType: MarginType.width, size: 16),
@@ -83,7 +83,7 @@ class BeerInfo extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  if (beerInfo.isLiked == true)
+                  if (beerInfo.isLiked == true && isReviewPage != true)
                     IconButton(
                       onPressed: () {
                         beerDislike();
@@ -94,7 +94,7 @@ class BeerInfo extends StatelessWidget {
                         color: Colors.red,
                       ),
                     ),
-                  if (beerInfo.isLiked == false)
+                  if (beerInfo.isLiked == false && isReviewPage != true)
                     IconButton(
                       onPressed: () {
                         beerlike();
@@ -105,22 +105,23 @@ class BeerInfo extends StatelessWidget {
                         color: Colors.red,
                       ),
                     ),
-                  RatingBar.builder(
-                    ignoreGestures: true,
-                    itemSize: 32,
-                    initialRating: beerInfo.overall,
-                    minRating: 0.5,
-                    maxRating: 5,
-                    direction: Axis.horizontal,
-                    allowHalfRating: true,
-                    itemCount: 5,
-                    itemPadding: const EdgeInsets.symmetric(horizontal: 0),
-                    itemBuilder: (context, _) => const Icon(
-                      Icons.star,
-                      color: Colors.amber,
+                  if (isReviewPage != true)
+                    RatingBar.builder(
+                      ignoreGestures: true,
+                      itemSize: 32,
+                      initialRating: beerInfo.overall,
+                      minRating: 0.5,
+                      maxRating: 5,
+                      direction: Axis.horizontal,
+                      allowHalfRating: true,
+                      itemCount: 5,
+                      itemPadding: const EdgeInsets.symmetric(horizontal: 0),
+                      itemBuilder: (context, _) => const Icon(
+                        Icons.star,
+                        color: Colors.amber,
+                      ),
+                      onRatingUpdate: (rating) {},
                     ),
-                    onRatingUpdate: (rating) {},
-                  ),
                   const Margin(marginType: MarginType.height, size: 24),
                   BeerInfoText(
                     title: '종류   ',
