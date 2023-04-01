@@ -14,10 +14,10 @@ def recommend_and_schedule():
 
 def make_log():
     logger.info("hello world!")
-    print("5초마다 확인! ")
+    
 
-# schedule.add_job(recommend_and_schedule, 'cron', week='1-53', day_of_week='0-6', hour='4')
-schedule.add_job(make_log, 'cron', week='1-53', day_of_week='0-6', second='5,15,25')
+schedule.add_job(recommend_and_schedule, 'cron', week='1-53', day_of_week='0-6', hour='4')
+schedule.add_job(make_log, 'cron', week='1-53', day_of_week='0-6', hour='1-23')
 
 schedule.start()
 
