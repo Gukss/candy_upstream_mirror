@@ -23,9 +23,10 @@ class Statistics extends StatelessWidget {
     final PageController pageController = PageController(initialPage: 0);
 
     return FutureBuilder(
-        future: statistics(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
+      future: statistics(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          if (snapshot.data!.pieCountry.isNotEmpty) {
             return SingleChildScrollView(
               padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
               child: Column(children: [
@@ -56,7 +57,28 @@ class Statistics extends StatelessWidget {
               ]),
             );
           }
-          return const SizedBox();
-        });
+          return Container(
+            width: double.infinity,
+            padding: const EdgeInsets.only(top: 100),
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/no/no-chart.png'),
+                fit: BoxFit.fill,
+                opacity: 0.3,
+              ),
+            ),
+            child: const Text(
+              '마신 맥주가 없습니다',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          );
+        }
+        return const SizedBox();
+      },
+    );
   }
 }
