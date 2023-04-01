@@ -6,11 +6,13 @@ import com.project.candy.exception.exceptionMessage.NotFoundExceptionMessage;
 import com.project.candy.review.dto.CreateReviewRequest;
 import com.project.candy.review.dto.ReadReviewResponse;
 import com.project.candy.review.entity.Review;
+import com.project.candy.review.entity.ReviewLike;
 import com.project.candy.review.repository.ReviewLikeRepository;
 import com.project.candy.review.repository.ReviewRepository;
 import com.project.candy.user.entity.User;
 import com.project.candy.user.repository.UserRepository;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -69,7 +71,11 @@ public class ReviewServiceImpl implements ReviewService {
 
       int reviewLikeCount = reviewLikeRepository.findAllByReview(review).stream().filter(reviewLike -> reviewLike.getBaseEntity().isDelete()==false).collect(Collectors.toList()).size();
 
-      boolean isLikes= reviewLikeRepository.findByUserAndReview(LoginUser,review).isPresent();
+      Optional<ReviewLike> reviewLikeEntity = reviewLikeRepository.findByUserAndReview(LoginUser, review);
+      boolean isLikes= reviewLikeEntity.isPresent() ;
+      if(isLikes){
+        isLikes = (reviewLikeEntity.get().getBaseEntity().isDelete() == true )?false :true ;
+      }
 
       ReadReviewResponse response=ReadReviewResponse.EntityToDto(user,review,reviewLikeCount,isLikes);
 
