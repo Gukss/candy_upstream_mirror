@@ -44,7 +44,7 @@ class BeerImage extends StatelessWidget {
               : null,
           colorBlendMode: isDrunk == 0 ? BlendMode.modulate : null,
           errorBuilder: (context, error, stackTrace) {
-            return Image.asset('assets/images/no-drink.png');
+            return Image.asset('assets/images/n0/no-drink.png');
           },
         ),
       ),
