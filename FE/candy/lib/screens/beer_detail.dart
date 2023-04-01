@@ -63,13 +63,7 @@ class BeerDetail extends StatelessWidget {
                               'korean': snapshot.data!.beerNameKR,
                               'english': snapshot.data!.beerNameEN,
                             },
-                            beerImgSrc: snapshot.data!.beerImageUrl,
-                            country: snapshot.data!.countryNameKR,
-                            alcoholLevel: snapshot.data!.abv,
-                            beerType: snapshot.data!.style,
-                            rate: snapshot.data!.overall,
-                            beerDrunk: snapshot.data!.isDrunk,
-                            beerLike: snapshot.data!.isLiked,
+                            beerInfo: snapshot.data!,
                           ),
                           const Margin(marginType: MarginType.height, size: 16),
                           BeerExtraInfo(
@@ -85,8 +79,8 @@ class BeerDetail extends StatelessWidget {
                   const Margin(marginType: MarginType.height, size: 32),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      BeerReviewList(),
+                    children: [
+                      BeerReviewList(beerId: beerId),
                     ],
                   ),
                 ],

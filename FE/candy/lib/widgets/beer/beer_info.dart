@@ -1,3 +1,4 @@
+import 'package:candy/models/beer/beer_detail_model.dart';
 import 'package:flutter/material.dart';
 
 import 'package:candy/widgets/ui/margin.dart';
@@ -7,24 +8,12 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class BeerInfo extends StatelessWidget {
   final Map<String, String> beerName;
-  final String beerImgSrc;
-  final String beerType;
-  final String country;
-  final double alcoholLevel;
-  final double rate;
-  final bool beerDrunk;
-  final bool beerLike;
+  final BeerDetailModel beerInfo;
 
   const BeerInfo({
     super.key,
-    required this.beerLike,
-    required this.beerDrunk,
     required this.beerName,
-    required this.beerImgSrc,
-    required this.beerType,
-    required this.country,
-    required this.alcoholLevel,
-    required this.rate,
+    required this.beerInfo,
   });
 
   @override
@@ -45,7 +34,7 @@ class BeerInfo extends StatelessWidget {
               ),
             ),
             const Margin(marginType: MarginType.width, size: 8),
-            if (beerDrunk == true)
+            if (beerInfo.isDrunk == true)
               const Icon(
                 Icons.check,
                 size: 24,
@@ -70,7 +59,7 @@ class BeerInfo extends StatelessWidget {
               width: 104,
               height: 240,
               child: Image.network(
-                beerImgSrc,
+                beerInfo.beerImageUrl,
                 fit: BoxFit.cover,
               ),
             ),
@@ -79,7 +68,7 @@ class BeerInfo extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  if (beerLike == true)
+                  if (beerInfo.isLiked == true)
                     IconButton(
                       onPressed: () {},
                       icon: const Icon(
@@ -88,7 +77,7 @@ class BeerInfo extends StatelessWidget {
                         color: Colors.red,
                       ),
                     ),
-                  if (beerLike == false)
+                  if (beerInfo.isLiked == false)
                     IconButton(
                       onPressed: () {},
                       icon: const Icon(
@@ -100,7 +89,7 @@ class BeerInfo extends StatelessWidget {
                   RatingBar.builder(
                     ignoreGestures: true,
                     itemSize: 32,
-                    initialRating: rate,
+                    initialRating: beerInfo.overall,
                     minRating: 0.5,
                     maxRating: 5,
                     direction: Axis.horizontal,
@@ -116,17 +105,17 @@ class BeerInfo extends StatelessWidget {
                   const Margin(marginType: MarginType.height, size: 24),
                   BeerInfoText(
                     title: '종류   ',
-                    value: beerType,
+                    value: beerInfo.style,
                   ),
                   const Margin(marginType: MarginType.height, size: 24),
                   BeerInfoText(
                     title: '원산지',
-                    value: country,
+                    value: beerInfo.countryNameKR,
                   ),
                   const Margin(marginType: MarginType.height, size: 24),
                   BeerInfoText(
                     title: '도수    ',
-                    value: '$alcoholLevel%',
+                    value: '${beerInfo.abv}%',
                   ),
                   const Margin(marginType: MarginType.height, size: 16),
                 ],

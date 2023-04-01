@@ -69,14 +69,7 @@ class _ReviewCreateState extends State<ReviewCreate> {
                   padding: EdgeInsets.all(16.0),
                   child: BeerInfo(
                     beerName: {'korean': '카스 프레시', 'english': 'Cass Fresh'},
-                    beerImgSrc:
-                        'https://justliquor.com.au/2735/cass-fresh-beer-can-355ml.jpg',
-                    beerType: '밀맥주',
-                    country: '한국',
-                    alcoholLevel: 4.2,
-                    rate: 3,
-                    beerDrunk: true,
-                    beerLike: true,
+                    beerInfo: beerInfo,
                   ),
                 ),
               ),
