@@ -63,8 +63,8 @@ public class ReviewServiceImpl implements ReviewService {
     User LoginUser=userRepository.findByEmail(userEmail)
         .orElseThrow(() -> new NotFoundExceptionMessage(NotFoundExceptionMessage.NOT_FOUND_USER));
 
-    List<ReadReviewResponse> reviewList =reviewRepository.findAllByBeer(beer).stream().map(review -> {
-
+//    List<ReadReviewResponse> reviewList =reviewRepository.findAllByBeer(beer).stream().map(review -> {
+      List<ReadReviewResponse> reviewList =reviewRepository.findAllByBeerIdAndUpdaterNot(beerId , "admin@admin.com").stream().map(review -> {
       long userId=review.getUser().getId();
       User user=userRepository.findById(userId)
           .orElseThrow(() -> new NotFoundExceptionMessage(NotFoundExceptionMessage.NOT_FOUND_USER));
