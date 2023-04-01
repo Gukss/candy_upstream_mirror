@@ -9,26 +9,14 @@ class ReviewApiService {
   static Future<bool> postReviewCreate({
     required String email,
     required int beerId,
-    required double aroma,
-    required double mouthfeel,
-    required double flavor,
-    required double apperance,
-    required double overall,
-    required String contents,
+    required Map<String, dynamic> review,
   }) async {
     final Uri uri = Uri.parse('${RequestInfo.baseUrl}/review/$beerId');
     final Map<String, String> headers = {
       'Content-Type': RequestInfo.headerJson,
       'email': email,
     };
-    final String body = jsonEncode({
-      'aroma': aroma,
-      'mouthfeel': mouthfeel,
-      'flavor': flavor,
-      'appearance': apperance,
-      'overall': overall,
-      'contents': contents,
-    });
+    final String body = jsonEncode(review);
 
     final http.Response response = await http.post(
       uri,
