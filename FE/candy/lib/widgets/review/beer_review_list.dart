@@ -1,10 +1,11 @@
+import 'package:flutter/material.dart';
+
 import 'package:candy/api/review_api_service.dart';
 import 'package:candy/models/review/all_review_list_model.dart';
 import 'package:candy/stores/store.dart';
-import 'package:candy/widgets/review/beer_review_item.dart';
-import 'package:flutter/material.dart';
-
 import 'package:candy/widgets/ui/margin.dart';
+import 'package:candy/widgets/review/beer_review_item.dart';
+
 import 'package:get/get.dart';
 
 class BeerReviewList extends StatelessWidget {
@@ -28,7 +29,6 @@ class BeerReviewList extends StatelessWidget {
       future: review(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          print(snapshot.data![0].runtimeType);
           return SizedBox(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

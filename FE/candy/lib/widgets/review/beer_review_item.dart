@@ -1,8 +1,8 @@
-import 'package:candy/api/review_api_service.dart';
-import 'package:candy/stores/store.dart';
 import 'package:flutter/material.dart';
 
+import 'package:candy/stores/store.dart';
 import 'package:candy/widgets/ui/margin.dart';
+import 'package:candy/api/review_api_service.dart';
 import 'package:candy/models/review/all_review_list_model.dart';
 
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
