@@ -142,7 +142,7 @@ class BeerApiService {
       uri,
       headers: headers,
     );
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200) {
       return true;
     }
     return false;

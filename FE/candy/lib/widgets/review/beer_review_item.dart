@@ -8,31 +8,55 @@ import 'package:candy/models/review/all_review_list_model.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 
-class BeerReviewItem extends StatelessWidget {
+class BeerReviewItem extends StatefulWidget {
   final AllReviewListModel review;
 
-  BeerReviewItem({
+  const BeerReviewItem({
     super.key,
     required this.review,
   });
 
-  UserController userController = Get.find();
+  @override
+  State<BeerReviewItem> createState() => _BeerReviewItemState();
+}
 
-  Future<bool> reviewLike(reviewId) async {
-    return ReviewApiService.postReviewLike(
-        reviewId: reviewId, email: userController.userEmail.value);
+class _BeerReviewItemState extends State<BeerReviewItem> {
+  late bool isLiked;
+  late int likeCount;
+  bool isContentOpend = false;
+
+  @override
+  void initState() {
+    super.initState();
+    isLiked = widget.review.isLiked;
+    likeCount = widget.review.likeCount;
   }
 
-  Future<dynamic> reviewDislike(reviewId) async {
-    return ReviewApiService.deleteReviewLike(
-        reviewId: reviewId, email: userController.userEmail.value);
+  void onLikeButtonPressed() async {
+    final UserController userController = Get.find();
+    if (isLiked) {
+      if (await ReviewApiService.deleteReviewLike(
+          reviewId: widget.review.reviewId,
+          email: userController.userEmail.value)) {
+        setState(() {
+          isLiked = false;
+          likeCount--;
+        });
+        return;
+      }
+    }
+    if (await ReviewApiService.postReviewLike(
+        reviewId: widget.review.reviewId,
+        email: userController.userEmail.value)) {
+      setState(() {
+        isLiked = true;
+        likeCount++;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    print(review.reviewId);
-    print(review.isLiked);
-    print(review.likeCount);
     return Column(
       children: [
         Container(
@@ -62,20 +86,20 @@ class BeerReviewItem extends StatelessWidget {
                     Row(
                       children: [
                         const CircleAvatar(
-                          // backgroundImage: Image.network(review.profileImage),
+                          // backgroundImage: Image.network(widget.review.profileImage),
                           radius: 24,
                         ),
                         const Margin(marginType: MarginType.width, size: 8),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(review.userName),
+                            Text(widget.review.userName),
                             const Margin(
                                 marginType: MarginType.height, size: 8),
                             RatingBar.builder(
                               ignoreGestures: true,
                               itemSize: 16,
-                              initialRating: review.overall,
+                              initialRating: widget.review.overall,
                               minRating: 0.5,
                               maxRating: 5,
                               direction: Axis.horizontal,
@@ -95,33 +119,28 @@ class BeerReviewItem extends StatelessWidget {
                     ),
                     Column(
                       children: [
-                        if (review.isLiked == false)
+                        if (widget.review.isLiked == false)
                           IconButton(
                             onPressed: () {
-                              reviewLike(review.reviewId);
+                              onLikeButtonPressed();
                             },
-                            icon: const Icon(
-                              Icons.favorite_border,
-                              color: Color.fromARGB(255, 251, 98, 98),
-                            ),
+                            icon: isLiked
+                                ? const Icon(
+                                    Icons.favorite,
+                                    color: Color.fromARGB(255, 251, 98, 98),
+                                  )
+                                : const Icon(
+                                    Icons.favorite_border,
+                                    color: Color.fromARGB(255, 251, 98, 98),
+                                  ),
                           ),
-                        if (review.isLiked == true)
-                          IconButton(
-                            onPressed: () {
-                              reviewDislike(review.reviewId);
-                            },
-                            icon: const Icon(
-                              Icons.favorite,
-                              color: Color.fromARGB(255, 251, 98, 98),
-                            ),
-                          ),
-                        Text('${review.likeCount}')
+                        Text('$likeCount')
                       ],
                     )
                   ],
                 ),
                 const Margin(marginType: MarginType.height, size: 8),
-                Text(review.contents),
+                Text(widget.review.contents),
               ],
             ),
           ),
