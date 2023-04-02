@@ -50,6 +50,7 @@ public class ReviewCache implements Serializable {
             .beerKrName(review.getBeer().getBeerKrName())
             .beerEnName(review.getBeer().getBeerEnName())
             .beerImageUrl(review.getBeer().getBeerImage())
+            .profileImage(review.getUser().getProfileImage())
             .nickName(review.getUser().getNickname())
             .overall(review.getOverall())
             .contents(review.getContents())
