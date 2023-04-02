@@ -35,7 +35,7 @@ public class BeerHistoryController {
    * @return
    */
   @PostMapping( headers = "email")
-  public ResponseEntity<?> createCalendar(@RequestHeader("email") String userEmail, @RequestBody Long beerId) {
+  public ResponseEntity<?> createCalendar(@RequestHeader("email") String userEmail, @RequestBody("beer") Long beerId) {
     log.info(userEmail);
     log.info(String.valueOf(beerId));
     beerHistoryService.createBeerHistory(userEmail, beerId);
