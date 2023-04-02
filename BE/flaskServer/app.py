@@ -34,6 +34,11 @@ class HelloWorld(Resource):
     def get(self):  # GET 요청시 리턴 값에 해당 하는 dict를 JSON 형태로 반환
         return {"curTime": str(datetime.datetime.now(timezone('Asia/Seoul')))}
 
+@api.route('/make')  # 데코레이터 이용, '/hello' 경로에 클래스 등록
+class HelloWorld(Resource):
+    def get(self):  # GET 요청시 리턴 값에 해당 하는 dict를 JSON 형태로 반환
+        model.recommend_flow()
+        return {"result": "추천이 완료되었습니다"}
 
 @api.route('/reccomand')
 class ReccomandBeer(Resource):
