@@ -9,26 +9,50 @@ import 'package:candy/widgets/beer/beer_info_text.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 
-class BeerInfo extends StatelessWidget {
+class BeerInfo extends StatefulWidget {
   final BeerDetailModel beerInfo;
   final bool? isReviewPage;
 
-  BeerInfo({
+  const BeerInfo({
     super.key,
     required this.beerInfo,
     this.isReviewPage,
   });
 
-  final UserController userController = Get.find();
+  @override
+  State<BeerInfo> createState() => _BeerInfoState();
+}
 
-  Future<bool> beerlike() async {
-    return BeerApiService.postBeerLike(
-        email: userController.userEmail.value, beerId: beerInfo.beerId);
+class _BeerInfoState extends State<BeerInfo> {
+  late bool isLiked;
+
+  @override
+  void initState() {
+    isLiked = widget.beerInfo.isLiked;
+    super.initState();
   }
 
-  Future<bool> beerDislike() async {
-    return BeerApiService.deleteBeerLike(
-        email: userController.userEmail.value, beerId: beerInfo.beerId);
+  void onLikeButtonPressed() async {
+    final UserController userController = Get.find();
+    if (isLiked) {
+      if (await BeerApiService.deleteBeerLike(
+        email: userController.userEmail.value,
+        beerId: widget.beerInfo.beerId,
+      )) {
+        setState(() {
+          isLiked = false;
+        });
+        return;
+      }
+    }
+    if (await BeerApiService.postBeerLike(
+      email: userController.userEmail.value,
+      beerId: widget.beerInfo.beerId,
+    )) {
+      setState(() {
+        isLiked = true;
+      });
+    }
   }
 
   @override
@@ -41,7 +65,7 @@ class BeerInfo extends StatelessWidget {
           children: [
             Expanded(
               child: Text(
-                beerInfo.beerNameKR,
+                widget.beerInfo.beerNameKR,
                 style: const TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.w700,
@@ -49,7 +73,7 @@ class BeerInfo extends StatelessWidget {
               ),
             ),
             const Margin(marginType: MarginType.width, size: 8),
-            if (beerInfo.isDrunk == true)
+            if (widget.beerInfo.isDrunk == true)
               const Icon(
                 Icons.check,
                 size: 24,
@@ -59,7 +83,7 @@ class BeerInfo extends StatelessWidget {
         ),
         const Margin(marginType: MarginType.height, size: 4),
         Text(
-          beerInfo.beerNameEN,
+          widget.beerInfo.beerNameEN,
           style: TextStyle(
             fontSize: 14,
             color: Colors.black.withOpacity(0.5),
@@ -74,7 +98,7 @@ class BeerInfo extends StatelessWidget {
               width: 104,
               height: 240,
               child: Image.network(
-                beerInfo.beerImageUrl,
+                widget.beerInfo.beerImageUrl,
                 fit: BoxFit.fill,
               ),
             ),
@@ -83,33 +107,28 @@ class BeerInfo extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  if (beerInfo.isLiked == true && isReviewPage != true)
+                  if (widget.isReviewPage != true)
                     IconButton(
                       onPressed: () {
-                        beerDislike();
+                        onLikeButtonPressed();
                       },
-                      icon: const Icon(
-                        Icons.favorite_rounded,
-                        size: 24,
-                        color: Colors.red,
-                      ),
+                      icon: isLiked
+                          ? const Icon(
+                              Icons.favorite_rounded,
+                              size: 24,
+                              color: Colors.red,
+                            )
+                          : const Icon(
+                              Icons.favorite_border_outlined,
+                              size: 24,
+                              color: Colors.red,
+                            ),
                     ),
-                  if (beerInfo.isLiked == false && isReviewPage != true)
-                    IconButton(
-                      onPressed: () {
-                        beerlike();
-                      },
-                      icon: const Icon(
-                        Icons.favorite_border_outlined,
-                        size: 24,
-                        color: Colors.red,
-                      ),
-                    ),
-                  if (isReviewPage != true)
+                  if (widget.isReviewPage != true)
                     RatingBar.builder(
                       ignoreGestures: true,
                       itemSize: 32,
-                      initialRating: beerInfo.overall,
+                      initialRating: widget.beerInfo.overall,
                       minRating: 0.5,
                       maxRating: 5,
                       direction: Axis.horizontal,
@@ -125,17 +144,17 @@ class BeerInfo extends StatelessWidget {
                   const Margin(marginType: MarginType.height, size: 24),
                   BeerInfoText(
                     title: '종류   ',
-                    value: beerInfo.style,
+                    value: widget.beerInfo.style,
                   ),
                   const Margin(marginType: MarginType.height, size: 24),
                   BeerInfoText(
                     title: '원산지',
-                    value: beerInfo.countryNameKR,
+                    value: widget.beerInfo.countryNameKR,
                   ),
                   const Margin(marginType: MarginType.height, size: 24),
                   BeerInfoText(
                     title: '도수    ',
-                    value: '${beerInfo.abv}%',
+                    value: '${widget.beerInfo.abv}%',
                   ),
                   const Margin(marginType: MarginType.height, size: 16),
                 ],

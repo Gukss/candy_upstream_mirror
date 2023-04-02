@@ -29,10 +29,6 @@ class BarcodeCheck extends StatelessWidget {
     UserController userController,
     int beerId,
   ) async {
-    // await BeerApiService.postBeerLike(
-    //   email: userController.userEmail.value,
-    //   beerId: beerId,
-    // );
     await BeerApiService.postBeerDrunk(
       email: userController.userEmail.value,
       beerId: beerId,
