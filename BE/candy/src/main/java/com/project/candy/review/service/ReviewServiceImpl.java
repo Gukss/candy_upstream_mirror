@@ -36,8 +36,6 @@ public class ReviewServiceImpl implements ReviewService {
   private final UserRepository userRepository;
   private final ReviewRepository reviewRepository;
   private final ReviewLikeRepository reviewLikeRepository;
-  private final CalendarServiceImpl calendarService;
-  private final BeerHistoryServiceImpl beerHistoryService;
 
   @Override
   @Transactional
@@ -54,8 +52,6 @@ public class ReviewServiceImpl implements ReviewService {
     // 해당 아이디로 작성된 review 데이터가 없거나 삭제된 경우에만 리뷰를 추가 할 수 있다.
     if(review.size()==0 || review.get(0).getBaseEntity().isDelete()){
       reviewRepository.save(Review.create(user, beer, createReviewRequest));
-      calendarService.createCalendar(userEmail);
-      beerHistoryService.createBeerHistory(userEmail,beerId);
       return true;
     }
     return false;
