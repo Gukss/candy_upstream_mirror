@@ -5,6 +5,7 @@ import numpy as np
 import random
 import pymysql
 import datetime
+from pytz import timezone
 def rename(name):
     if '(' in name:
         return name[ :name.index('(')]
@@ -37,7 +38,7 @@ def reccomend_beer_similar() :
     # print("논 리뷰 비어 : ",non_review_beer)
     for index, row in non_review_beer.iterrows() :
         print(row['beer_id'])
-        cur_now=datetime.datetime.now()
+        cur_now=datetime.datetime.now(timezone('Asia/Seoul'))
         cur_now = cur_now.strftime("%Y-%m-%d %H:%M:%S")+".000000"
         # print(" cur _now :  ",cur_now)
         # print("user_id  :   ",user_id)
@@ -73,7 +74,7 @@ def reccomend_beer_similar() :
         on_review_beer_id_list=""
         for i in beer_rec.index :
             on_review_beer_id_list+=str(int(beer_sql.loc[beer_sql['beer_en_name']==i]['beer_id']))+" "
-        cur_now=datetime.datetime.now()
+        cur_now=datetime.datetime.now(timezone('Asia/Seoul'))
         cur_now = cur_now.strftime("%Y-%m-%d %H:%M:%S")+".000000"
         # print(" cur _now :  ",cur_now)
         # print("user_id  :   ",user_id)
@@ -138,7 +139,7 @@ def reccomend_beer_prefer_base(prefer_list, user_id) :
     for i in range (beer_list.shape[0]) :
         beer_id_list+= str(beer_list.iloc[i]['beer_id'])+" "
 
-    cur_now=datetime.datetime.now()
+    cur_now=datetime.datetime.now(timezone('Asia/Seoul'))
     cur_now = cur_now.strftime("%Y-%m-%d %H:%M:%S")+".000000"
     # print(" cur _now :  ",cur_now)
     # print("user_id  :   ",user_id)
@@ -203,7 +204,7 @@ def reccomend_cf (email,cur_user_id):
     for i in beer_list :
         beer_id_list+=str(int(sql_suer.loc[sql_suer['beer_en_name']==i]['beer_id']))+" "
     
-    cur_now=datetime.datetime.now()
+    cur_now=datetime.datetime.now(timezone('Asia/Seoul'))
     cur_now = cur_now.strftime("%Y-%m-%d %H:%M:%S")+".000000"
     # print(" cur _now :  ",cur_now)
     # print("user_id  :   ",user_id)
@@ -290,3 +291,4 @@ def recommend_flow() :
 # reccomend_candy(conn ,'ttt@naver.com')
 
 # conn.close()
+# print(datetime.datetime.now(timezone('Asia/Seoul')))
