@@ -1,5 +1,5 @@
 class UserPickListModel {
-  final int beerId;
+  final int beerId, reviewId;
   final String beerNameKR,
       beerNameEN,
       beerImageUrl,
@@ -11,7 +11,8 @@ class UserPickListModel {
   int likeCount;
 
   UserPickListModel.fromJson(Map<String, dynamic> json)
-      : beerId = json['beerId'],
+      : reviewId = json['reviewId'],
+        beerId = json['beerId'],
         beerNameKR = json['beerKrName'],
         beerNameEN = json['beerEnName'],
         beerImageUrl = json['beerImageUrl'] ?? '',
