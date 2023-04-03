@@ -22,6 +22,7 @@ public interface BeerRepository extends JpaRepository<Beer, Long> {
 
   /**
    * 맥주의 전체 리스트를 반환하지만, 마신 맥주인지, 찜한 맥주인지 변수와 함께 반환하는 메소드
+   * TODO : 3개 join 하는 거를 2개로  join
    */
   @Query(nativeQuery = true, value =
           "select isDrink.*, isLike.isLike " +
@@ -67,6 +68,7 @@ public interface BeerRepository extends JpaRepository<Beer, Long> {
    *
    * @return
    */
+  //todo: 쿼리 검증 필요
   @Query(nativeQuery = true, value = "select beer_id as beerId, appearance, mouthfeel, flavor, aroma, overall, " +
           "avg(appearance) as appearanceAvg, avg(mouthfeel) as mouthfeelAvg, avg(flavor) as flavorAvg, " +
           "avg(aroma) as aromaAvg, avg(overall) as overallAvg from review " +

@@ -16,8 +16,9 @@ import java.util.Optional;
  * description    : 음주 일지(기록)에 대해 RDB와 통신하기 위한 인터페이스
  */
 public interface CalendarRepository extends JpaRepository<Calendar, Long> {
+  // todo : native query 삭제하는 방식으로 수정
   @Query(nativeQuery = true, value = "select DISTINCT DATE( calendar.created_at ) as createdAt from calendar where calendar.user_id = :userId and YEAR(calendar.created_at) = :year and MONTH(calendar.created_at) = :month")
   Optional<List<ReadCalendarResponse>> findAllByUseridWhereYearAndMonth(@Param(value = "userId") long userId, @Param(value = "year") int year, @Param(value = "month") int month);
 
-  Optional<List<Calendar>> findByUserId(long userId);
+  Optional<List<Calendar>> findAllByUserId(long userId);
 }

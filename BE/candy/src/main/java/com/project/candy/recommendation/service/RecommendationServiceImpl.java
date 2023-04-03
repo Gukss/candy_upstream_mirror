@@ -179,6 +179,8 @@ public class RecommendationServiceImpl implements RecommendationService {
   @Override
   public List<ReadReviewRecommendationResponse> readReviewByCache(String userEmail) {
 
+    // todo : 전날 리뷰 좋아요가 안쌓여있다면 이전 좋아요를 많이 받은 맥주 리뷰 출력
+    
     // 캐시 데이터 읽어오기
     List<ReviewCache> reviewCacheList = recommendationRepository.readReviewByCache();
 

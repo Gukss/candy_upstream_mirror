@@ -55,7 +55,6 @@ public class LikesServiceImpl implements LikesService {
             .build();
 
     // 찜했다가 해제한 후 다시 찜하는 경우 고려
-    // upsert 사용 필요
     Likes createLikes = likeRepository.findByUserAndBeer(user, beer).orElse(likes);
     if (createLikes.getBaseEntity().isDelete()) {
       createLikes.getBaseEntity().create();
@@ -90,6 +89,7 @@ public class LikesServiceImpl implements LikesService {
 
       for (Likes like : likeList) {
         Beer beer = like.getBeer();
+        // todo : entity to dto
         likesBeerList.add(new ReadLikesListByUserResponse(beer.getBeerKrName(), beer.getBeerEnName(), beer.getBeerImage()));
       }
 

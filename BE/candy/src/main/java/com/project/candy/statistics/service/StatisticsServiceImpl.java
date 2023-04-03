@@ -48,6 +48,11 @@ public class StatisticsServiceImpl implements StatisticsService {
   private final BeerHistoryRepository beerHistoryRepository;
   private final UserRepository userRepository;
 
+  /**
+   *
+   * @param email
+   * @return
+   */
   @Override
   public ReadStatisticResponse readStatistics(String email) {
     User foundUser = userRepository.findByEmail(email)
@@ -120,7 +125,6 @@ public class StatisticsServiceImpl implements StatisticsService {
       Long styleValue = styleCur.value;
       double stylePercent = (double) styleValue / (double) size;
       sumStylePercent += stylePercent;
-      System.out.println("sumStylePercent = " + sumStylePercent);
       pieStyleList.add(new Pie(style, stylePercent));
     }
     for (int i = 0; i < countrySize; i++) {
@@ -144,7 +148,6 @@ public class StatisticsServiceImpl implements StatisticsService {
   int readTotalCount(User curUser){
     //---인증 개수---
     int totalCount = statisticsRepository.readTotalCountByUserEmail(curUser.getId());
-    System.out.println("totalCount = " + totalCount);
     return totalCount;
   }
 
@@ -154,7 +157,6 @@ public class StatisticsServiceImpl implements StatisticsService {
       calendar.add(x.getContinuousDay());
     }
     //---연속 일수---
-    System.out.println("calendar.size() = " + calendar.size());
     LocalDate now = LocalDate.now();
     int offset = 0;
     if(calendar.isEmpty()) return 0; //비어있으면 0일 반환
@@ -225,7 +227,6 @@ public class StatisticsServiceImpl implements StatisticsService {
     for (User curUser : allUser) {
       //isPresent로 검사해주고 있으면 불러오고, 없으면 생성해준다.
       Statistics curStatistics = Statistics.createStatistics(0,0,"none",0.0,0,curUser);
-      log.info(statisticsRepository.findByUser(curUser).isPresent()+"\n");
       if(!statisticsRepository.findByUser(curUser).isPresent()){ //없으면
         curStatistics = statisticsRepository.save(curStatistics);
       }else{ //있으면
@@ -243,7 +244,6 @@ public class StatisticsServiceImpl implements StatisticsService {
       int totalDay = calendar.size();
 
       //---선호 스타일---
-      //todo: get mapping이랑 겹치기 때문에 메소드로 빼기
       String favoriteStyle = readFavoriteStyle(curUser);
 
       //---상위퍼센트---
@@ -251,7 +251,6 @@ public class StatisticsServiceImpl implements StatisticsService {
 
       curStatistics.updateStatistics(totalCount, continuousDay, favoriteStyle, topRank, totalDay);
     }
-
   }
 
   private class Order {

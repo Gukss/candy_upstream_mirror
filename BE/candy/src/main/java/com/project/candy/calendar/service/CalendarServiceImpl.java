@@ -17,10 +17,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * packageName    : com.project.candy.calendar.service
- * fileName       : CalendarServiceImpl
- * date           : 2023-03-21
- * description    : 음주 일지에 관련된 서비스 인터페이스 구현체
+ * packageName    : com.project.candy.calendar.service fileName       : CalendarServiceImpl date
+ * : 2023-03-21 description    : 음주 일지에 관련된 서비스 인터페이스 구현체
  */
 @Service
 @Transactional(readOnly = true)
@@ -36,29 +34,36 @@ public class CalendarServiceImpl implements CalendarService {
   @Override
   public void createCalendar(String userEmail) {
     // 실존 체크
-    User customer = userRepository.findByEmail(userEmail).orElseThrow(() -> new NotFoundExceptionMessage(NotFoundExceptionMessage.NOT_FOUND_USER));
+    User customer = userRepository.findByEmail(userEmail)
+        .orElseThrow(() -> new NotFoundExceptionMessage(NotFoundExceptionMessage.NOT_FOUND_USER));
 
     Calendar calendar = Calendar.builder()
-            .user(customer)
-            .baseEntity(BaseEntity.builder()
-                    .constructor(userEmail)
-                    .isDelete(false)
-                    .updater(userEmail)
-                    .build())
-            .build();
+        .user(customer)
+        .baseEntity(BaseEntity.builder()
+            .constructor(userEmail)
+            .isDelete(false)
+            .updater(userEmail)
+            .build())
+        .build();
     calendarRepository.save(calendar);
   }
 
   @Override
   public List<ReadCalendarResponse> readCalendarList(String userEmail, int year, int month) {
-   User customer = userRepository.findByEmail(userEmail).orElseThrow(() -> new NotFoundExceptionMessage(NotFoundExceptionMessage.NOT_FOUND_USER));
-   List<ReadCalendarResponse> readCalendarResponses =calendarRepository.findAllByUseridWhereYearAndMonth(customer.getId() , year, month).get();
-   if(month==1){
-      readCalendarResponses.addAll(0,calendarRepository.findAllByUseridWhereYearAndMonth(customer.getId(),year-1 ,12).get());
-   }else{
-      readCalendarResponses.addAll(0,calendarRepository.findAllByUseridWhereYearAndMonth(customer.getId(),year ,month-1).get());
-   }
-   return readCalendarResponses;
+    User customer = userRepository.findByEmail(userEmail)
+        .orElseThrow(() -> new NotFoundExceptionMessage(NotFoundExceptionMessage.NOT_FOUND_USER));
+    List<ReadCalendarResponse> readCalendarResponses = calendarRepository.findAllByUseridWhereYearAndMonth(
+        customer.getId(), year, month).get();
+    if (month == 1) {
+      readCalendarResponses.addAll(0,
+          calendarRepository.findAllByUseridWhereYearAndMonth(customer.getId(), year - 1, 12)
+              .get());
+    } else {
+      readCalendarResponses.addAll(0,
+          calendarRepository.findAllByUseridWhereYearAndMonth(customer.getId(), year, month - 1)
+              .get());
+    }
+    return readCalendarResponses;
 
   }
 

@@ -82,7 +82,8 @@ public class ReviewLikeServiceImpl implements ReviewLikeService {
 
     User user = userRepository.findByEmail(userEmail).orElseThrow(() -> new NotFoundExceptionMessage());
     Review review = reviewRepository.findById(reviewId).orElseThrow(() -> new NotFoundExceptionMessage());
-
+    
+    //todo : reviewLike 로 메소드 명 수정
     ReviewLike reviewLike = reviewLikeRepository.findByUserAndReview(user, review).orElseThrow(() -> new NotFoundExceptionMessage());
     // 삭제
     reviewLike.getBaseEntity().delete();

@@ -1,6 +1,8 @@
 package com.project.candy.beer.dto;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -10,8 +12,9 @@ import lombok.NoArgsConstructor;
  * date           : 2023-03-25
  * description    :
  */
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
+@Builder
 @Getter
 public class ReadSearchBeerListResponse {
 
@@ -23,4 +26,5 @@ public class ReadSearchBeerListResponse {
 
   private String beerImageUrl;
 
+  // todo : entity to dto
 }
