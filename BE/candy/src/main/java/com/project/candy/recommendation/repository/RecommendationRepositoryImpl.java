@@ -66,6 +66,7 @@ public class RecommendationRepositoryImpl implements RecommendationRepository {
   }
 
   @Override
+  // todo : id 무슨 id?
   public void createCandyCache(long id, CandyCache candyCache) {
 
     ValueOperations valueOperations = redisTemplate.opsForValue();

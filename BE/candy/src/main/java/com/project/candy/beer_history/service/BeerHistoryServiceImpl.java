@@ -16,47 +16,47 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * packageName    : com.project.candy.beer_history.service
- * fileName       : BeerHistoryService
- * date           : 2023-03-23
- * description    : 음주 도감을 위한 서비스 인터페이스
+ * packageName    : com.project.candy.beer_history.service fileName       : BeerHistoryService date
+ * : 2023-03-23 description    : 음주 도감을 위한 서비스 인터페이스
  */
 @Service
 @Transactional(readOnly = true)
 @Slf4j
 @RequiredArgsConstructor
 public class BeerHistoryServiceImpl implements BeerHistoryService {
-  private  final  BeerHistoryRepository beerHistoryRepository;
-  private  final UserRepository userRepository;
+
+  private final BeerHistoryRepository beerHistoryRepository;
+  private final UserRepository userRepository;
   private final BeerRepository beerRepository;
 
 
   @Transactional
   @Override
-  public void createBeerHistory(String userEmail , Long beerId){
-    User user = userRepository.findByEmail(userEmail).orElseThrow(() -> new NotFoundExceptionMessage(NotFoundExceptionMessage.NOT_FOUND_USER));
-    Beer beer =beerRepository.findById(beerId).orElseThrow(() -> new NotFoundExceptionMessage(NotFoundExceptionMessage.NOT_FOUND_BEER));
+  public void createBeerHistory(String userEmail, Long beerId) {
+    User user = userRepository.findByEmail(userEmail)
+        .orElseThrow(() -> new NotFoundExceptionMessage(NotFoundExceptionMessage.NOT_FOUND_USER));
+    Beer beer = beerRepository.findById(beerId)
+        .orElseThrow(() -> new NotFoundExceptionMessage(NotFoundExceptionMessage.NOT_FOUND_BEER));
 
     BeerHistory beerHistory = BeerHistory.builder()
-            .beerHistoryId(new BeerHistoryId(user.getId(), beerId))
-            .user(user)
-            .beer(beer)
-            .count(1)
-            .baseEntity(BaseEntity.builder()
-                    .constructor(user.getEmail())
-                    .isDelete(false)
-                    .updater(user.getEmail())
-                    .build())
-            .build();
+        .beerHistoryId(new BeerHistoryId(user.getId(), beerId))
+        .user(user)
+        .beer(beer)
+        .count(1)
+        .baseEntity(BaseEntity.builder()
+            .constructor(user.getEmail())
+            .isDelete(false)
+            .updater(user.getEmail())
+            .build())
+        .build();
     //  이미 만들어진 beerHistory가 있는지 확인하기
-    if(beerHistoryRepository.findByBeerHistoryId(beerHistory.getBeerHistoryId()).isPresent()){
+    // todo : db에 접근 두번 하는 부분 수정
+    if (beerHistoryRepository.findByBeerHistoryId(beerHistory.getBeerHistoryId()).isPresent()) {
       beerHistoryRepository.findByBeerHistoryId(beerHistory.getBeerHistoryId()).get().updateCount();
-    }
-    else{
+    } else {
       beerHistoryRepository.save(beerHistory);
     }
   }
-
 
 
 }

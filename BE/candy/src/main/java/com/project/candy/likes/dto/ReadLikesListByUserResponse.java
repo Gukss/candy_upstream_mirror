@@ -1,6 +1,7 @@
 package com.project.candy.likes.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -13,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class ReadLikesListByUserResponse {
 
   private String beerKrName;
@@ -20,4 +22,6 @@ public class ReadLikesListByUserResponse {
   private String beerEnName;
 
   private String beerImageUrl;
+
+  // todo : entity to dto
 }

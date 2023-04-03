@@ -58,7 +58,8 @@ public class UserServiceImpl implements UserService {
     log.info(String.valueOf(user.getId()));
     return true;
   }
-
+  
+  // todo : 삭제해야함
   @Override
   public User findUserByEmail(String Email) {
     return userRepository.findByEmail(Email).orElseThrow(() -> new NotFoundExceptionMessage(NotFoundExceptionMessage.NOT_FOUND_USER));
@@ -71,7 +72,7 @@ public class UserServiceImpl implements UserService {
     }
     return true;
   }
-
+  // todo : 겹치는 로직 고민해볼 필요있음
   @Override
   public ReadUserByEmailResponse readUserByEmail(String userEmail) {
     User user =userRepository.findByEmail(userEmail).orElseThrow(() -> new NotFoundExceptionMessage(NotFoundExceptionMessage.NOT_FOUND_USER));

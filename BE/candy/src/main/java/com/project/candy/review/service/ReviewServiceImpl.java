@@ -40,17 +40,19 @@ public class ReviewServiceImpl implements ReviewService {
   @Override
   @Transactional
   // 하나의 맥주에 대해 사용자는 하나의 리뷰만 만들 수 있다.
-  public boolean CreateReview(String userEmail,long beerId, CreateReviewRequest createReviewRequest) {
-    User user=userRepository.findByEmail(userEmail)
+  public boolean CreateReview(String userEmail, long beerId,
+      CreateReviewRequest createReviewRequest) {
+    User user = userRepository.findByEmail(userEmail)
         .orElseThrow(() -> new NotFoundExceptionMessage(NotFoundExceptionMessage.NOT_FOUND_USER));
 
-    Beer beer=beerRepository.findById(beerId)
+    Beer beer = beerRepository.findById(beerId)
         .orElseThrow(() -> new NotFoundExceptionMessage(NotFoundExceptionMessage.NOT_FOUND_BEER));
 
-    List<Review> review=reviewRepository.findAllByUserAndBeer(user,beer);
+    List<Review> review = reviewRepository.findAllByUserAndBeer(user, beer);
 
     // 해당 아이디로 작성된 review 데이터가 없거나 삭제된 경우에만 리뷰를 추가 할 수 있다.
-    if(review.size()==0 || review.get(0).getBaseEntity().isDelete()){
+    // todo : null값이 들어 올수 있어 null 비교
+    if (review.size() == 0 || review.get(0).getBaseEntity().isDelete()) {
       reviewRepository.save(Review.create(user, beer, createReviewRequest));
       return true;
     }
@@ -58,28 +60,33 @@ public class ReviewServiceImpl implements ReviewService {
   }
 
   @Override
-  public List<ReadReviewResponse> ReadAllReview(long beerId,String userEmail) {
+  public List<ReadReviewResponse> ReadAllReview(long beerId, String userEmail) {
     Beer beer = beerRepository.findById(beerId)
         .orElseThrow(() -> new NotFoundExceptionMessage(NotFoundExceptionMessage.NOT_FOUND_BEER));
 
-    User LoginUser=userRepository.findByEmail(userEmail)
+    User LoginUser = userRepository.findByEmail(userEmail)
         .orElseThrow(() -> new NotFoundExceptionMessage(NotFoundExceptionMessage.NOT_FOUND_USER));
 
 //    List<ReadReviewResponse> reviewList =reviewRepository.findAllByBeer(beer).stream().map(review -> {
-      List<ReadReviewResponse> reviewList =reviewRepository.findAllByBeerIdAndUpdaterNot(beerId , "admin@admin.com").stream().map(review -> {
-      long userId=review.getUser().getId();
-      User user=userRepository.findById(userId)
+    List<ReadReviewResponse> reviewList = reviewRepository.findAllByBeerIdAndUpdaterNot(beerId,
+        "admin@admin.com").stream().map(review -> {
+      long userId = review.getUser().getId();
+      User user = userRepository.findById(userId)
           .orElseThrow(() -> new NotFoundExceptionMessage(NotFoundExceptionMessage.NOT_FOUND_USER));
 
-      int reviewLikeCount = reviewLikeRepository.findAllByReview(review).stream().filter(reviewLike -> reviewLike.getBaseEntity().isDelete()==false).collect(Collectors.toList()).size();
+      int reviewLikeCount = reviewLikeRepository.findAllByReview(review).stream()
+          .filter(reviewLike -> reviewLike.getBaseEntity().isDelete() == false)
+          .collect(Collectors.toList()).size();
 
-      Optional<ReviewLike> reviewLikeEntity = reviewLikeRepository.findByUserAndReview(LoginUser, review);
-      boolean isLikes= reviewLikeEntity.isPresent() ;
-      if(isLikes){
-        isLikes = (reviewLikeEntity.get().getBaseEntity().isDelete() == true )?false :true ;
+      Optional<ReviewLike> reviewLikeEntity = reviewLikeRepository.findByUserAndReview(LoginUser,
+          review);
+      boolean isLikes = reviewLikeEntity.isPresent();
+      if (isLikes) {
+        isLikes = (reviewLikeEntity.get().getBaseEntity().isDelete() == true) ? false : true;
       }
 
-      ReadReviewResponse response=ReadReviewResponse.EntityToDto(user,review,reviewLikeCount,isLikes);
+      ReadReviewResponse response = ReadReviewResponse.EntityToDto(user, review, reviewLikeCount,
+          isLikes);
 
       return response;
     }).collect(Collectors.toList());

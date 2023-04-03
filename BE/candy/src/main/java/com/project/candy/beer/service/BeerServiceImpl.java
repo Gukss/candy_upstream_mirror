@@ -20,6 +20,7 @@ import com.project.candy.review.entity.Review;
 import com.project.candy.review.repository.ReviewRepository;
 import com.project.candy.user.entity.User;
 import com.project.candy.user.repository.UserRepository;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -75,8 +76,8 @@ public class BeerServiceImpl implements BeerService {
     boolean isLike = false;
 
     // 마셨는지, 찜한 맥주인지 체크한다.
-    List<Calendar> calendarList = calendarRepository.findByUserId(user.getId()).get();
-    if (calendarList != null) {
+    Optional<List<Calendar>> calendarList = calendarRepository.findAllByUserId(user.getId());
+    if (calendarList.isPresent()) {
       isDrink = true;
     }
 
@@ -118,6 +119,7 @@ public class BeerServiceImpl implements BeerService {
 
     List<ReadSearchBeerListResponse> resBeerList = new ArrayList<>();
     for (Beer beer : beerList) {
+      // todo : ReadSearchBeerListResponse entity to dto
       resBeerList.add(new ReadSearchBeerListResponse(
               beer.getId(), beer.getBeerKrName(), beer.getBeerEnName(), beer.getBeerImage()));
     }
@@ -130,6 +132,9 @@ public class BeerServiceImpl implements BeerService {
 
     Beer beer = beerRepository.findByBarcode(barcode).orElse(null);
 
+    // 바코드가 없는 값이 있어 에러 처리를 하지않고 null처리
+    // 바코드가 등록되지 않은 맥주가 있을 수 있다.
+    // => 프론트에게 null 던져주면 처리할 수 있도록 했다.
     if (beer == null) {
       return null;
     }
@@ -151,6 +156,7 @@ public class BeerServiceImpl implements BeerService {
     List<Review> reviewList = reviewRepository.readAllIsDeleteFalse();
     if (reviewList != null && !reviewList.isEmpty()) {
 
+      // todo : DTO 검증 필요
       List<ReadBeerAvgFromReviewResponse> beerAvgList = beerRepository.readAllBeerAvgList();
       if (beerAvgList != null && !beerAvgList.isEmpty()) {
         batchUpdate(beerAvgList);
@@ -164,9 +170,9 @@ public class BeerServiceImpl implements BeerService {
    * @param beerAvgList
    */
   public void batchUpdate(List<ReadBeerAvgFromReviewResponse> beerAvgList) {
-    jdbcTemplate.batchUpdate("update test set " +
-                    "test.aroma = ?, test.flavor = ?, test.mouthfeel = ?, " +
-                    "test.appearance = ?, test.overall = ? where test.beer_id = ?",
+    jdbcTemplate.batchUpdate("update beer set " +
+                    "beer.aroma = ?, beer.flavor = ?, beer.mouthfeel = ?, " +
+                    "beer.appearance = ?, beer.overall = ? where beer.beer_id = ?",
             beerAvgList,
             beerAvgList.size(),
             new ParameterizedPreparedStatementSetter<ReadBeerAvgFromReviewResponse>() {
