@@ -12,6 +12,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
+
 import java.time.Duration;
 import java.util.*;
 
@@ -119,19 +120,20 @@ public class RecommendationRepositoryImpl implements RecommendationRepository {
   }
 
   @Override
-  public void createSimilarityCache(SimilarityCache similarityCache) {
+  public void createSimilarityCache(long beerId, long id, SimilarityCache similarityCache) {
     ValueOperations valueOperations = redisTemplate.opsForValue();
     String jsonSimilarityCache = setObjectToJSON(similarityCache);
-    valueOperations.set("similarity:" + similarityCache.getBeerId(), jsonSimilarityCache);
+//    valueOperations.set("similarity:" + similarityCache.getBeerId(), jsonSimilarityCache);
+    valueOperations.set("similarity:" + beerId + "+" + id + "+" + similarityCache.getBeerId(), jsonSimilarityCache);
   }
 
   @Override
   public List<SimilarityCache> readSimilarityByCache(long beerId) {
 
-    Set<String> similarityKeys = redisTemplate.keys("similarity:" + beerId);
+    Set<String> similarityKeys = redisTemplate.keys("similarity:" + beerId + "*");
     if (similarityKeys.isEmpty() || similarityKeys == null) {
       return null;
-    }
+    }it
     Iterator<String> keyIter = similarityKeys.iterator();
 
     List<SimilarityCache> similarityCacheList = new ArrayList<>();
