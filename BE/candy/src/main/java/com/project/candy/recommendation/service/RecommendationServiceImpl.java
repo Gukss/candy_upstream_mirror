@@ -160,6 +160,7 @@ public class RecommendationServiceImpl implements RecommendationService {
     // beerIdList 나누는 작업 필요
     String[] beerIdArray = recommendationSimilarity.getBeerIdList().split(" ");
     // 레디스 키 값을 구분짓기 위한 변수
+    long id = 1L;
     for (String beerIdStr : beerIdArray) {
       long similarityBeerId = Long.parseLong(beerIdStr);
 
@@ -169,7 +170,8 @@ public class RecommendationServiceImpl implements RecommendationService {
 
       SimilarityCache similarityCache = SimilarityCache.entityToCache(beer);
 
-      recommendationRepository.createSimilarityCache(similarityCache);
+      recommendationRepository.createSimilarityCache(beerId, id, similarityCache);
+      id++;
       resSimilarityRecommendationList.add(ReadSimilarityRecommendationResponse.cacheToDTO(similarityCache));
     }
 

@@ -28,7 +28,7 @@ public interface RecommendationRepository {
   RecentlyCache readRecentlyBeerName(long userId);
 
   // 비슷한 맥주 추천 : 상세정보를 확인한 맥주에 대해 비슷한 맥주들을 캐시에 저장
-  void createSimilarityCache(SimilarityCache similarityCache);
+  void createSimilarityCache(long beerId, long id, SimilarityCache similarityCache);
 
   // 비슷한 맥주 추천 : 캐시 조회해서 데이터 가져오는 메소드
   List<SimilarityCache> readSimilarityByCache(long beerId);
