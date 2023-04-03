@@ -127,6 +127,7 @@ public class StatisticsServiceImpl implements StatisticsService {
       sumStylePercent += stylePercent;
       pieStyleList.add(new Pie(style, stylePercent));
     }
+    // todo :
     for (int i = 0; i < countrySize; i++) {
       Order countryCur = countryPq.poll();
       String country = countryCur.string;
