@@ -133,7 +133,7 @@ public class RecommendationRepositoryImpl implements RecommendationRepository {
     Set<String> similarityKeys = redisTemplate.keys("similarity:" + beerId + "*");
     if (similarityKeys.isEmpty() || similarityKeys == null) {
       return null;
-    }it
+    }
     Iterator<String> keyIter = similarityKeys.iterator();
 
     List<SimilarityCache> similarityCacheList = new ArrayList<>();
