@@ -160,12 +160,16 @@ def reccomend_beer_prefer_base(prefer_list, user_id) :
 
 
 def get_similar_users(name, n,user_similarity):
-    return user_similarity.loc[name].sort_values(ascending=False)[:n]
+    # df.drop(df[df['name'] == 'Bob'].index, inplace=True)
+    # user_similarity.drop(user_similarity[user_similarity['']])
+    result=user_similarity.loc[name].sort_values(ascending=False)
+    print("드랍 한 값 :",result.drop(name)[:n])
+    # return user_similarity.loc[name].sort_values(ascending=False)[:n]
+    return result.drop(name)[:n]
 
 def del_rated_beer(df, user, i):
     # user: 추천을 원하는 사용자
     # i: 사용자와 유사한 취향을 가진 사용자
-    
     # i 사용자가 마셔본 맥주 중 user 사용자가 마셔본 맥주 제외
     return df[df[user] == 0][['beer_en_name', user, i]]
 
@@ -186,15 +190,20 @@ def reccomend_cf (email,cur_user_id):
         where b.beer_id = r.beer_id and u.user_id = r.user_id"""
     
     review_sql  = pd.read_sql_query(sql,conn)
-    # print(review_sql.shape)
     beer_matrix = review_sql.pivot_table(index='beer_en_name', columns='email', values='overall')
 
     beer_matrix.fillna(0, inplace=True)
     id_matrix = beer_matrix.transpose()
     user_similarity = cosine_similarity(id_matrix)
     user_similarity = pd.DataFrame(data=user_similarity, index=id_matrix.index, columns=id_matrix.index)
-    users = get_similar_users(email, 2,user_similarity).index[1:2]
-    
+    users = get_similar_users(email, 2,user_similarity).index[0:1]
+    # print("이것은 비슷한 유저들",get_similar_users(email, 2,user_similarity))
+    # print("이것이 구한 유저",type(users))
+    # print("이것이 구한 유저",del_rated_beer(beer_matrix.reset_index(), email, users[0]))
+    # print("이것이 구한 users",users)
+    # print("이것이 구한 users[0]",users[0])
+    # print("이것이 구한 유저",users.tolist())
+
     beer_list = del_rated_beer(beer_matrix.reset_index(), email, users[0]).sort_values(users[0], ascending=False)['beer_en_name'][:10]
     sql = "select beer_id , beer_en_name  from  beer"
     sql_suer =pd.read_sql_query(sql , conn)
@@ -289,6 +298,7 @@ def recommend_flow() :
 # charset="utf8"
 # )
 # reccomend_candy(conn ,'ttt@naver.com')
-
+# reccomend_cf('2733471329@candy.com', 2504)
+# reccomend_cf('2723641995@candy.com', 2498)
 # conn.close()
 # print(datetime.datetime.now(timezone('Asia/Seoul')))
