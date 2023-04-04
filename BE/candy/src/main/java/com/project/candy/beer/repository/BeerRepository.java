@@ -35,7 +35,8 @@ public interface BeerRepository extends JpaRepository<Beer, Long> {
                   "from beer " +
                   "left join likes on beer.beer_id = likes.beer_id and likes.user_id = :user_id and likes.is_delete = false " +
                   "group by beer.beer_id, likes.user_id) isLike " +
-                  "on isDrink.beerId = isLike.beer_id;")
+                  "on isDrink.beerId = isLike.beer_id " +
+                  "order by isDrink.beerKrName;")
   List<ReadBeerListResponse> readAllBeerList(@Param("user_id") long userId);
 
   /**
