@@ -1,5 +1,6 @@
 package com.project.candy.calendar.service;
 
+import com.project.candy.calendar.dto.ReadCalendarAllResponse;
 import com.project.candy.calendar.dto.ReadCalendarResponse;
 import com.project.candy.calendar.entity.Calendar;
 import com.project.candy.calendar.repository.CalendarRepository;
@@ -50,10 +51,11 @@ public class CalendarServiceImpl implements CalendarService {
   }
 
   @Override
-  public List<ReadCalendarResponse> readCalendarList(String userEmail) {
+  public List<ReadCalendarAllResponse> readCalendarList(String userEmail) {
     User customer = userRepository.findByEmail(userEmail)
         .orElseThrow(() -> new NotFoundExceptionMessage(NotFoundExceptionMessage.NOT_FOUND_USER));
     Optional<List<Calendar>> calendars =  calendarRepository.findAllByUserId(customer.getId());
+    List<ReadCalendarAllResponse> readCalendarAllResponses = calendarRepository.findAllByUseridWhereYearAndMonth(customer.getId()).get();
     List<ReadCalendarResponse> readCalendarResponses = calendars.get().stream().map(calendar -> {return ReadCalendarResponse.entityToDTO(calendar);} ).collect(Collectors.toList());
 //    List<ReadCalendarResponse> readCalendarResponses = calendarRepository.findAllByUseridWhereYearAndMonth(
 //        customer.getId(), year, month).get();
@@ -66,7 +68,7 @@ public class CalendarServiceImpl implements CalendarService {
 //          calendarRepository.findAllByUseridWhereYearAndMonth(customer.getId(), year, month - 1)
 //              .get());
 //    }
-    return readCalendarResponses;
+    return readCalendarAllResponses;
 
   }
 

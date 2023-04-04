@@ -1,5 +1,6 @@
 package com.project.candy.calendar.service;
 
+import com.project.candy.calendar.dto.ReadCalendarAllResponse;
 import com.project.candy.calendar.dto.ReadCalendarResponse;
 import com.project.candy.calendar.entity.Calendar;
 
@@ -29,7 +30,7 @@ public interface CalendarService {
    * @param userEmail : 조회를 요청한 유저 이메일
    * @return : 해당 유저의 음주 일지 리스트
    */
-  List<ReadCalendarResponse> readCalendarList(String userEmail);
+  List<ReadCalendarAllResponse> readCalendarList(String userEmail);
 
 
 }
