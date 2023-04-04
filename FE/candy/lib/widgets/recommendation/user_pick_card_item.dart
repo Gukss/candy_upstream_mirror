@@ -152,7 +152,7 @@ class _UserPickCardItemState extends State<UserPickCardItem> {
                             onPressed: onLikeButtonPressed,
                             icon: Icon(
                               Icons.recommend,
-                              color: isLiked ? null : Colors.red,
+                              color: isLiked ? Colors.red : null,
                             ),
                           ),
                           Text(
