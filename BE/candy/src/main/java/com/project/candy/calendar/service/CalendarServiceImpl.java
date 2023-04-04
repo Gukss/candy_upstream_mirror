@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -49,20 +50,22 @@ public class CalendarServiceImpl implements CalendarService {
   }
 
   @Override
-  public List<ReadCalendarResponse> readCalendarList(String userEmail, int year, int month) {
+  public List<ReadCalendarResponse> readCalendarList(String userEmail) {
     User customer = userRepository.findByEmail(userEmail)
         .orElseThrow(() -> new NotFoundExceptionMessage(NotFoundExceptionMessage.NOT_FOUND_USER));
-    List<ReadCalendarResponse> readCalendarResponses = calendarRepository.findAllByUseridWhereYearAndMonth(
-        customer.getId(), year, month).get();
-    if (month == 1) {
-      readCalendarResponses.addAll(0,
-          calendarRepository.findAllByUseridWhereYearAndMonth(customer.getId(), year - 1, 12)
-              .get());
-    } else {
-      readCalendarResponses.addAll(0,
-          calendarRepository.findAllByUseridWhereYearAndMonth(customer.getId(), year, month - 1)
-              .get());
-    }
+    Optional<List<Calendar>> calendars =  calendarRepository.findAllByUserId(customer.getId());
+    List<ReadCalendarResponse> readCalendarResponses = calendars.get().stream().map(calendar -> {return ReadCalendarResponse.entityToDTO(calendar);} ).collect(Collectors.toList());
+//    List<ReadCalendarResponse> readCalendarResponses = calendarRepository.findAllByUseridWhereYearAndMonth(
+//        customer.getId(), year, month).get();
+//    if (month == 1) {
+//      readCalendarResponses.addAll(0,
+//          calendarRepository.findAllByUseridWhereYearAndMonth(customer.getId(), year - 1, 12)
+//              .get());
+//    } else {
+//      readCalendarResponses.addAll(0,
+//          calendarRepository.findAllByUseridWhereYearAndMonth(customer.getId(), year, month - 1)
+//              .get());
+//    }
     return readCalendarResponses;
 
   }

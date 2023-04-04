@@ -46,8 +46,8 @@ public class CalendarController {
    * @return
    */
   @GetMapping(path = "calendar", headers = "email")
-  public ResponseEntity<?> findCalendarByEmailAndDate(@RequestHeader("email") String userEmail, @RequestParam int year, @RequestParam int month) {
-    List<ReadCalendarResponse> calendarList = calendarService.readCalendarList(userEmail, year, month);
+  public ResponseEntity<?> findCalendarByEmailAndDate(@RequestHeader("email") String userEmail) {
+    List<ReadCalendarResponse> calendarList = calendarService.readCalendarList(userEmail);
     return new ResponseEntity<>(calendarList, HttpStatus.OK);
   }
 }
