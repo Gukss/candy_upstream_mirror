@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:candy/widgets/ui/margin.dart';
 import 'package:candy/widgets/beer/beer_info_text.dart';
 
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 
 class BeerInfo extends StatefulWidget {
@@ -108,38 +107,30 @@ class _BeerInfoState extends State<BeerInfo> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   if (widget.isReviewPage != true)
-                    IconButton(
-                      onPressed: () {
-                        onLikeButtonPressed();
-                      },
-                      icon: isLiked
-                          ? const Icon(
-                              Icons.favorite_rounded,
-                              size: 24,
-                              color: Colors.red,
-                            )
-                          : const Icon(
-                              Icons.favorite_border_outlined,
-                              size: 24,
-                              color: Colors.red,
-                            ),
-                    ),
-                  if (widget.isReviewPage != true)
-                    RatingBar.builder(
-                      ignoreGestures: true,
-                      itemSize: 32,
-                      initialRating: widget.beerInfo.overall,
-                      minRating: 0.5,
-                      maxRating: 5,
-                      direction: Axis.horizontal,
-                      allowHalfRating: true,
-                      itemCount: 5,
-                      itemPadding: const EdgeInsets.symmetric(horizontal: 0),
-                      itemBuilder: (context, _) => const Icon(
-                        Icons.star,
-                        color: Colors.amber,
+                    Container(
+                      alignment: Alignment.centerRight,
+                      child: IconButton(
+                        onPressed: () {
+                          onLikeButtonPressed();
+                        },
+                        icon: isLiked
+                            ? const Icon(
+                                Icons.favorite_rounded,
+                                size: 24,
+                                color: Colors.red,
+                              )
+                            : const Icon(
+                                Icons.favorite_border_outlined,
+                                size: 24,
+                                color: Colors.red,
+                              ),
                       ),
-                      onRatingUpdate: (rating) {},
+                    ),
+                  const Margin(marginType: MarginType.height, size: 8),
+                  if (widget.isReviewPage != true)
+                    BeerInfoText(
+                      title: '별점    ',
+                      value: (widget.beerInfo.overall).toStringAsFixed(1),
                     ),
                   const Margin(marginType: MarginType.height, size: 24),
                   BeerInfoText(
