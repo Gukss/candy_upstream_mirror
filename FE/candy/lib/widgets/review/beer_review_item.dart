@@ -85,8 +85,9 @@ class _BeerReviewItemState extends State<BeerReviewItem> {
                   children: [
                     Row(
                       children: [
-                        const CircleAvatar(
-                          // backgroundImage: Image.network(widget.review.profileImage),
+                        CircleAvatar(
+                          backgroundImage:
+                              NetworkImage(widget.review.profileImage),
                           radius: 24,
                         ),
                         const Margin(marginType: MarginType.width, size: 8),
@@ -119,21 +120,20 @@ class _BeerReviewItemState extends State<BeerReviewItem> {
                     ),
                     Column(
                       children: [
-                        if (widget.review.isLiked == false)
-                          IconButton(
-                            onPressed: () {
-                              onLikeButtonPressed();
-                            },
-                            icon: isLiked
-                                ? const Icon(
-                                    Icons.favorite,
-                                    color: Color.fromARGB(255, 251, 98, 98),
-                                  )
-                                : const Icon(
-                                    Icons.favorite_border,
-                                    color: Color.fromARGB(255, 251, 98, 98),
-                                  ),
-                          ),
+                        IconButton(
+                          onPressed: () {
+                            onLikeButtonPressed();
+                          },
+                          icon: isLiked
+                              ? const Icon(
+                                  Icons.favorite,
+                                  color: Color.fromARGB(255, 251, 98, 98),
+                                )
+                              : const Icon(
+                                  Icons.favorite_border,
+                                  color: Color.fromARGB(255, 251, 98, 98),
+                                ),
+                        ),
                         Text('$likeCount')
                       ],
                     )

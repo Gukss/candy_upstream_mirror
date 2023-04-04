@@ -11,7 +11,7 @@ import 'package:candy/widgets/beer/beer_extra_info.dart';
 import 'package:get/get.dart';
 
 class BarcodeCheck extends StatelessWidget {
-  UserController userController = Get.find();
+  final UserController userController = Get.find();
 
   final String barcodeScanRes;
 

@@ -44,7 +44,7 @@ class ReviewCreate extends StatelessWidget {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
-        duration: const Duration(milliseconds: 1500),
+        duration: const Duration(milliseconds: 2000),
         backgroundColor: color,
         padding: const EdgeInsets.symmetric(
           horizontal: 16.0,
@@ -93,7 +93,9 @@ class ReviewCreate extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Get.back();
+          },
           icon: const Icon(
             Icons.arrow_back_ios_rounded,
           ),
