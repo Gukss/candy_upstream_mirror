@@ -121,17 +121,11 @@ class UserApiService {
 
   // 음주 일지 조회
   static Future<List<UserDailyDataModel>> getUserDailyData({
-    required int year,
-    required int month,
     required String email,
   }) async {
     final Uri uri = Uri.https(
       'j8b105.p.ssafy.io',
       '/api/calendar',
-      {
-        'year': '$year',
-        'month': '$month',
-      },
     );
     final Map<String, String> headers = {
       'Content-Type': RequestInfo.headerJson,
@@ -142,6 +136,7 @@ class UserApiService {
       uri,
       headers: headers,
     );
+
     if (response.statusCode == 200) {
       final List<UserDailyDataModel> instances = [];
       for (final data in jsonDecode(utf8.decode(response.bodyBytes))) {

@@ -158,13 +158,16 @@ class BeerApiService {
       'Content-Type': RequestInfo.headerJson,
       'email': email,
     };
-    final String body = '$beerId';
+    final String body = jsonEncode({'beerId': beerId});
 
     final http.Response response = await http.post(
       uri,
       headers: headers,
       body: body,
     );
+    print(uri);
+    print(body);
+    print(response.statusCode);
     if (response.statusCode == 201) {
       return true;
     }
