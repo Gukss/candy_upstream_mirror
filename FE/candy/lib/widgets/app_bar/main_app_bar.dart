@@ -10,14 +10,13 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: const Center(
-        child: Text(
-          'CANDY',
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
+      title: GestureDetector(
+        onTap: () {},
+        child: Center(
+            child: Image.asset(
+          'assets/images/logo/candy3.png',
+          fit: BoxFit.fill,
+        )),
       ),
       actions: const [
         AppBarSearchBox(),

@@ -61,6 +61,13 @@ class MainPage extends StatelessWidget {
     return result;
   }
 
+  final List<Widget> banners = [
+    Image.asset(
+      'assets/images/banners/banner1.png',
+      fit: BoxFit.fill,
+    ),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -80,13 +87,23 @@ class MainPage extends StatelessWidget {
             horizontal: 16,
           ),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                color: Colors.grey,
-                width: 240,
-                height: 80,
-                child: const Center(
-                  child: Text('배너'),
+                height: 120,
+                clipBehavior: Clip.hardEdge,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: PageView.builder(
+                  scrollDirection: Axis.horizontal,
+                  controller: PageController(
+                    initialPage: 0,
+                  ),
+                  itemCount: 1,
+                  itemBuilder: (context, index) {
+                    return banners[index];
+                  },
                 ),
               ),
               const Margin(marginType: MarginType.height, size: 32),

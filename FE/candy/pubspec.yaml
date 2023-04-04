@@ -100,6 +100,7 @@ flutter:
     - assets/images/countries/
     - assets/images/priority/
     - assets/images/recommend/
+    - assets/images/banners/
     - assets/images/no/
 
   # An image asset can refer to one or more resolution-specific "variants", see
