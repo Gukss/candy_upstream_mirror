@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 /**
  * packageName    : com.project.candy.beer_history.controller
  * fileName       : BeerHistoryController
@@ -31,11 +33,12 @@ public class BeerHistoryController {
    *  해당하는 맥주도감을 DB에 생성하면서 ,
    *  Calendar 도 추가하는 메소드
    * @param userEmail
-   * @param beerId
+   * @param requestBody
    * @return
    */
   @PostMapping( headers = "email")
-  public ResponseEntity<?> createCalendar(@RequestHeader("email") String userEmail, @RequestBody Long beerId) {
+  public ResponseEntity<?> createCalendar(@RequestHeader("email") String userEmail, @RequestBody Map<String, String> requestBody) {
+    Long beerId = Long.parseLong(requestBody.get("beerId"));
     log.info(userEmail);
     log.info(String.valueOf(beerId));
     beerHistoryService.createBeerHistory(userEmail, beerId);
