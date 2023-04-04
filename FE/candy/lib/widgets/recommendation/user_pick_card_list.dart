@@ -16,6 +16,7 @@ class UserPickCardList extends StatelessWidget {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           for (int i = 0; i < userPickList.length; i++)
             UserPickCardItem(
