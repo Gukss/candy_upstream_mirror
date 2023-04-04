@@ -26,7 +26,6 @@ class _CalendarState extends State<Calendar> {
   }
 
   drunkDay(DateTime day, List<UserDailyDataModel> allday) {
-    print(allday[0].createdAt);
     final date = DateFormat('yyyy-MM-dd').format(day);
     for (int i = 0; i < allday.length; i++) {
       if (date == allday[i].createdAt) {
