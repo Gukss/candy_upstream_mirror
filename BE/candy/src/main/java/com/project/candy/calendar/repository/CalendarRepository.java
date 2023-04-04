@@ -1,5 +1,6 @@
 package com.project.candy.calendar.repository;
 
+import com.project.candy.calendar.dto.ReadCalendarAllResponse;
 import com.project.candy.calendar.dto.ReadCalendarResponse;
 import com.project.candy.calendar.entity.Calendar;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,8 +18,8 @@ import java.util.Optional;
  */
 public interface CalendarRepository extends JpaRepository<Calendar, Long> {
   // todo : native query 삭제하는 방식으로 수정
-  @Query(nativeQuery = true, value = "select DISTINCT DATE( calendar.created_at ) as createdAt from calendar where calendar.user_id = :userId and YEAR(calendar.created_at) = :year and MONTH(calendar.created_at) = :month")
-  Optional<List<ReadCalendarResponse>> findAllByUseridWhereYearAndMonth(@Param(value = "userId") long userId, @Param(value = "year") int year, @Param(value = "month") int month);
+  @Query(nativeQuery = true, value = "select DISTINCT DATE( calendar.created_at ) as createdAt from calendar where calendar.user_id = :userId ")
+  Optional<List<ReadCalendarAllResponse>> findAllByUseridWhereYearAndMonth(@Param(value = "userId") long userId);
 
   Optional<List<Calendar>> findAllByUserId(long userId);
 }

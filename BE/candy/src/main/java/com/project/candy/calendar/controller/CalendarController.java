@@ -1,5 +1,6 @@
 package com.project.candy.calendar.controller;
 
+import com.project.candy.calendar.dto.ReadCalendarAllResponse;
 import com.project.candy.calendar.dto.ReadCalendarResponse;
 import com.project.candy.calendar.service.CalendarService;
 import lombok.RequiredArgsConstructor;
@@ -47,7 +48,7 @@ public class CalendarController {
    */
   @GetMapping(path = "calendar", headers = "email")
   public ResponseEntity<?> findCalendarByEmailAndDate(@RequestHeader("email") String userEmail) {
-    List<ReadCalendarResponse> calendarList = calendarService.readCalendarList(userEmail);
+    List<ReadCalendarAllResponse> calendarList = calendarService.readCalendarList(userEmail);
     return new ResponseEntity<>(calendarList, HttpStatus.OK);
   }
 }
