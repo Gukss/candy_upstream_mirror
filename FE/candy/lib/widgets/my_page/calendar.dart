@@ -22,13 +22,12 @@ class _CalendarState extends State<Calendar> {
 
   Future<List<UserDailyDataModel>> events() async {
     return await UserApiService.getUserDailyData(
-        year: focusedDay.year,
-        month: focusedDay.month,
         email: userController.userEmail.value);
   }
 
   drunkDay(DateTime day, List<UserDailyDataModel> allday) {
-    final date = DateFormat('yyyy-MM-d').format(day);
+    print(allday[0].createdAt);
+    final date = DateFormat('yyyy-MM-dd').format(day);
     for (int i = 0; i < allday.length; i++) {
       if (date == allday[i].createdAt) {
         return ['true'];
@@ -62,7 +61,6 @@ class _CalendarState extends State<Calendar> {
                 weekendTextStyle: TextStyle(color: Colors.red),
                 todayTextStyle: TextStyle(fontWeight: FontWeight.bold),
                 todayDecoration: BoxDecoration(
-                  color: Color.fromARGB(255, 255, 205, 6),
                   shape: BoxShape.circle,
                 ),
               ),

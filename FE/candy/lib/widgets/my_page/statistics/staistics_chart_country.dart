@@ -25,7 +25,9 @@ class StatisticsChartCountry extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     for (Map<String, dynamic> data in pieCountry) {
-      dataMap['${data['name']}'] = data['value'];
+      if (data['value'] != 0) {
+        dataMap['${data['name']}'] = data['value'];
+      }
     }
 
     final chart = PieChart(

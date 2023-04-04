@@ -1,9 +1,9 @@
-import 'package:candy/api/user_api_service.dart';
-import 'package:candy/models/user/user_info_model.dart';
 import 'package:flutter/material.dart';
 
 import 'package:candy/stores/store.dart';
+import 'package:candy/api/user_api_service.dart';
 import 'package:candy/widgets/my_page/calendar.dart';
+import 'package:candy/models/user/user_info_model.dart';
 import 'package:candy/widgets/my_page/statistics/statistics_list.dart';
 import 'package:candy/widgets/my_page/beer_encyclopedia/beer_getlist.dart';
 
@@ -18,6 +18,10 @@ class MyPage extends StatefulWidget {
 
 class _MyPageState extends State<MyPage> {
   int _page_index = 0;
+  bool index1 = true;
+  bool index2 = false;
+  bool index3 = false;
+
   UserController userController = Get.find();
 
   Future<UserInfoModel> userInfo() async {
@@ -34,6 +38,24 @@ class _MyPageState extends State<MyPage> {
   void onTextButtonTap(index) {
     setState(() {
       _page_index = index;
+    });
+  }
+
+  void OnTapButton(index) {
+    setState(() {
+      if (index == 0) {
+        index1 = true;
+        index2 = false;
+        index3 = false;
+      } else if (index == 1) {
+        index1 = false;
+        index2 = true;
+        index3 = false;
+      } else {
+        index1 = false;
+        index2 = false;
+        index3 = true;
+      }
     });
   }
 
@@ -74,51 +96,63 @@ class _MyPageState extends State<MyPage> {
                     height: 16,
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
+                    padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         TextButton(
                           onPressed: () {
                             onTextButtonTap(0);
+                            OnTapButton(0);
                           },
                           style: TextButton.styleFrom(
                             foregroundColor:
-                                const Color.fromARGB(233, 233, 233, 233),
-                            backgroundColor:
-                                const Color.fromARGB(255, 245, 204, 21),
-                            disabledForegroundColor:
-                                const Color.fromARGB(255, 245, 204, 21),
+                                const Color.fromARGB(233, 60, 60, 60),
                           ),
-                          child: const Text('음주 기록'),
+                          child: Text(
+                            '음주 기록',
+                            style: TextStyle(
+                              color: index1
+                                  ? const Color.fromARGB(255, 245, 204, 21)
+                                  : const Color.fromARGB(255, 102, 102, 102),
+                            ),
+                          ),
                         ),
                         TextButton(
                           onPressed: () {
                             onTextButtonTap(1);
+                            OnTapButton(1);
                           },
                           style: TextButton.styleFrom(
                             foregroundColor:
-                                const Color.fromARGB(233, 233, 233, 233),
-                            backgroundColor:
-                                const Color.fromARGB(255, 245, 204, 21),
-                            disabledForegroundColor:
-                                const Color.fromARGB(255, 245, 204, 21),
+                                const Color.fromARGB(233, 60, 60, 60),
                           ),
-                          child: const Text('맥주 도감'),
+                          child: Text(
+                            '맥주 도감',
+                            style: TextStyle(
+                              color: index2
+                                  ? const Color.fromARGB(255, 245, 204, 21)
+                                  : const Color.fromARGB(255, 102, 102, 102),
+                            ),
+                          ),
                         ),
                         TextButton(
                           onPressed: () {
                             onTextButtonTap(2);
+                            OnTapButton(2);
                           },
                           style: TextButton.styleFrom(
                             foregroundColor:
-                                const Color.fromARGB(233, 233, 233, 233),
-                            backgroundColor:
-                                const Color.fromARGB(255, 245, 204, 21),
-                            disabledForegroundColor:
-                                const Color.fromARGB(255, 245, 204, 21),
+                                const Color.fromARGB(233, 60, 60, 60),
                           ),
-                          child: const Text('음주 내역'),
+                          child: Text(
+                            '음주 내역',
+                            style: TextStyle(
+                              color: index3
+                                  ? const Color.fromARGB(255, 245, 204, 21)
+                                  : const Color.fromARGB(255, 102, 102, 102),
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -128,7 +162,7 @@ class _MyPageState extends State<MyPage> {
                     color: const Color.fromARGB(255, 216, 216, 216),
                   ),
                   const SizedBox(
-                    height: 16,
+                    height: 8,
                   ),
                   Expanded(
                     child: Container(
