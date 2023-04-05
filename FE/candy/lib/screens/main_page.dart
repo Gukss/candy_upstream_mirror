@@ -12,10 +12,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 
-class MainPage extends StatelessWidget {
-  MainPage({super.key});
+class MainPage extends StatefulWidget {
+  const MainPage({super.key});
 
+  @override
+  State<MainPage> createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
   final UserController userController = Get.find();
+  final RefreshController refreshController = Get.find();
 
   Future<Map<String, dynamic>> recommendationInfo() async {
     final Map<String, dynamic> result = {};
@@ -67,6 +73,16 @@ class MainPage extends StatelessWidget {
       fit: BoxFit.fill,
     ),
   ];
+
+  void refresh() {
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    refreshController.mainRefresh = refresh;
+  }
 
   @override
   Widget build(BuildContext context) {

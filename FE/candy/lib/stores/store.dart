@@ -1,5 +1,9 @@
 import 'package:get/get.dart';
 
+class RefreshController extends GetxController {
+  Function mainRefresh = () {};
+}
+
 class UserController extends GetxController {
   RxString userEmail = ''.obs;
   RxString userProfileImg = ''.obs;

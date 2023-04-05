@@ -57,6 +57,7 @@ class _UserPickCardItemState extends State<UserPickCardItem> {
 
   @override
   Widget build(BuildContext context) {
+    final RefreshController refreshController = Get.find();
     return Row(
       children: [
         Container(
@@ -85,6 +86,7 @@ class _UserPickCardItemState extends State<UserPickCardItem> {
               GestureDetector(
                 onTap: () {
                   Get.to(BeerDetail(beerId: widget.userPcik.beerId));
+                  refreshController.mainRefresh();
                 },
                 child: BeerImage(
                   radiusSize: 16,
