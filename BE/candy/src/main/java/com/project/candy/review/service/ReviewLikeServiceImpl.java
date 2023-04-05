@@ -37,6 +37,7 @@ public class ReviewLikeServiceImpl implements ReviewLikeService {
 
   /**
    * desc : 리뷰아이디와 유저이메일 기반으로 리뷰에 좋아요 추가
+   *
    * @param reviewId
    * @param userEmail
    */
@@ -47,7 +48,7 @@ public class ReviewLikeServiceImpl implements ReviewLikeService {
     // 찜하기를 누른 유저 정보
     User user = userRepository.findByEmail(userEmail).orElseThrow(() -> new NotFoundExceptionMessage());
     // 유저가 찜을 누른 맥주 정보
-    Review review= reviewRepository.findById(reviewId).orElseThrow(() -> new NotFoundExceptionMessage());
+    Review review = reviewRepository.findById(reviewId).orElseThrow(() -> new NotFoundExceptionMessage());
 
     // 찜하기 정보 생성
     ReviewLike reviewLike = ReviewLike.builder()
@@ -69,10 +70,12 @@ public class ReviewLikeServiceImpl implements ReviewLikeService {
     }
     // 찜하기 저장
     reviewLikeRepository.save(createReviewLike);
+    review.increaseLikeCount();
   }
 
   /**
    * desc : 리뷰아이디와 유저이메일 기반으로 리뷰에 좋아요 삭제
+   *
    * @param reviewId
    * @param userEmail
    */
@@ -82,12 +85,11 @@ public class ReviewLikeServiceImpl implements ReviewLikeService {
 
     User user = userRepository.findByEmail(userEmail).orElseThrow(() -> new NotFoundExceptionMessage());
     Review review = reviewRepository.findById(reviewId).orElseThrow(() -> new NotFoundExceptionMessage());
-    
+
     //todo : reviewLike 로 메소드 명 수정
     ReviewLike reviewLike = reviewLikeRepository.findByUserAndReview(user, review).orElseThrow(() -> new NotFoundExceptionMessage());
     // 삭제
     reviewLike.getBaseEntity().delete();
+    review.decreaseLikeCount();
   }
-
-
 }

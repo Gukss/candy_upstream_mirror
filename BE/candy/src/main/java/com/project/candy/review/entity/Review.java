@@ -5,7 +5,9 @@ import com.project.candy.review.dto.CreateReviewRequest;
 import com.project.candy.user.entity.User;
 import com.project.candy.util.BaseEntity;
 import com.project.candy.util.BaseTimeEntity;
+
 import javax.validation.constraints.NotNull;
+
 import lombok.*;
 
 import javax.persistence.*;
@@ -66,24 +68,30 @@ public class Review extends BaseTimeEntity {
 
   public static Review create(User user, Beer beer, CreateReviewRequest createReviewRequest) {
     Review review = Review.builder()
-        .appearance(createReviewRequest.getAppearance())
-        .aroma(createReviewRequest.getAroma())
-        .flavor(createReviewRequest.getFlavor())
-        .overall(createReviewRequest.getOverall())
-        .mouthfeel(createReviewRequest.getMouthfeel())
-        .contents(createReviewRequest.getContents())
-        .likeCount(0)
-        .baseEntity(BaseEntity.builder()
-            .constructor(user.getEmail())
-            .isDelete(false)
-            .updater(user.getEmail())
-            .build())
-        .user(user)
-        .beer(beer)
-        .build();
+            .appearance(createReviewRequest.getAppearance())
+            .aroma(createReviewRequest.getAroma())
+            .flavor(createReviewRequest.getFlavor())
+            .overall(createReviewRequest.getOverall())
+            .mouthfeel(createReviewRequest.getMouthfeel())
+            .contents(createReviewRequest.getContents())
+            .likeCount(0)
+            .baseEntity(BaseEntity.builder()
+                    .constructor(user.getEmail())
+                    .isDelete(false)
+                    .updater(user.getEmail())
+                    .build())
+            .user(user)
+            .beer(beer)
+            .build();
 
     return review;
   }
 
+  public void increaseLikeCount() {
+    this.likeCount += 1;
+  }
 
+  public void decreaseLikeCount() {
+    this.likeCount -= 1;
+  }
 }
