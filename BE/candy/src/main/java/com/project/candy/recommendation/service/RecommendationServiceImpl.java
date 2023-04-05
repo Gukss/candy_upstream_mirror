@@ -76,7 +76,7 @@ public class RecommendationServiceImpl implements RecommendationService {
     // 추천된 데이터가 들어가 있는 rdb에서 해당 유저의 추천 데이터를 받아온다.
     LocalDateTime startTime = LocalDateTime.now().minusDays(1);
     LocalDateTime endTime = LocalDateTime.now();
-    RecommendationCandy recommendationCandy = recommendationCandyRepository.findByUserAndCreatedAtBetween(user, startTime, endTime)
+    RecommendationCandy recommendationCandy = recommendationCandyRepository.findTop1ByUserAndCreatedAtBetweenOrderByCreatedAtDesc(user, startTime, endTime)
             .orElseThrow(() -> new NotFoundExceptionMessage(NotFoundExceptionMessage.NOT_FOUND_USER));
     if (recommendationCandy == null) {
       // todo : 에러 메세지 정의하기
@@ -148,7 +148,7 @@ public class RecommendationServiceImpl implements RecommendationService {
     LocalDateTime startTime = LocalDateTime.now().minusDays(1);
     LocalDateTime endTime = LocalDateTime.now();
     RecommendationSimilarity recommendationSimilarity =
-            recommendationSimilarityRepository.findByBeerIdAndCreatedAtBetween(beerId, startTime, endTime);
+            recommendationSimilarityRepository.findTop1ByBeerIdAndCreatedAtBetweenOrderByCreatedAtDesc(beerId, startTime, endTime);
     if (recommendationSimilarity == null) {
       // todo : 에러 메세지 정의하기
       throw new NotFoundExceptionMessage();
