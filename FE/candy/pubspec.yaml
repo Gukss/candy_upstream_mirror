@@ -135,6 +135,11 @@ fonts:
         weight: 700
       - asset: assets/font/SCDream/SCDream9.otf
         weight: 900
+
+  - family: BMDOHYEON
+    fonts:
+      - asset: assets/font/BMDOHYEON.ttf
+        weight: 800
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

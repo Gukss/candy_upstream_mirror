@@ -30,14 +30,18 @@ class Statistics extends StatelessWidget {
             return SingleChildScrollView(
               padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
               child: Column(children: [
-                const StatisticsText(),
+                StatisticsText(
+                  continuousDay: snapshot.data!.continuousDay,
+                  topRank: snapshot.data!.topRank,
+                  totalCount: snapshot.data!.totalCount,
+                  totalDay: snapshot.data!.totalDay,
+                ),
                 const SizedBox(
                   height: 20,
                 ),
                 Container(
                   height: 1,
-                  width: 400,
-                  color: Colors.black,
+                  color: const Color.fromARGB(255, 216, 216, 216),
                 ),
                 const SizedBox(
                   height: 20,
@@ -68,7 +72,7 @@ class Statistics extends StatelessWidget {
               ),
             ),
             child: const Text(
-              '마신 맥주가 없습니다',
+              '통계를 분석하는 중입니다',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 30,
