@@ -15,5 +15,5 @@ import java.util.Optional;
  */
 public interface RecommendationCandyRepository extends JpaRepository<RecommendationCandy, Long> {
 
-  Optional<RecommendationCandy> findByUserAndCreatedAtBetween(User user, LocalDateTime startTime, LocalDateTime endTime);
+  Optional<RecommendationCandy> findTop1ByUserAndCreatedAtBetweenOrderByCreatedAtDesc(User user, LocalDateTime startTime, LocalDateTime endTime);
 }

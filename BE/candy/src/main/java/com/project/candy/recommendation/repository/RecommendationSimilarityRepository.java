@@ -13,5 +13,5 @@ import java.time.LocalDateTime;
  */
 public interface RecommendationSimilarityRepository extends JpaRepository<RecommendationSimilarity, Long> {
 
-  RecommendationSimilarity findByBeerIdAndCreatedAtBetween(long beerId, LocalDateTime startTime, LocalDateTime endTime);
+  RecommendationSimilarity findTop1ByBeerIdAndCreatedAtBetweenOrderByCreatedAtDesc(long beerId, LocalDateTime startTime, LocalDateTime endTime);
 }
