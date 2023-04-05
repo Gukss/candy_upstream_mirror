@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 
 class RefreshController extends GetxController {
   Function mainRefresh = () {};
+  Function myRefresh = () {};
 }
 
 class UserController extends GetxController {

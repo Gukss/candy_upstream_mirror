@@ -11,20 +11,27 @@ import 'package:candy/widgets/beer/beer_extra_info.dart';
 
 import 'package:get/get.dart';
 
-class BarcodeCheck extends StatelessWidget {
-  final UserController userController = Get.find();
-
+class BarcodeCheck extends StatefulWidget {
   final String barcodeScanRes;
 
-  BarcodeCheck({
+  const BarcodeCheck({
     super.key,
     required this.barcodeScanRes,
   });
 
+  @override
+  State<BarcodeCheck> createState() => _BarcodeCheckState();
+}
+
+class _BarcodeCheckState extends State<BarcodeCheck> {
+  final UserController userController = Get.find();
+  final RefreshController refreshController = Get.find();
+
   Future<dynamic> beerdetail() async {
     try {
       final BeerDetailModel beer = await BeerApiService.getBarcodeSearch(
-          barcode: barcodeScanRes, email: userController.userEmail.value);
+          barcode: widget.barcodeScanRes,
+          email: userController.userEmail.value);
       return beer;
     } catch (e) {
       Get.off(() => const NoBeerPage());
@@ -32,22 +39,58 @@ class BarcodeCheck extends StatelessWidget {
     }
   }
 
-  void postbeer(
+  Future<bool?> openDialog(BuildContext context, String text) async {
+    return showDialog<bool>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: Text(
+          text,
+          style: const TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(
+              context,
+              false,
+            ),
+            child: const Text('취소'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(
+              context,
+              true,
+            ),
+            child: const Text('확인'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> postbeer(
     UserController userController,
     int beerId,
+    BuildContext context,
   ) async {
+    final bool isMyBeer =
+        await openDialog(context, '오늘 마신 맥주가 맞으신가요?') ?? false;
+    if (!isMyBeer) return;
     await BeerApiService.postBeerDrunk(
       email: userController.userEmail.value,
       beerId: beerId,
     );
-    {
-      Get.off(ReviewCreate(beerId: beerId));
-    }
+    refreshController.myRefresh();
+    if (!mounted) return;
+    final bool tmp = await openDialog(context, '리뷰를 등록하시겠습니까?') ?? false;
+    if (!tmp) return;
+    Get.to(ReviewCreate(beerId: beerId));
   }
 
   @override
   Widget build(BuildContext context) {
-    final UserController userController = Get.find();
     return FutureBuilder(
       future: beerdetail(),
       builder: (context, snapshot) {
@@ -66,7 +109,7 @@ class BarcodeCheck extends StatelessWidget {
                 actions: [
                   TextButton(
                     onPressed: () {
-                      postbeer(userController, snapshot.data!.beerId);
+                      postbeer(userController, snapshot.data!.beerId, context);
                     },
                     child: const Text(
                       '등록하기',
@@ -82,7 +125,7 @@ class BarcodeCheck extends StatelessWidget {
               body: Center(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
-                    horizontal: 24,
+                    horizontal: 16,
                   ),
                   child: Container(
                     decoration: BoxDecoration(

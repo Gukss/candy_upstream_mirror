@@ -75,7 +75,7 @@ class UserApiService {
     return false;
   }
 
-  // 추천 생성
+  // 유저 정보 조회
   static Future<UserInfoModel> getUserInfo({
     required String email,
   }) async {
@@ -100,7 +100,7 @@ class UserApiService {
     throw Error();
   }
 
-  // 유저 정보 조회
+  // 추천 생성
   static Future<bool> postCreateRecommendation({
     required String email,
   }) async {

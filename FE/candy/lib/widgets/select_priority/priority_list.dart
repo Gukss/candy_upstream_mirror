@@ -16,12 +16,12 @@ class PriorityList extends StatelessWidget {
     },
     {
       'imgUrl': 'assets/images/priority/green.jpg',
-      'titleLabel': '색감',
+      'titleLabel': '색',
       'titleValue': 'appearance'
     },
     {
       'imgUrl': 'assets/images/priority/sky_blue.jpg',
-      'titleLabel': '식감',
+      'titleLabel': '바디감',
       'titleValue': 'mouthfeel'
     }
   ];

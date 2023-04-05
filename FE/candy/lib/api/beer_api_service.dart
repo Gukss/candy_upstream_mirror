@@ -165,9 +165,6 @@ class BeerApiService {
       headers: headers,
       body: body,
     );
-    print(uri);
-    print(body);
-    print(response.statusCode);
     if (response.statusCode == 201) {
       return true;
     }

@@ -22,7 +22,7 @@ class _SignupState extends State<Signup> {
   final UserController userController = Get.find();
   final TextEditingController nicknameController = TextEditingController();
   final List<int> yearList = [
-    for (int i = 1950; i <= DateTime.now().year; i++) i
+    for (int i = 1970; i <= DateTime.now().year; i++) i
   ];
   final List<int> monthList = [for (int i = 1; i <= 12; i++) i];
   List<int> dayList = [];

@@ -79,6 +79,12 @@ class _MainPageState extends State<MainPage> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    refreshController.mainRefresh = () {};
+  }
+
+  @override
   void initState() {
     super.initState();
     refreshController.mainRefresh = refresh;
