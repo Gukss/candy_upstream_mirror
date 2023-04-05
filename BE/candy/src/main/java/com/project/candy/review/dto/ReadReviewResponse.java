@@ -39,7 +39,7 @@ public class ReadReviewResponse {
             .userName(user.getNickname())
             .profileImage(user.getProfileImage())
             .contents(review.getContents())
-            .overall(review.getOverall())
+            .overall(review.getOverall() / 4.0)
             .likeCount(review.getLikeCount())
             .isLikes(isLikes)
             .reviewId(review.getReviewId())
