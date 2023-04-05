@@ -31,7 +31,7 @@ class BeerDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const BeerDetailAppBar(),
+      appBar: BeerDetailAppBar(),
       body: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 16,
@@ -44,6 +44,7 @@ class BeerDetail extends StatelessWidget {
               return const Center(
                 child: CircularProgressIndicator(
                   strokeWidth: 10,
+                  color: Colors.amber,
                 ),
               );
             }

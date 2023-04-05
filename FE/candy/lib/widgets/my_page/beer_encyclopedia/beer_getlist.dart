@@ -9,7 +9,7 @@ import 'package:get/get.dart';
 class BeerGetList extends StatelessWidget {
   BeerGetList({super.key});
 
-  UserController userController = Get.find();
+  final UserController userController = Get.find();
 
   Future<List<AllBeerListModel>> beerlist() async {
     return await BeerApiService.getAllBeerList(

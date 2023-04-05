@@ -22,7 +22,8 @@ class _MyPageState extends State<MyPage> {
   bool index2 = false;
   bool index3 = false;
 
-  UserController userController = Get.find();
+  final UserController userController = Get.find();
+  final RefreshController refreshController = Get.find();
 
   Future<UserInfoModel> userInfo() async {
     return await UserApiService.getUserInfo(
@@ -41,7 +42,7 @@ class _MyPageState extends State<MyPage> {
     });
   }
 
-  void OnTapButton(index) {
+  void onButtonTap(index) {
     setState(() {
       if (index == 0) {
         index1 = true;
@@ -59,9 +60,24 @@ class _MyPageState extends State<MyPage> {
     });
   }
 
+  void refresh() {
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    refreshController.myRefresh = refresh;
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    refreshController.myRefresh = () {};
+  }
+
   @override
   Widget build(BuildContext context) {
-    UserController userController = Get.find();
     return FutureBuilder(
         future: userInfo(),
         builder: (context, snapshot) {
@@ -103,7 +119,7 @@ class _MyPageState extends State<MyPage> {
                         TextButton(
                           onPressed: () {
                             onTextButtonTap(0);
-                            OnTapButton(0);
+                            onButtonTap(0);
                           },
                           style: TextButton.styleFrom(
                             foregroundColor:
@@ -121,7 +137,7 @@ class _MyPageState extends State<MyPage> {
                         TextButton(
                           onPressed: () {
                             onTextButtonTap(1);
-                            OnTapButton(1);
+                            onButtonTap(1);
                           },
                           style: TextButton.styleFrom(
                             foregroundColor:
@@ -139,7 +155,7 @@ class _MyPageState extends State<MyPage> {
                         TextButton(
                           onPressed: () {
                             onTextButtonTap(2);
-                            OnTapButton(2);
+                            onButtonTap(2);
                           },
                           style: TextButton.styleFrom(
                             foregroundColor:
@@ -173,7 +189,12 @@ class _MyPageState extends State<MyPage> {
               ),
             );
           }
-          return const SizedBox();
+          return const Center(
+            child: CircularProgressIndicator(
+              strokeWidth: 10,
+              color: Colors.amber,
+            ),
+          );
         });
   }
 }

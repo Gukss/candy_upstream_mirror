@@ -24,7 +24,7 @@ class BeerEncyclopedia extends StatefulWidget {
 class _BeerEncyclopediaState extends State<BeerEncyclopedia> {
   String dropdownValue = '전체';
   int dropindex = 0;
-  List<String> itemList = ['전체', '좋아요한 맥주', '마신맥주', '마시지않은 맥주'];
+  List<String> itemList = ['전체', '좋아요한 맥주', '마신 맥주', '안 마신 맥주'];
   late List<AllBeerListModel> beerlist;
   late double beerpercent;
 

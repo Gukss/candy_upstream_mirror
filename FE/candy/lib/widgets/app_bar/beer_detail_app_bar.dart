@@ -1,4 +1,6 @@
+import 'package:candy/stores/store.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class BeerDetailAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
@@ -8,10 +10,13 @@ class BeerDetailAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final RefreshController refreshController = Get.find();
     return AppBar(
       leading: IconButton(
         onPressed: () {
-          Navigator.pop(context);
+          refreshController.mainRefresh();
+          refreshController.myRefresh();
+          Get.back();
         },
         icon: const Icon(
           Icons.arrow_back_ios_new_rounded,
