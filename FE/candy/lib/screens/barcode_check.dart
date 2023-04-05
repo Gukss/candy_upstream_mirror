@@ -1,5 +1,6 @@
 import 'package:candy/screens/no_beer_page.dart';
 import 'package:candy/screens/review_create.dart';
+import 'package:candy/widgets/bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
 import 'package:candy/stores/store.dart';
@@ -84,8 +85,12 @@ class _BarcodeCheckState extends State<BarcodeCheck> {
     );
     refreshController.myRefresh();
     if (!mounted) return;
-    final bool tmp = await openDialog(context, '리뷰를 등록하시겠습니까?') ?? false;
-    if (!tmp) return;
+    final bool isRegistering =
+        await openDialog(context, '리뷰를 등록하시겠습니까?') ?? false;
+    if (!isRegistering) {
+      Get.off(() => const BottomNavigation());
+      return;
+    }
     Get.to(ReviewCreate(beerId: beerId));
   }
 

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:candy/screens/barcode_check.dart';
+import 'package:candy/stores/store.dart';
 import 'package:candy/widgets/app_bar/main_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -46,6 +47,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
 
   @override
   Widget build(BuildContext context) {
+    final UserController userController = Get.find();
     Widget bodychild = Container();
 
     switch (_selectedIndex) {
@@ -54,7 +56,9 @@ class _BottomNavigationState extends State<BottomNavigation> {
         break;
 
       case 2:
-        bodychild = const MyPage();
+        bodychild = MyPage(
+          email: userController.userEmail.value,
+        );
         break;
     }
 

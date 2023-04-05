@@ -1,4 +1,3 @@
-import 'package:candy/stores/store.dart';
 import 'package:flutter/material.dart';
 
 import 'package:candy/api/statistics_api_service.dart';
@@ -6,16 +5,17 @@ import 'package:candy/models/user/user_statistics.model.dart';
 import 'package:candy/widgets/my_page/statistics/staistics_text.dart';
 import 'package:candy/widgets/my_page/statistics/staistics_chart_beer.dart';
 import 'package:candy/widgets/my_page/statistics/staistics_chart_country.dart';
-import 'package:get/get.dart';
 
 class Statistics extends StatelessWidget {
-  Statistics({super.key});
+  final String email;
 
-  UserController userController = Get.find();
+  const Statistics({
+    super.key,
+    required this.email,
+  });
 
-  Future<UserStatisticsModel> statistics() async {
-    return await StatisticsApiService.getUserStatistics(
-        email: userController.userEmail.value);
+  Future<UserStatisticsModel> statistics(String email) async {
+    return await StatisticsApiService.getUserStatistics(email: email);
   }
 
   @override
@@ -23,7 +23,7 @@ class Statistics extends StatelessWidget {
     final PageController pageController = PageController(initialPage: 0);
 
     return FutureBuilder(
-      future: statistics(),
+      future: statistics(email),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data!.pieCountry.isNotEmpty) {
@@ -47,7 +47,7 @@ class Statistics extends StatelessWidget {
                   height: 20,
                 ),
                 SizedBox(
-                  height: 500,
+                  height: 520,
                   child: PageView(
                     scrollDirection: Axis.horizontal,
                     controller: pageController,
