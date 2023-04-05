@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:candy/screens/barcode_check.dart';
+import 'package:candy/screens/no_beer_page.dart';
 import 'package:candy/widgets/app_bar/main_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -29,14 +30,10 @@ class _BottomNavigationState extends State<BottomNavigation> {
     try {
       barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
           '#ff6666', ' ', false, ScanMode.BARCODE);
-      print(barcodeScanRes);
-    } on PlatformException {
-      print('Failed to get platform version.');
-    }
+    } on PlatformException {}
 
     setState(() {
       barcodeScan = barcodeScanRes;
-      print(barcodeScan);
     });
 
     if (barcodeScanRes.isNotEmpty) return;
@@ -54,7 +51,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
 
     switch (_selectedIndex) {
       case 0:
-        bodychild = MainPage();
+        bodychild = const MainPage();
         break;
 
       case 2:
@@ -77,14 +74,12 @@ class _BottomNavigationState extends State<BottomNavigation> {
         onTap: (int i) async {
           if (i == 1) {
             await scanBarcodeNormal();
-            print('${barcodeScan}3423');
             if (barcodeScan != '-1') {
-              print('$barcodeScan@@@@');
               WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-                Get.to(BarcodeCheck(barcodeScanRes: barcodeScan));
+                Get.to(() => BarcodeCheck(barcodeScanRes: barcodeScan));
               });
             } else {
-              bodychild = MainPage();
+              Get.to(() => const NoBeerPage());
             }
           } else {
             _onItemTapped(i);
