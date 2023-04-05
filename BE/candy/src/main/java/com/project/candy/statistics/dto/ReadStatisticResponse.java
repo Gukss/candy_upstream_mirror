@@ -35,6 +35,7 @@ public class ReadStatisticResponse {
         .favoriteStyle(statistics.getFavoriteStyle())
         .topRank(statistics.getTopRank())
         .totalCount(statistics.getTotalCount())
+        .totalDay(statistics.getTotalDay())
         .pieCountry(pieCountry)
         .pieStyle(pieStyle)
         .build();
