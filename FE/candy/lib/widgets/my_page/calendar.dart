@@ -1,15 +1,18 @@
-import 'package:candy/stores/store.dart';
 import 'package:flutter/material.dart';
 
 import 'package:candy/api/user_api_service.dart';
 import 'package:candy/models/user/user_daily_data_model.dart';
-import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import 'package:table_calendar/table_calendar.dart';
 
 class Calendar extends StatefulWidget {
-  const Calendar({Key? key}) : super(key: key);
+  final String email;
+
+  const Calendar({
+    super.key,
+    required this.email,
+  });
 
   @override
   State<Calendar> createState() => _CalendarState();
@@ -18,11 +21,8 @@ class Calendar extends StatefulWidget {
 class _CalendarState extends State<Calendar> {
   DateTime focusedDay = DateTime.now();
 
-  UserController userController = Get.find();
-
-  Future<List<UserDailyDataModel>> events() async {
-    return await UserApiService.getUserDailyData(
-        email: userController.userEmail.value);
+  Future<List<UserDailyDataModel>> events(String email) async {
+    return await UserApiService.getUserDailyData(email: email);
   }
 
   drunkDay(DateTime day, List<UserDailyDataModel> allday) {
@@ -38,7 +38,7 @@ class _CalendarState extends State<Calendar> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: events(),
+      future: events(widget.email),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return SafeArea(

@@ -10,7 +10,12 @@ import 'package:candy/widgets/my_page/beer_encyclopedia/beer_getlist.dart';
 import 'package:get/get.dart';
 
 class MyPage extends StatefulWidget {
-  const MyPage({super.key});
+  final String email;
+
+  const MyPage({
+    super.key,
+    required this.email,
+  });
 
   @override
   State<MyPage> createState() => _MyPageState();
@@ -22,19 +27,13 @@ class _MyPageState extends State<MyPage> {
   bool index2 = false;
   bool index3 = false;
 
-  final UserController userController = Get.find();
   final RefreshController refreshController = Get.find();
 
-  Future<UserInfoModel> userInfo() async {
-    return await UserApiService.getUserInfo(
-        email: userController.userEmail.value);
+  Future<UserInfoModel> userInfo(email) async {
+    return await UserApiService.getUserInfo(email: email);
   }
 
-  static List<Widget> pages = <Widget>[
-    const Calendar(),
-    BeerGetList(),
-    Statistics(),
-  ];
+  late final List<Widget> pages;
 
   void onTextButtonTap(index) {
     setState(() {
@@ -68,6 +67,17 @@ class _MyPageState extends State<MyPage> {
   void initState() {
     super.initState();
     refreshController.myRefresh = refresh;
+    pages = <Widget>[
+      Calendar(
+        email: widget.email,
+      ),
+      BeerGetList(
+        email: widget.email,
+      ),
+      Statistics(
+        email: widget.email,
+      ),
+    ];
   }
 
   @override
@@ -79,7 +89,7 @@ class _MyPageState extends State<MyPage> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: userInfo(),
+        future: userInfo(widget.email),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return SafeArea(
@@ -93,17 +103,20 @@ class _MyPageState extends State<MyPage> {
                     children: [
                       CircleAvatar(
                         backgroundImage:
-                            NetworkImage(userController.userProfileImg.value),
+                            NetworkImage(snapshot.data!.profileImage),
                         radius: 48,
                       ),
                       const SizedBox(
                         width: 24,
                       ),
-                      Text(
-                        snapshot.data!.nickname,
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
+                      Expanded(
+                        child: Text(
+                          snapshot.data!.nickname,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                     ],
