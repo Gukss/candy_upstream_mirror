@@ -15,29 +15,35 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-public class ReadReviewResponse{
+public class ReadReviewResponse {
 
-  String userName;
-  double overall;
-  String profileImage;
-  String contents;
+  private String userEmail;
 
-  Integer likeCount;
+  private String userName;
 
-  Boolean isLikes;
+  private double overall;
 
-  long reviewId;
+  private String profileImage;
 
-  public static ReadReviewResponse EntityToDto(User user, Review review, int reviewLikeCount,boolean isLikes){
-    ReadReviewResponse response=ReadReviewResponse.builder()
-        .userName(user.getNickname())
-        .profileImage(user.getProfileImage())
-        .contents(review.getContents())
-        .overall(review.getOverall())
-        .likeCount(reviewLikeCount)
-        .isLikes(isLikes)
-        .reviewId(review.getReviewId())
-        .build();
+  private String contents;
+
+  private Integer likeCount;
+
+  private Boolean isLikes;
+
+  private long reviewId;
+
+  public static ReadReviewResponse entityToDto(User user, Review review, boolean isLikes) {
+    ReadReviewResponse response = ReadReviewResponse.builder()
+            .userEmail(user.getEmail())
+            .userName(user.getNickname())
+            .profileImage(user.getProfileImage())
+            .contents(review.getContents())
+            .overall(review.getOverall())
+            .likeCount(review.getLikeCount())
+            .isLikes(isLikes)
+            .reviewId(review.getReviewId())
+            .build();
 
     return response;
   }

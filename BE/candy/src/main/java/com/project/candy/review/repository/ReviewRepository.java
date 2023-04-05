@@ -3,8 +3,10 @@ package com.project.candy.review.repository;
 import com.project.candy.beer.entity.Beer;
 import com.project.candy.review.entity.Review;
 import com.project.candy.user.entity.User;
+
 import java.time.LocalDateTime;
 import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -17,10 +19,10 @@ import org.springframework.data.repository.query.Param;
  */
 public interface ReviewRepository extends JpaRepository<Review, Long> {
 
-  List<Review> findAllByBeer(Beer beer);
-  @Query(nativeQuery = true, value = "SELECT * FROM candy.review where constructor!=:updater and beer_id = :beer_id")
-  List<Review> findAllByBeerIdAndUpdaterNot(@Param("beer_id") Long beerId,@Param("updater") String updater);
-  List<Review> findAllByUserAndBeer(User user,Beer beer);
+  @Query(nativeQuery = true, value = "SELECT * FROM candy.review where constructor!=:updater and beer_id = :beer_id order by like_count desc, created_at desc;")
+  List<Review> findAllByBeerIdAndUpdaterNot(@Param("beer_id") Long beerId, @Param("updater") String updater);
+
+  List<Review> findAllByUserAndBeer(User user, Beer beer);
 
   /**
    * 맥주 상세조회 시 보이는 통계 값들을 구하기 위한 스케줄링 되는 메소드
