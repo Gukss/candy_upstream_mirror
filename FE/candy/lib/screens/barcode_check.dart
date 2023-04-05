@@ -1,3 +1,4 @@
+import 'package:candy/screens/no_beer_page.dart';
 import 'package:candy/screens/review_create.dart';
 import 'package:flutter/material.dart';
 
@@ -20,9 +21,15 @@ class BarcodeCheck extends StatelessWidget {
     required this.barcodeScanRes,
   });
 
-  Future<BeerDetailModel> beerdetail() async {
-    return await BeerApiService.getBarcodeSearch(
-        barcode: barcodeScanRes, email: userController.userEmail.value);
+  Future<dynamic> beerdetail() async {
+    try {
+      final BeerDetailModel beer = await BeerApiService.getBarcodeSearch(
+          barcode: barcodeScanRes, email: userController.userEmail.value);
+      return beer;
+    } catch (e) {
+      Get.off(() => const NoBeerPage());
+      return;
+    }
   }
 
   void postbeer(
