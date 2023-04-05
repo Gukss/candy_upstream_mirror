@@ -150,17 +150,22 @@ class _UserPickCardItemState extends State<UserPickCardItem> {
                       flex: 1,
                       child: Column(
                         children: [
-                          IconButton(
-                            onPressed: onLikeButtonPressed,
-                            icon: Icon(
-                              Icons.recommend,
-                              color: isLiked ? Colors.red : null,
-                            ),
+                          // IconButton(
+                          //   onPressed: onLikeButtonPressed,
+                          //   icon: Icon(
+                          //     Icons.recommend,
+                          //     color: isLiked ? Colors.red : null,
+                          //   ),
+                          // ),
+                          const Icon(
+                            Icons.recommend,
+                            color: Colors.red,
                           ),
                           Text(
                             '$likeCount',
                             style: const TextStyle(
-                              color: Colors.amber,
+                              color: Colors.redAccent,
+                              fontSize: 16,
                             ),
                           ),
                         ],
