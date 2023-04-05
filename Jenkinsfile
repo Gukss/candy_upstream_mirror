@@ -34,7 +34,7 @@ pipeline{
         stage('Deploy'){
             steps {
                 withCredentials([string(credentialsId: 'candySecretKey', variable: 'MY_SECRET_PASSWORD')]) {
-                    sh "docker run -d --name=${BACK_SPRING_CONTAINER_NAME} -p 8080:8080 -e JAVA_OPTS=-Djasypt.encryptor.password=candy@b105 ${BACK_SPRING_NAME}"
+                    sh "docker run -d --name=${BACK_SPRING_CONTAINER_NAME} -p 8080:8080 -e $JAVA_OPTS -jar myapp.jar --jasypt.encryptor.password=$MY_SECRET_PASSWORD ${BACK_SPRING_NAME}"
                 sh "docker run -d --name=${BACK_FLASK_CONTAINER_NAME} -p 0.0.0.0:90:5000 ${BACK_FLASK_NAME}"
                 sh "docker image prune --force"
             }
