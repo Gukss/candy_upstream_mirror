@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final UserController userController = Get.put(UserController());
+    final RefreshController refreshController = Get.put(RefreshController());
     return GetMaterialApp(
       scrollBehavior: MyCustomScrollBehavior(),
       title: 'Flutter Demo',

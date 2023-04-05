@@ -1,5 +1,6 @@
 import 'package:candy/models/beer/recommendation_list_model.dart';
 import 'package:candy/screens/beer_detail.dart';
+import 'package:candy/stores/store.dart';
 import 'package:candy/widgets/beer/beer_image_with_name.dart';
 import 'package:candy/widgets/ui/margin.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,7 @@ class RecommendationBeers extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final RefreshController refreshController = Get.find();
     return SizedBox(
       height: sectionSize,
       child: ListView.separated(
@@ -31,8 +33,9 @@ class RecommendationBeers extends StatelessWidget {
         itemCount: beerList.length,
         itemBuilder: (context, index) {
           return GestureDetector(
-            onTap: () {
+            onTap: () async {
               Get.to(BeerDetail(beerId: beerList[index].beerId));
+              refreshController.mainRefresh();
             },
             child: BeerImageWithName(
               radiusSize: radiusSize,
