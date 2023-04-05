@@ -205,7 +205,7 @@ public class RecommendationServiceImpl implements RecommendationService {
   public List<ReadReviewRecommendationResponse> readReviewByRdbAndCreateCache(String userEmail) {
 
     // rdb 조회해서 리뷰 추천 데이터(리뷰 좋아요 많이 받은 순서로 정렬한 데이터) 뽑아오기
-    LocalDateTime startTime = LocalDateTime.now().minusDays(1);
+    LocalDateTime startTime = LocalDateTime.now().minusWeeks(1);
     LocalDateTime endTime = LocalDateTime.now();
     List<Review> reviewList = reviewRepository.findTop10ByCreatedAtBetweenOrderByLikeCountDesc(startTime, endTime);
 
