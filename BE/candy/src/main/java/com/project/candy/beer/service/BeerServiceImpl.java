@@ -6,6 +6,8 @@ import com.project.candy.beer.dto.ReadBeerListResponse;
 import com.project.candy.beer.dto.ReadSearchBeerListResponse;
 import com.project.candy.beer.entity.Beer;
 import com.project.candy.beer.repository.BeerRepository;
+import com.project.candy.beer_history.entity.BeerHistory;
+import com.project.candy.beer_history.repository.BeerHistoryRepository;
 import com.project.candy.calendar.entity.Calendar;
 import com.project.candy.calendar.repository.CalendarRepository;
 import com.project.candy.country.dto.ReadCountryResponse;
@@ -50,7 +52,7 @@ public class BeerServiceImpl implements BeerService {
   private final BeerRepository beerRepository;
   private final UserRepository userRepository;
   private final CountryRepository countryRepository;
-  private final CalendarRepository calendarRepository;
+  private final BeerHistoryRepository beerHistoryRepository;
   private final LikesRepository likeRepository;
   private final ReviewRepository reviewRepository;
   private final JdbcTemplate jdbcTemplate;
@@ -76,8 +78,8 @@ public class BeerServiceImpl implements BeerService {
     boolean isLike = false;
 
     // 마셨는지, 찜한 맥주인지 체크한다.
-    Optional<List<Calendar>> calendarList = calendarRepository.findAllByUserId(user.getId());
-    if (calendarList.isPresent()) {
+    Optional<BeerHistory> history = beerHistoryRepository.findAllByUserAndBeer(user, beer);
+    if (history.isPresent()) {
       isDrink = true;
     }
 

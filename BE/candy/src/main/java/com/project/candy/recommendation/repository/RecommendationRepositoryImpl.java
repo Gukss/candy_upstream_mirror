@@ -153,7 +153,7 @@ public class RecommendationRepositoryImpl implements RecommendationRepository {
 
     ValueOperations valueOperations = redisTemplate.opsForValue();
     String jsonReviewCache = setObjectToJSON(reviewCache);
-    valueOperations.set("review:" + reviewCache.getReviewId(), jsonReviewCache, Duration.ofDays(1));
+    valueOperations.set("review:" + reviewCache.getReviewId(), jsonReviewCache, Duration.ofDays(7));
   }
 
   @Override
