@@ -129,7 +129,7 @@ class _BeerInfoState extends State<BeerInfo> {
                   const Margin(marginType: MarginType.height, size: 8),
                   if (widget.isReviewPage != true)
                     BeerInfoText(
-                      title: '별점    ',
+                      title: '별점   ',
                       value: (widget.beerInfo.overall).toStringAsFixed(1),
                     ),
                   const Margin(marginType: MarginType.height, size: 24),
