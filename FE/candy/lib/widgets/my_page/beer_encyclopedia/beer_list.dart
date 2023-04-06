@@ -1,5 +1,6 @@
 import 'package:candy/models/beer/all_beer_list_model.dart';
 import 'package:candy/screens/beer_detail.dart';
+import 'package:candy/stores/store.dart';
 import 'package:flutter/material.dart';
 import 'package:candy/widgets/beer/beer_image_with_name.dart';
 import 'package:candy/widgets/ui/margin.dart';
@@ -17,6 +18,7 @@ class BeerList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final RefreshController refreshController = Get.find();
     return Expanded(
       child: ListView.separated(
           separatorBuilder: (context, index) {
@@ -29,8 +31,10 @@ class BeerList extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   GestureDetector(
-                    onTap: () {
-                      Get.to(BeerDetail(beerId: newbeerlist[index * 3].beerId));
+                    onTap: () async {
+                      await Get.to(
+                          BeerDetail(beerId: newbeerlist[index * 3].beerId));
+                      refreshController.beerListRefresh();
                     },
                     child: BeerImageWithName(
                       radiusSize: 16,
@@ -46,9 +50,10 @@ class BeerList extends StatelessWidget {
                   ),
                   if (index * 3 + 1 < newbeerlist.length)
                     GestureDetector(
-                      onTap: () {
-                        Get.to(BeerDetail(
+                      onTap: () async {
+                        await Get.to(BeerDetail(
                             beerId: newbeerlist[index * 3 + 1].beerId));
+                        refreshController.beerListRefresh();
                       },
                       child: BeerImageWithName(
                         radiusSize: 16,
@@ -69,9 +74,10 @@ class BeerList extends StatelessWidget {
                     ),
                   if (index * 3 + 2 < newbeerlist.length)
                     GestureDetector(
-                      onTap: () {
-                        Get.to(BeerDetail(
+                      onTap: () async {
+                        await Get.to(BeerDetail(
                             beerId: newbeerlist[index * 3 + 2].beerId));
+                        refreshController.beerListRefresh();
                       },
                       child: BeerImageWithName(
                         radiusSize: 16,
