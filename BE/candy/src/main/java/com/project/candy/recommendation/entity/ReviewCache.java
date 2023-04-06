@@ -4,7 +4,9 @@ import com.project.candy.review.entity.Review;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
+
 import java.io.Serializable;
+import java.util.Comparator;
 
 /**
  * packageName    : com.project.candy.recommendation.entity
@@ -18,7 +20,7 @@ import java.io.Serializable;
 @Getter
 @Builder
 @ToString
-public class ReviewCache implements Serializable {
+public class ReviewCache implements Serializable, Comparable<ReviewCache> {
 
   @Id
   private long reviewId;
@@ -60,5 +62,13 @@ public class ReviewCache implements Serializable {
 
   public void updateIsLike(boolean isLike) {
     this.isLike = isLike;
+  }
+
+  @Override
+  public int compareTo(ReviewCache o) {
+    if (o.likeCount == this.likeCount) {
+      return (int) (o.overall - this.overall);
+    }
+    return o.likeCount - this.likeCount;
   }
 }

@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -191,6 +192,8 @@ public class RecommendationServiceImpl implements RecommendationService {
       List<ReadReviewRecommendationResponse> resReviewList = readReviewByRdbAndCreateCache(userEmail);
       return resReviewList;
     }
+
+    Collections.sort(reviewCacheList);
 
     // 캐시에 데이터가 있다면 Response DTO 형식으로 변환 후 리턴
     List<ReadReviewRecommendationResponse> resReviewCacheList = new ArrayList<>();
