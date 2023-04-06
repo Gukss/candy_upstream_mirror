@@ -6,7 +6,9 @@ class BeerDetailAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => const Size.fromHeight(56);
 
-  const BeerDetailAppBar({super.key});
+  final Function capture;
+
+  const BeerDetailAppBar({super.key, required this.capture});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,9 @@ class BeerDetailAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: const Text('맥주 정보 확인'),
       actions: [
         IconButton(
-          onPressed: () {},
+          onPressed: () {
+            capture();
+          },
           icon: const Icon(
             Icons.share,
             size: 24,

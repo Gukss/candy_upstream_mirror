@@ -23,16 +23,6 @@ class BeerExtraInfo extends StatelessWidget {
       children: [
         const Margin(marginType: MarginType.height, size: 16),
         BeerExtraInfoSildebar(
-          sliderCategory: '색깔',
-          sliderValue: apperanceNum,
-        ),
-        const Margin(marginType: MarginType.height, size: 16),
-        BeerExtraInfoSildebar(
-          sliderCategory: '바디감',
-          sliderValue: mouthfeelNum,
-        ),
-        const Margin(marginType: MarginType.height, size: 16),
-        BeerExtraInfoSildebar(
           sliderCategory: '맛',
           sliderValue: flavorNum,
         ),
@@ -40,6 +30,16 @@ class BeerExtraInfo extends StatelessWidget {
         BeerExtraInfoSildebar(
           sliderCategory: '향',
           sliderValue: aromaNum,
+        ),
+        const Margin(marginType: MarginType.height, size: 16),
+        BeerExtraInfoSildebar(
+          sliderCategory: '색깔',
+          sliderValue: apperanceNum,
+        ),
+        const Margin(marginType: MarginType.height, size: 16),
+        BeerExtraInfoSildebar(
+          sliderCategory: '바디감',
+          sliderValue: mouthfeelNum,
         ),
       ],
     );

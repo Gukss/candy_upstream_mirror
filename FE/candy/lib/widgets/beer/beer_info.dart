@@ -72,7 +72,7 @@ class _BeerInfoState extends State<BeerInfo> {
               ),
             ),
             const Margin(marginType: MarginType.width, size: 8),
-            if (widget.beerInfo.isDrunk == true)
+            if (widget.beerInfo.isDrunk)
               const Icon(
                 Icons.check,
                 size: 24,
