@@ -72,7 +72,6 @@ class _BarcodeCheckState extends State<BarcodeCheck> {
   }
 
   Future<void> postbeer(
-    UserController userController,
     int beerId,
     BuildContext context,
   ) async {
@@ -83,7 +82,7 @@ class _BarcodeCheckState extends State<BarcodeCheck> {
       email: userController.userEmail.value,
       beerId: beerId,
     );
-    refreshController.myRefresh();
+    refreshController.calendarRefresh();
     if (!mounted) return;
     final bool isRegistering =
         await openDialog(context, '리뷰를 등록하시겠습니까?') ?? false;
@@ -114,7 +113,7 @@ class _BarcodeCheckState extends State<BarcodeCheck> {
                 actions: [
                   TextButton(
                     onPressed: () {
-                      postbeer(userController, snapshot.data!.beerId, context);
+                      postbeer(snapshot.data!.beerId, context);
                     },
                     child: const Text(
                       '등록하기',

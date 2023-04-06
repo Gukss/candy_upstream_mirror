@@ -22,7 +22,7 @@ class MyPage extends StatefulWidget {
 }
 
 class _MyPageState extends State<MyPage> {
-  int _page_index = 0;
+  int _pageIndex = 0;
   bool index1 = true;
   bool index2 = false;
   bool index3 = false;
@@ -37,7 +37,7 @@ class _MyPageState extends State<MyPage> {
 
   void onTextButtonTap(index) {
     setState(() {
-      _page_index = index;
+      _pageIndex = index;
     });
   }
 
@@ -59,14 +59,9 @@ class _MyPageState extends State<MyPage> {
     });
   }
 
-  void refresh() {
-    setState(() {});
-  }
-
   @override
   void initState() {
     super.initState();
-    refreshController.myRefresh = refresh;
     pages = <Widget>[
       Calendar(
         email: widget.email,
@@ -78,12 +73,6 @@ class _MyPageState extends State<MyPage> {
         email: widget.email,
       ),
     ];
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    refreshController.myRefresh = () {};
   }
 
   @override
@@ -195,7 +184,7 @@ class _MyPageState extends State<MyPage> {
                   ),
                   Expanded(
                     child: Container(
-                      child: pages[_page_index],
+                      child: pages[_pageIndex],
                     ),
                   ),
                 ]),

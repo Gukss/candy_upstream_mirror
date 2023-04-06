@@ -17,7 +17,7 @@ class BeerDetailAppBar extends StatelessWidget implements PreferredSizeWidget {
       leading: IconButton(
         onPressed: () {
           refreshController.mainRefresh();
-          refreshController.myRefresh();
+          refreshController.beerListRefresh();
           Get.back();
         },
         icon: const Icon(
