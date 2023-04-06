@@ -67,7 +67,7 @@ class StatisticsText extends StatelessWidget {
             Column(
               children: [
                 Text(
-                  '최대 연속 음주 일 수',
+                  '현재 연속 음주 일 수',
                   style: subStyle(),
                 ),
                 const Margin(marginType: MarginType.height, size: 4),
