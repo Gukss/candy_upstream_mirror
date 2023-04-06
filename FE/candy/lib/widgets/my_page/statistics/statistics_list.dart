@@ -46,7 +46,7 @@ class Statistics extends StatelessWidget {
                   height: 20,
                 ),
                 SizedBox(
-                  height: 420,
+                  height: 456,
                   child: PageView(
                     scrollDirection: Axis.horizontal,
                     controller: pageController,
