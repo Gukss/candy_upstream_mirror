@@ -3,6 +3,7 @@ import 'package:candy/api/review_api_service.dart';
 import 'package:candy/models/beer/beer_detail_model.dart';
 import 'package:candy/screens/beer_detail.dart';
 import 'package:candy/stores/store.dart';
+import 'package:candy/widgets/bottom_navigation_bar.dart';
 import 'package:candy/widgets/review/create/review_beer_info.dart';
 import 'package:candy/widgets/review/create/review_content.dart';
 import 'package:candy/widgets/review/create/review_slider_input.dart';
@@ -11,7 +12,7 @@ import 'package:candy/widgets/ui/margin.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ReviewCreate extends StatelessWidget {
+class ReviewCreate extends StatefulWidget {
   final int beerId;
 
   const ReviewCreate({
@@ -19,6 +20,11 @@ class ReviewCreate extends StatelessWidget {
     required this.beerId,
   });
 
+  @override
+  State<ReviewCreate> createState() => _ReviewCreateState();
+}
+
+class _ReviewCreateState extends State<ReviewCreate> {
   Future<BeerDetailModel> getBeerData(
     int beerId,
     String email,
@@ -75,14 +81,26 @@ class ReviewCreate extends StatelessWidget {
     } else if (reviewController.overall.value == 0) {
       return openSnackBar(context, '별점을 남겨주세요.', Colors.red);
     }
-
-    if (await ReviewApiService.postReviewCreate(
+    final Map<String, bool> createResult =
+        await ReviewApiService.postReviewCreate(
       email: userController.userEmail.value,
       beerId: beerId,
       review: makeReviewMap(reviewController),
-    )) {
-      Get.off(BeerDetail(beerId: beerId));
+    );
+    if (createResult['isExist']!) {
+      if (!mounted) return;
+      openSnackBar(context, '해당 맥주에 이미 리뷰를 작성했습니다.', Colors.red);
+      Get.offAll(() => const BottomNavigation());
+      return;
     }
+    if (createResult['isError']!) {
+      if (!mounted) return;
+      openSnackBar(context, '잠시 후 다시 시도해주세요.', Colors.red);
+      return;
+    }
+    if (!mounted) return;
+    openSnackBar(context, '리뷰가 작성되었습니다.', Colors.green);
+    Get.off(() => BeerDetail(beerId: beerId));
   }
 
   @override
@@ -110,7 +128,7 @@ class ReviewCreate extends StatelessWidget {
           TextButton(
             onPressed: () {
               onSubmitPressed(
-                  context, userController, reviewController, beerId);
+                  context, userController, reviewController, widget.beerId);
             },
             child: const Text(
               '등록',
@@ -125,7 +143,7 @@ class ReviewCreate extends StatelessWidget {
       ),
       body: FutureBuilder(
         future: getBeerData(
-          beerId,
+          widget.beerId,
           userController.userEmail.value,
         ),
         builder: (context, snapshot) {

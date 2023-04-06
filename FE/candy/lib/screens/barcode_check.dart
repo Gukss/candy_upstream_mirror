@@ -87,7 +87,7 @@ class _BarcodeCheckState extends State<BarcodeCheck> {
     final bool isRegistering =
         await openDialog(context, '리뷰를 등록하시겠습니까?') ?? false;
     if (!isRegistering) {
-      Get.off(() => const BottomNavigation());
+      Get.offAll(() => const BottomNavigation());
       return;
     }
     Get.to(ReviewCreate(beerId: beerId));
