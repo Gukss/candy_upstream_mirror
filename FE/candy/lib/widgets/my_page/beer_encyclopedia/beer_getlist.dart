@@ -30,6 +30,7 @@ class BeerGetList extends StatelessWidget {
             return BeerEncyclopedia(
               beerlist: snapshot.data!,
               beerpercent: checkpercent(snapshot.data!),
+              email: email,
             );
           }
           return const SizedBox();

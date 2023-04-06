@@ -1,8 +1,10 @@
+import 'package:candy/stores/store.dart';
 import 'package:flutter/material.dart';
 
 import 'package:candy/widgets/ui/margin.dart';
 import 'package:candy/models/beer/all_beer_list_model.dart';
 import 'package:candy/widgets/my_page/beer_encyclopedia/beer_list.dart';
+import 'package:get/get.dart';
 
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
@@ -10,11 +12,13 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 class BeerEncyclopedia extends StatefulWidget {
   final List<AllBeerListModel> beerlist;
   final double beerpercent;
+  final String email;
 
   const BeerEncyclopedia({
     super.key,
     required this.beerlist,
     required this.beerpercent,
+    required this.email,
   });
 
   @override
@@ -22,9 +26,13 @@ class BeerEncyclopedia extends StatefulWidget {
 }
 
 class _BeerEncyclopediaState extends State<BeerEncyclopedia> {
+  final UserController userController = Get.find();
+
   String dropdownValue = '전체';
   int dropindex = 0;
-  List<String> itemList = ['전체', '좋아요한 맥주', '마신 맥주', '안 마신 맥주'];
+  List<String> itemList = [];
+  List<String> itemListme = ['전체', '마신 맥주', '안 마신 맥주', '좋아요한 맥주'];
+  List<String> itemListyou = ['전체', '마신 맥주', '안 마신 맥주'];
   late List<AllBeerListModel> beerlist;
   late double beerpercent;
 
@@ -60,13 +68,13 @@ class _BeerEncyclopediaState extends State<BeerEncyclopedia> {
     if (index == 0) {
       return beer;
     } else if (index == 1) {
-      final newbeer = beer.where((e) => e.isLiked > 0).toList();
-      return newbeer;
-    } else if (index == 2) {
       final newbeer = beer.where((e) => e.isDrunk > 0).toList();
       return newbeer;
-    } else {
+    } else if (index == 2) {
       final newbeer = beer.where((e) => e.isDrunk == 0).toList();
+      return newbeer;
+    } else {
+      final newbeer = beer.where((e) => e.isLiked == 0).toList();
       return newbeer;
     }
   }
@@ -80,6 +88,10 @@ class _BeerEncyclopediaState extends State<BeerEncyclopedia> {
 
   @override
   Widget build(BuildContext context) {
+    itemList = (widget.email == userController.userEmail.value)
+        ? itemListme
+        : itemListyou;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
