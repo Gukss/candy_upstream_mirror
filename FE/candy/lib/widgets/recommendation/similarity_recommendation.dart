@@ -25,13 +25,20 @@ class SimilarityRecommendation extends StatelessWidget {
         if (!error)
           Row(
             children: [
-              const Icon(
-                Icons.arrow_back_ios,
-                size: 16,
+              const Text(
+                '"',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.amber,
+                ),
               ),
               Expanded(
-                flex: similarBeer!.beerName.length >= 12 ? 1 : 0,
-                child: SizedBox(
+                flex: similarBeer!.beerName.length >= 10 ? 1 : 0,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 4,
+                  ),
                   child: Text(
                     similarBeer!.beerName,
                     overflow: TextOverflow.ellipsis,
@@ -43,14 +50,18 @@ class SimilarityRecommendation extends StatelessWidget {
                   ),
                 ),
               ),
-              const Icon(
-                Icons.arrow_forward_ios,
-                size: 16,
+              const Text(
+                '"',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.amber,
+                ),
               ),
               const Expanded(
                 child: SizedBox(
                   child: Text(
-                    '를 좋아하시나요?',
+                    '을(를) 좋아하시나요?',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w700,

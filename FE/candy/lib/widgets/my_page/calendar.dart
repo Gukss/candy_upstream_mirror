@@ -59,9 +59,7 @@ class _CalendarState extends State<Calendar> {
       future: events(widget.email),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return SafeArea(
-              child: Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0, 0, 16),
+          return SingleChildScrollView(
             child: TableCalendar(
               focusedDay: focusedDay,
               locale: 'ko-KR',
@@ -101,7 +99,7 @@ class _CalendarState extends State<Calendar> {
                 return drunkDay(day, snapshot.data!);
               },
             ),
-          ));
+          );
         }
         return const SizedBox();
       },

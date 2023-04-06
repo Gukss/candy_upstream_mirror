@@ -111,7 +111,7 @@ class _MyPageState extends State<MyPage> {
                     ],
                   ),
                   const SizedBox(
-                    height: 16,
+                    height: 8,
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(8, 0, 8, 0),
