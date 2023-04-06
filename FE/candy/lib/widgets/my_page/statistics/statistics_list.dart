@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:candy/api/statistics_api_service.dart';
 import 'package:candy/models/user/user_statistics.model.dart';
 import 'package:candy/widgets/my_page/statistics/staistics_text.dart';
-import 'package:candy/widgets/my_page/statistics/staistics_chart_beer.dart';
-import 'package:candy/widgets/my_page/statistics/staistics_chart_country.dart';
+import 'package:candy/widgets/my_page/statistics/staistics_chart.dart';
 
 class Statistics extends StatelessWidget {
   final String email;
@@ -47,14 +46,19 @@ class Statistics extends StatelessWidget {
                   height: 20,
                 ),
                 SizedBox(
-                  height: 520,
+                  height: 420,
                   child: PageView(
                     scrollDirection: Axis.horizontal,
                     controller: pageController,
                     children: [
-                      StatisticsChartCountry(
-                          pieCountry: snapshot.data!.pieCountry),
-                      StatisticsChartBeer(pieStyle: snapshot.data!.pieStyle),
+                      StatisticsChart(
+                        piechart: snapshot.data!.pieCountry,
+                        name: '나라별 마신 맥주',
+                      ),
+                      StatisticsChart(
+                        piechart: snapshot.data!.pieStyle,
+                        name: '종류별 마신 맥주',
+                      ),
                     ],
                   ),
                 ),

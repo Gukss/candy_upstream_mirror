@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 
 import 'package:pie_chart/pie_chart.dart';
 
-class StatisticsChartCountry extends StatelessWidget {
-  final List pieCountry;
+class StatisticsChart extends StatelessWidget {
+  final List piechart;
+  final String name;
 
-  StatisticsChartCountry({
+  StatisticsChart({
     super.key,
-    required this.pieCountry,
+    required this.piechart,
+    required this.name,
   });
 
   late Map<String, double> dataMap = {};
@@ -24,7 +26,7 @@ class StatisticsChartCountry extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    for (Map<String, dynamic> data in pieCountry) {
+    for (Map<String, dynamic> data in piechart) {
       if (data['value'] != 0) {
         dataMap['${data['name']}'] = data['value'];
       }
@@ -32,33 +34,32 @@ class StatisticsChartCountry extends StatelessWidget {
 
     final chart = PieChart(
         dataMap: dataMap,
-        chartRadius: math.min(MediaQuery.of(context).size.width, 300),
+        chartRadius: math.min(MediaQuery.of(context).size.width, 250),
         colorList: colorList,
         initialAngleInDegree: 270,
+        chartLegendSpacing: 20,
         chartValuesOptions: const ChartValuesOptions(
             showChartValues: true,
             showChartValuesInPercentage: true,
             showChartValueBackground: false,
             decimalPlaces: 1),
         legendOptions: const LegendOptions(
-            showLegendsInRow: true, legendPosition: LegendPosition.bottom));
+            showLegendsInRow: true, legendPosition: LegendPosition.top));
 
-    return Container(
-      child: Column(children: [
-        Container(
-            margin: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-            width: double.infinity,
-            child: const Text(
-              '나라별 마신 맥주',
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),
-            )),
-        const SizedBox(height: 16),
-        chart,
-      ]),
-    );
+    return Column(children: [
+      Container(
+          margin: const EdgeInsets.fromLTRB(16, 0, 0, 0),
+          width: double.infinity,
+          child: Text(
+            name,
+            textAlign: TextAlign.left,
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 22,
+            ),
+          )),
+      const SizedBox(height: 16),
+      chart,
+    ]);
   }
 }

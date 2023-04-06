@@ -60,7 +60,8 @@ class _CalendarState extends State<Calendar> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return SafeArea(
-              child: SingleChildScrollView(
+              child: Padding(
+            padding: const EdgeInsets.fromLTRB(0, 0, 0, 16),
             child: TableCalendar(
               focusedDay: focusedDay,
               locale: 'ko-KR',
@@ -68,8 +69,7 @@ class _CalendarState extends State<Calendar> {
               lastDay: DateTime.now(),
               daysOfWeekHeight: 30,
               headerStyle: const HeaderStyle(
-                  headerMargin:
-                      EdgeInsets.only(left: 40, right: 40, bottom: 10),
+                  headerMargin: EdgeInsets.only(left: 40, right: 40, bottom: 0),
                   formatButtonVisible: false,
                   titleCentered: true,
                   titleTextStyle:
