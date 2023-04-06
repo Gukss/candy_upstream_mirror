@@ -66,6 +66,7 @@ public class ReviewLikeServiceImpl implements ReviewLikeService {
     ReviewLike createReviewLike = reviewLikeRepository.findByUserAndReview(user, review).orElse(reviewLike);
     if (createReviewLike.getBaseEntity().isDelete()) {
       createReviewLike.getBaseEntity().create();
+      review.increaseLikeCount();
       return;
     }
     // 찜하기 저장
