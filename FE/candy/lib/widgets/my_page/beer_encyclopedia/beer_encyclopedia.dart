@@ -74,7 +74,7 @@ class _BeerEncyclopediaState extends State<BeerEncyclopedia> {
       final newbeer = beer.where((e) => e.isDrunk == 0).toList();
       return newbeer;
     } else {
-      final newbeer = beer.where((e) => e.isLiked == 0).toList();
+      final newbeer = beer.where((e) => e.isLiked > 0).toList();
       return newbeer;
     }
   }
@@ -84,6 +84,13 @@ class _BeerEncyclopediaState extends State<BeerEncyclopedia> {
     beerlist = widget.beerlist;
     beerpercent = widget.beerpercent;
     super.initState();
+  }
+
+  @override
+  void didUpdateWidget(covariant BeerEncyclopedia oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    beerlist = widget.beerlist;
+    beerpercent = widget.beerpercent;
   }
 
   @override

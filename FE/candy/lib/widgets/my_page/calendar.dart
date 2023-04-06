@@ -1,7 +1,9 @@
+import 'package:candy/stores/store.dart';
 import 'package:flutter/material.dart';
 
 import 'package:candy/api/user_api_service.dart';
 import 'package:candy/models/user/user_daily_data_model.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import 'package:table_calendar/table_calendar.dart';
@@ -33,6 +35,22 @@ class _CalendarState extends State<Calendar> {
       }
     }
     return [];
+  }
+
+  final RefreshController refreshController = Get.find();
+
+  @override
+  void initState() {
+    super.initState();
+    refreshController.calendarRefresh = () {
+      setState(() {});
+    };
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    refreshController.calendarRefresh = () {};
   }
 
   @override
