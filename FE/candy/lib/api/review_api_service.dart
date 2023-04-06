@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 
 class ReviewApiService {
   // 리뷰 작성
-  static Future<bool> postReviewCreate({
+  static Future<Map<String, bool>> postReviewCreate({
     required String email,
     required int beerId,
     required Map<String, dynamic> review,
@@ -24,9 +24,20 @@ class ReviewApiService {
       body: body,
     );
     if (response.statusCode == 201) {
-      return true;
+      return {
+        'isExist': false,
+        'isError': false,
+      };
+    } else if (response.statusCode == 200) {
+      return {
+        'isExist': true,
+        'isError': false,
+      };
     }
-    return false;
+    return {
+      'isExist': false,
+      'isError': true,
+    };
   }
 
   // 특정 맥주 리뷰 전체 조회
