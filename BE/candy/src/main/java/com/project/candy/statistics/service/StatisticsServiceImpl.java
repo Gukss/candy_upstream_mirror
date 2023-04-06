@@ -158,7 +158,7 @@ public class StatisticsServiceImpl implements StatisticsService {
       calendar.add(x.getContinuousDay());
     }
     //---연속 일수---
-    LocalDate now = LocalDate.now();
+    LocalDate now = LocalDate.now().minusDays(1);
     int offset = 0;
     if(calendar.isEmpty()) return 0; //비어있으면 0일 반환
     if (calendar.get(0).isEqual(now)) { //새벽 4시기준 같으면 새벽에 인증했다는 이야기다.
