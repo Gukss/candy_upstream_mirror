@@ -34,7 +34,7 @@ class RecommendationBeers extends StatelessWidget {
         itemBuilder: (context, index) {
           return GestureDetector(
             onTap: () async {
-              Get.to(BeerDetail(beerId: beerList[index].beerId));
+              await Get.to(BeerDetail(beerId: beerList[index].beerId));
               refreshController.mainRefresh();
             },
             child: BeerImageWithName(
